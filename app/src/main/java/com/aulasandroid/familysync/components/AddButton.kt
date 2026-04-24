@@ -15,7 +15,7 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun LeftArrow() {
+fun AddButton() {
     Button(
         onClick = {/* TODO */},
         colors = ButtonDefaults.buttonColors(
@@ -23,11 +23,11 @@ fun LeftArrow() {
         ),
         shape = RoundedCornerShape(100),
         contentPadding = PaddingValues(0.dp),
-        modifier = Modifier .size(50.dp)
+        modifier = Modifier .size(52.dp)
     ){
         Icon(
-            painter = painterResource(R.drawable.arrow),
-            contentDescription = "seta-de-voltar",
+            painter = painterResource(R.drawable.plus),
+            contentDescription = "botao-criar",
             tint = branco,
             modifier = Modifier .size(25.dp)
         )

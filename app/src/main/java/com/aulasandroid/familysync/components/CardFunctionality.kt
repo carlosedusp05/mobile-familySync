@@ -38,7 +38,8 @@ fun CardFunctionality(
         colors = CardDefaults.cardColors(
             containerColor = creme
         ),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(4.dp),
+        onClick = {/* TODO */}
     ) {
         Column(
             modifier = Modifier
