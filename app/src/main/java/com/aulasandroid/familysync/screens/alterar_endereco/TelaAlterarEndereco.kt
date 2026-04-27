@@ -1,4 +1,4 @@
-package com.aulasandroid.familysync.screens.cadastro_familia
+package com.aulasandroid.familysync.screens.alterar_endereco
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,14 +18,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aulasandroid.familysync.components.CremeButton
-import com.aulasandroid.familysync.components.Family
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.ui.theme.branco
+import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun TelaCadastroFamilia(modifier: Modifier = Modifier) {
+fun TelaAlterarEndereco(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize().background(branco)
     ) {
@@ -36,21 +36,22 @@ fun TelaCadastroFamilia(modifier: Modifier = Modifier) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(0.95f),
-            verticalArrangement = Arrangement.SpaceEvenly
+            verticalArrangement = Arrangement.spacedBy(50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
+                    .width(230.dp)
+                    .height(50.dp),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Family(110.dp)
                 Text(
-                    text = "Nome da Família",
+                    text = "Alterar endereço da família",
                     textAlign = TextAlign.Center,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = laranja
                 )
             }
 

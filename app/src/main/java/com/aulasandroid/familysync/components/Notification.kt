@@ -18,9 +18,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
+import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
 @Composable
 fun Notification() {
@@ -41,28 +43,29 @@ fun Notification() {
         ) {
             Row(
                 modifier = Modifier
-                    .height(30.dp)
+                    .height(25.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = "tema da notificação",
                     fontWeight = FontWeight.Bold,
-                    color = laranja,
+                    color = laranjaEscuro,
                     fontSize = 20.sp
                 )
             }
 
             Row(
                 modifier = Modifier
-                    .height(55.dp)
+                    .height(60.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = "xsadsccccccadddccccccccczxnhcsb cguggcfdvbhdbbvchx hvc xvchjxb chhjvccccccccccccccccccccccccccccccccccccc hcx bhjjjjhb chb hjjjjjj chhcbbhdhbvbfhdvbvfhabhdfbvhjb cdsacsda",
                     fontWeight = FontWeight.SemiBold,
-                    color = laranja,
+                    lineHeight = 1.2.em,
+                    color = laranjaEscuro,
                     fontSize = 12.sp
                 )
             }

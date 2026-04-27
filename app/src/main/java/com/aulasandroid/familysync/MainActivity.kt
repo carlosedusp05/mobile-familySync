@@ -7,9 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import com.aulasandroid.familysync.screens.notifiacao.TelaNotificacao
 import com.aulasandroid.familysync.ui.theme.FamilySyncTheme
 import androidx.compose.ui.Modifier
+import com.aulasandroid.familysync.screens.adicionar_dispesas.TelaAdicionarDespesas
+import com.aulasandroid.familysync.screens.alterar_endereco.TelaAlterarEndereco
+import com.aulasandroid.familysync.screens.editar_despesas.TelaEditarDespesas
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FamilySyncTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TelaNotificacao(modifier = Modifier .padding(innerPadding))
+                    TelaAdicionarDespesas(modifier = Modifier .padding(innerPadding))
                 }
             }
         }
