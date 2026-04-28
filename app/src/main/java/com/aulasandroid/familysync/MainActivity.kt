@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import com.aulasandroid.familysync.screens.adicionar_dispesas.TelaAdicionarDespesas
 import com.aulasandroid.familysync.screens.alterar_endereco.TelaAlterarEndereco
 import com.aulasandroid.familysync.screens.editar_despesas.TelaEditarDespesas
+import com.aulasandroid.familysync.screens.informacoes_familiar.TelaInformacoesFamiliar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             FamilySyncTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TelaAdicionarDespesas(modifier = Modifier .padding(innerPadding))
+                    TelaInformacoesFamiliar(modifier = Modifier .padding(innerPadding))
                 }
             }
         }
