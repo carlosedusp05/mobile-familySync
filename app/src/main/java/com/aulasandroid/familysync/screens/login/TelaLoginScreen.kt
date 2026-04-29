@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.Logo
@@ -81,7 +83,8 @@ fun TelaLoginScreen(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     text = "Esqueceu a senha?",
-                    color = laranja
+                    color = laranja,
+                    textDecoration = TextDecoration.Underline
                 )
             }
 

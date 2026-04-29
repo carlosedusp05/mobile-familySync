@@ -53,7 +53,7 @@ fun TelaInformacoesFamiliar(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Informações familiar",
+                text = "INFORMAÇÕES FAMILIAR",
                 textAlign = TextAlign.Center,
                 fontSize = 26.sp,
                 fontWeight = FontWeight.SemiBold,

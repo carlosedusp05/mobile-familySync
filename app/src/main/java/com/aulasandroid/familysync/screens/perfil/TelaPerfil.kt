@@ -145,7 +145,7 @@ fun TelaPerfil(modifier: Modifier = Modifier) {
                         }
                     )
 
-                    AddButton()
+                    AddButton(52.dp)
                 }
 
                 Row(
