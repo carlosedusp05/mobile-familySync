@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.Logo
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.Outilined
@@ -23,12 +24,12 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun TelaEsqueceuSenha(modifier: Modifier = Modifier) {
+fun TelaEsqueceuSenha(navController: NavController) {
     Column(
-        modifier = modifier .fillMaxSize() .background(branco)
+        modifier = Modifier .fillMaxSize() .background(branco)
     ) {
 
-        RowBack()
+        RowBack(navController)
 
         Column(
             modifier = Modifier
@@ -43,7 +44,7 @@ fun TelaEsqueceuSenha(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Logo(modifier = Modifier, 110.dp, 250.dp)
+                Logo(modifier = Modifier, 110.dp, 250.dp, navController)
             }
 
             Column(
@@ -87,7 +88,8 @@ fun TelaEsqueceuSenha(modifier: Modifier = Modifier) {
                     text = "Trocar Senha",
                     width = 200.dp,
                     height = 55.dp,
-                    fontSize = 22
+                    fontSize = 22,
+                    navController
                 )
 
                 TextButton(

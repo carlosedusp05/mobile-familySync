@@ -20,8 +20,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
+import okhttp3.Route
 
 @Composable
 fun CardFunctionality(
@@ -29,6 +31,8 @@ fun CardFunctionality(
     width: Dp,
     nome: String,
     iconId: Int,
+    navController: NavController,
+    route: String,
     sizeIcon: Dp = 55.dp
 ) {
     Card(
@@ -39,7 +43,7 @@ fun CardFunctionality(
             containerColor = creme
         ),
         elevation = CardDefaults.cardElevation(4.dp),
-        onClick = {/* TODO */}
+        onClick = {navController.navigate(route)}
     ) {
         Column(
             modifier = Modifier

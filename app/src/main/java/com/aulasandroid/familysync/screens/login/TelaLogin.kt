@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.Logo
 import com.aulasandroid.familysync.components.OrangeButton
@@ -24,9 +24,10 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun TelaLoginScreen(modifier: Modifier = Modifier) {
+fun TelaLogin(
+    navController: NavController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(branco),
         verticalArrangement = Arrangement.SpaceEvenly
@@ -38,7 +39,7 @@ fun TelaLoginScreen(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ){
-            Logo(modifier = Modifier, 110.dp, 250.dp)
+            Logo(modifier = Modifier, 110.dp, 250.dp,navController)
         }
 
         Column(
@@ -75,11 +76,12 @@ fun TelaLoginScreen(modifier: Modifier = Modifier) {
                 text = "Entrar",
                 width = 200.dp,
                 height = 55.dp,
-                fontSize = 24
+                fontSize = 24,
+                navController
             )
 
             TextButton(
-                onClick = {/* TODO */}
+                onClick = {navController.navigate("esqueceu_senha")}
             ) {
                 Text(
                     text = "Esqueceu a senha?",
@@ -93,7 +95,8 @@ fun TelaLoginScreen(modifier: Modifier = Modifier) {
                 text = "Cadastrar",
                 width = 200.dp,
                 height = 55.dp,
-                fontSize = 24
+                fontSize = 24,
+                navController
             )
         }
     }

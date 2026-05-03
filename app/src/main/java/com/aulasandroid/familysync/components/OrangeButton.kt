@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
@@ -22,10 +23,13 @@ fun OrangeButton(
     text: String,
     width: Dp,
     height: Dp,
-    fontSize: Int
+    fontSize: Int,
+    navController: NavController
 ) {
     Button(
-        onClick = {/* TODO */},
+        onClick = {
+            navController.navigate("home")
+        },
         colors = ButtonDefaults.buttonColors(
             containerColor = laranja
         ),

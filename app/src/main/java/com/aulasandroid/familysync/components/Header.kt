@@ -20,12 +20,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun Header() {
+fun Header(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,7 +47,7 @@ fun Header() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                Logo(Modifier,90.dp, 210.dp)
+                Logo(Modifier,90.dp, 210.dp, navController)
             }
 
             Row(
@@ -56,10 +57,12 @@ fun Header() {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Profile(65.dp)
+                ProfileHeader(65.dp, navController)
 
                 Button(
-                    onClick = {/* TODO */},
+                    onClick = {
+                        navController.navigate("notificacao")
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = laranja
                     ),

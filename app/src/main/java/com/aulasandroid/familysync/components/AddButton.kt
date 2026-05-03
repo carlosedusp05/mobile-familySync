@@ -13,16 +13,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
 fun AddButton(
-    size: Dp
+    size: Dp,
+    navController: NavController
 ) {
     Button(
-        onClick = {/* TODO */},
+        onClick = {
+            navController.navigate("cadastro_familia")
+        },
         colors = ButtonDefaults.buttonColors(
             containerColor = laranja
         ),

@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Notification
 import com.aulasandroid.familysync.components.RowBack
@@ -24,13 +25,13 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun TelaNotificacao(modifier: Modifier = Modifier) {
+fun TelaNotificacao(navController: NavController) {
     Column(
-        modifier = modifier.fillMaxSize().background(branco),
+        modifier = Modifier.fillMaxSize().background(branco),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        RowBack()
+        RowBack(navController)
 
         Column(
             modifier = Modifier
@@ -67,6 +68,6 @@ fun TelaNotificacao(modifier: Modifier = Modifier) {
             }
         }
 
-        Footer()
+        Footer(navController, "")
     }
 }

@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.AddButton
 import com.aulasandroid.familysync.components.Family
 import com.aulasandroid.familysync.components.Footer
@@ -37,14 +38,14 @@ import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaGerenciarFamilia(modifier: Modifier = Modifier) {
+fun TelaGerenciarFamilia(navController: NavController) {
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
             .background(branco),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        Header()
+        Header(navController)
 
         Column(
             modifier = Modifier
@@ -122,7 +123,7 @@ fun TelaGerenciarFamilia(modifier: Modifier = Modifier) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            AddButton(35.dp)
+                            AddButton(35.dp, navController)
                         }
                     }
 
@@ -154,7 +155,7 @@ fun TelaGerenciarFamilia(modifier: Modifier = Modifier) {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     TextButton(
-                        onClick = {/* TODO */}
+                        onClick = {navController.navigate("alterar_endereco")}
                     ) {
                         Text(
                             text = "Alterar endereço?",
@@ -170,12 +171,13 @@ fun TelaGerenciarFamilia(modifier: Modifier = Modifier) {
                         "Salvar",
                         180.dp,
                         50.dp,
-                        21
+                        21,
+                        navController
                     )
                 }
             }
         }
 
-        Footer()
+        Footer(navController, "gerenciar")
     }
 }

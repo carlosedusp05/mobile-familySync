@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.HeaderDespesas
@@ -40,9 +41,9 @@ import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaAdicionarDespesas(modifier: Modifier = Modifier) {
+fun TelaAdicionarDespesas(navController: NavController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(branco),
         verticalArrangement = Arrangement.SpaceBetween
@@ -207,6 +208,6 @@ fun TelaAdicionarDespesas(modifier: Modifier = Modifier) {
             }
         }
 
-        Footer()
+        Footer(navController, "despesa")
     }
 }

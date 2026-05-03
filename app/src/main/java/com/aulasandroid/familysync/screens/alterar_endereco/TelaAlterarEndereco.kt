@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.Outilined
@@ -25,12 +26,12 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun TelaAlterarEndereco(modifier: Modifier = Modifier) {
+fun TelaAlterarEndereco(navController: NavController) {
     Column(
-        modifier = modifier.fillMaxSize().background(branco)
+        modifier = Modifier.fillMaxSize().background(branco)
     ) {
 
-        RowBack()
+        RowBack(navController)
 
         Column(
             modifier = Modifier
@@ -201,7 +202,8 @@ fun TelaAlterarEndereco(modifier: Modifier = Modifier) {
                         text = "Cancelar",
                         width = 150.dp,
                         height = 55.dp,
-                        fontSize = 22
+                        fontSize = 22,
+                        navController
                     )
 
                     OrangeButton(
@@ -209,7 +211,8 @@ fun TelaAlterarEndereco(modifier: Modifier = Modifier) {
                         text = "Confirmar",
                         width = 150.dp,
                         height = 55.dp,
-                        fontSize = 21
+                        fontSize = 21,
+                        navController
                     )
                 }
             }

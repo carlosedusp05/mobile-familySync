@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Header
 import com.aulasandroid.familysync.components.Information
@@ -36,14 +37,14 @@ import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
 @Composable
-fun TelaInformacoesFamiliar(modifier: Modifier = Modifier) {
+fun TelaInformacoesFamiliar(navController: NavController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(branco),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Header()
+        Header(navController)
 
         Column(
             modifier = Modifier
@@ -123,11 +124,12 @@ fun TelaInformacoesFamiliar(modifier: Modifier = Modifier) {
                     "Criar uma informação",
                     280.dp,
                     70.dp,
-                    21
+                    21,
+                    navController
                 )
             }
         }
 
-        Footer()
+        Footer(navController, "informacao")
     }
 }

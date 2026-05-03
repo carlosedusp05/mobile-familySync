@@ -13,17 +13,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 
 @Composable
 fun Logo(
     modifier: Modifier = Modifier,
     heigth: Dp,
-    width: Dp
+    width: Dp,
+    navController: NavController
 ) {
     IconButton(
         modifier = modifier .height(heigth) .width(width),
-        onClick = {/* TODO */}
+        onClick = {
+            navController.navigate("home")
+        }
     )  {
         Image(
             painter = painterResource(R.drawable.logo),

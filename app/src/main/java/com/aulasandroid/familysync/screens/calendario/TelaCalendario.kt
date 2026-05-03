@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.Event
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Header
@@ -29,14 +30,14 @@ import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
 @Composable
-fun TelaCalendario(modifier: Modifier = Modifier) {
+fun TelaCalendario(navController: NavController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(branco),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Header()
+        Header(navController)
 
         Column(
             modifier = Modifier
@@ -104,6 +105,6 @@ fun TelaCalendario(modifier: Modifier = Modifier) {
             }
         }
 
-        Footer()
+        Footer(navController, "calendario")
     }
 }

@@ -21,13 +21,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
 @Composable
-fun Footer() {
+fun Footer(
+    navController: NavController,
+    abaAtiva: String
+) {
+    var corFundoCalendario = laranjaEscuro
+    var corFundoLista = laranjaEscuro
+    var corFundoDespesa = laranjaEscuro
+    var corFundoGerenciar = laranjaEscuro
+    var corFundoInformacao = laranjaEscuro
+
+    when(abaAtiva) {
+        "calendario"    -> corFundoCalendario = laranja
+        "lista"         -> corFundoLista = laranja
+        "despesa"       -> corFundoDespesa = laranja
+        "gerenciar"     -> corFundoGerenciar = laranja
+        "informacao"    -> corFundoInformacao = laranja
+        else            -> laranjaEscuro
+    }
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -41,13 +60,16 @@ fun Footer() {
         Row(
             modifier = Modifier
                 .size(60.dp)
-                .clip(RoundedCornerShape(10.dp)),
+                .clip(RoundedCornerShape(10.dp))
+                .background(corFundoLista),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             IconButton(
                 modifier = Modifier .size(55.dp),
-                onClick = {/* TODO */}
+                onClick = {
+                    navController.navigate("lista")
+                }
             )  {
                 Image(
                     painter = painterResource(R.drawable.list),
@@ -61,13 +83,16 @@ fun Footer() {
         Row(
             modifier = Modifier
                 .size(60.dp)
-                .clip(RoundedCornerShape(10.dp)),
+                .clip(RoundedCornerShape(10.dp))
+                .background(corFundoCalendario),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             IconButton(
                 modifier = Modifier .size(55.dp),
-                onClick = {/* TODO */}
+                onClick = {
+                    navController.navigate("calendario")
+                }
             )  {
                 Image(
                     painter = painterResource(R.drawable.calendar),
@@ -81,13 +106,16 @@ fun Footer() {
         Row(
             modifier = Modifier
                 .size(60.dp)
-                .clip(RoundedCornerShape(10.dp)),
+                .clip(RoundedCornerShape(10.dp))
+                .background(corFundoGerenciar),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             IconButton(
                 modifier = Modifier .size(55.dp),
-                onClick = {/* TODO */}
+                onClick = {
+                    navController.navigate("gerenciador_familiar")
+                }
             )  {
                 Image(
                     painter = painterResource(R.drawable.settings),
@@ -101,14 +129,17 @@ fun Footer() {
         Row(
             modifier = Modifier
                 .size(60.dp)
-                .clip(RoundedCornerShape(10.dp)),
+                .clip(RoundedCornerShape(10.dp))
+                .background(corFundoDespesa),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
 
         ) {
             IconButton(
                 modifier = Modifier .size(55.dp),
-                onClick = {/* TODO */}
+                onClick = {
+                    navController.navigate("despesas")
+                }
             )  {
                 Image(
                     painter = painterResource(R.drawable.money_pig),
@@ -122,13 +153,16 @@ fun Footer() {
         Row(
             modifier = Modifier
                 .size(60.dp)
-                .clip(RoundedCornerShape(10.dp)),
+                .clip(RoundedCornerShape(10.dp))
+                .background(corFundoInformacao),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
             IconButton(
                 modifier = Modifier .size(55.dp),
-                onClick = {/* TODO */}
+                onClick = {
+                    navController.navigate("informacoes_familiar")
+                }
             )  {
                 Image(
                     painter = painterResource(R.drawable.info),

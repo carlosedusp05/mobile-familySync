@@ -1,4 +1,4 @@
-package com.aulasandroid.familysync.screens.home_sem_familia
+package com.aulasandroid.familysync.screens.despesas
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -17,23 +17,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Header
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaHomeSemFamilia(navController: NavController) {
+fun TelaDespesas(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(branco),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Header(navController)
+
         Column(
             modifier = Modifier
-                .fillMaxHeight(0.9f)
+                .fillMaxHeight(0.85f)
                 .width(250.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -50,12 +53,14 @@ fun TelaHomeSemFamilia(navController: NavController) {
 
             OrangeButton(
                 modifier = Modifier,
-                text = "Criar uma família!",
+                text = "Despesas!",
                 width = 245.dp,
                 height = 55.dp,
                 fontSize = 21,
                 navController
             )
         }
+
+        Footer(navController, "despesa")
     }
 }

@@ -9,14 +9,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import com.aulasandroid.familysync.ui.theme.FamilySyncTheme
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.aulasandroid.familysync.screens.adicionar_dispesas.TelaAdicionarDespesas
 import com.aulasandroid.familysync.screens.alterar_endereco.TelaAlterarEndereco
 import com.aulasandroid.familysync.screens.cadastro_familia.TelaCadastroFamilia
+import com.aulasandroid.familysync.screens.cadastro_usuario.TelaCadastroUsuario
 import com.aulasandroid.familysync.screens.calendario.TelaCalendario
+import com.aulasandroid.familysync.screens.despesas.TelaDespesas
 import com.aulasandroid.familysync.screens.editar_despesas.TelaEditarDespesas
+import com.aulasandroid.familysync.screens.esqueceu_senha.TelaEsqueceuSenha
 import com.aulasandroid.familysync.screens.gerenciador_familiar.TelaGerenciarFamilia
+import com.aulasandroid.familysync.screens.home.TelaHome
+import com.aulasandroid.familysync.screens.home_sem_familia.TelaHomeSemFamilia
 import com.aulasandroid.familysync.screens.informacoes_familiar.TelaInformacoesFamiliar
-import com.aulasandroid.familysync.screens.login.TelaLoginScreen
+import com.aulasandroid.familysync.screens.listas.TelaLista
+import com.aulasandroid.familysync.screens.login.TelaLogin
+import com.aulasandroid.familysync.screens.notificacao.TelaNotificacao
+import com.aulasandroid.familysync.screens.perfil.TelaPerfil
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +35,45 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FamilySyncTheme {
+
+                val navController = rememberNavController()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TelaCalendario(modifier = Modifier .padding(innerPadding))
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = "login",
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        // Telas de Acesso e Cadastro
+                        composable(route = "login") { TelaLogin(navController) }
+                        composable(route = "cadastro_usuario") { TelaCadastroUsuario(navController) }
+                        composable(route = "esqueceu_senha") { TelaEsqueceuSenha(navController) }
+
+                        // Telas Principais (Home)
+                        composable(route = "home") { TelaHome(navController) }
+                        composable(route = "home_sem_familia") { TelaHomeSemFamilia(navController) }
+
+                        // Gerenciamento de Família
+                        composable(route = "cadastro_familia") { TelaCadastroFamilia(navController) }
+                        composable(route = "gerenciador_familiar") { TelaGerenciarFamilia(navController) }
+                        composable(route = "informacoes_familiar") { TelaInformacoesFamiliar(navController) }
+                        composable(route = "alterar_endereco") { TelaAlterarEndereco(navController) }
+
+
+                        // Despesas
+                        composable(route = "despesas") { TelaDespesas(navController) }
+                        composable(route = "adicionar_despesas") { TelaAdicionarDespesas(navController) }
+                        composable(route = "editar_despesas") { TelaEditarDespesas(navController) }
+
+                        // Lista
+                        composable(route = "lista") { TelaLista(navController) }
+
+                        // Outros Recursos
+                        composable(route = "calendario") { TelaCalendario(navController) }
+                        composable(route = "notificacao") { TelaNotificacao(navController) }
+                        composable(route = "perfil") { TelaPerfil(navController) }
+                    }
                 }
             }
         }

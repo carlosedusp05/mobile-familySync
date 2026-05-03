@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CardFunctionality
 import com.aulasandroid.familysync.components.Header
@@ -32,12 +33,12 @@ import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaHome(modifier: Modifier = Modifier) {
+fun TelaHome(navController: NavController) {
     Column(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
     ) {
-        Header()
+        Header(navController)
         Row(
             modifier = Modifier
                 .height(100.dp)
@@ -71,14 +72,18 @@ fun TelaHome(modifier: Modifier = Modifier) {
                     140.dp,
                     150.dp,
                     "Lista compartilhada",
-                    R.drawable.list
+                    R.drawable.list,
+                    navController,
+                    "lista"
                 )
 
                 CardFunctionality(
                     140.dp,
                     150.dp,
                     "Calendário de eventos",
-                    R.drawable.calendar
+                    R.drawable.calendar,
+                    navController,
+                    "calendario"
                 )
             }
             Row(
@@ -92,7 +97,9 @@ fun TelaHome(modifier: Modifier = Modifier) {
                     140.dp,
                     150.dp,
                     "Gerenciamento financeiro",
-                    R.drawable.money_pig
+                    R.drawable.money_pig,
+                    navController,
+                    "despesas"
                 )
 
                 CardFunctionality(
@@ -100,6 +107,8 @@ fun TelaHome(modifier: Modifier = Modifier) {
                     150.dp,
                     "Informações da família",
                     R.drawable.info,
+                    navController,
+                    "informacoes_familiar",
                     70.dp
                 )
             }
@@ -116,7 +125,8 @@ fun TelaHome(modifier: Modifier = Modifier) {
                     colors = CardDefaults.cardColors(
                         containerColor = creme
                     ),
-                    elevation = CardDefaults.cardElevation(4.dp)
+                    elevation = CardDefaults.cardElevation(4.dp),
+                    onClick = {navController.navigate("gerenciador_familiar")}
                 ) {
                     Column(
                         modifier = Modifier
