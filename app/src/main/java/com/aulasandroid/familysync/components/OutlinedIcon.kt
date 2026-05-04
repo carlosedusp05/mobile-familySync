@@ -47,7 +47,6 @@ fun OutilinedIcon(
 
         trailingIcon = {
             if (visivel) {
-
                 Icon(
                     modifier = Modifier
                         .size(30.dp)
