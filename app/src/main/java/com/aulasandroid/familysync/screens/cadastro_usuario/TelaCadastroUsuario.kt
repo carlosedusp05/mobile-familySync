@@ -119,7 +119,8 @@ fun TelaCadastroUsuario(navController: NavController) {
                     width = 150.dp,
                     height = 55.dp,
                     fontSize = 22,
-                    navController
+                    navController,
+                    "cadastro_usuario"
                 )
 
                 OrangeButton(
@@ -128,7 +129,8 @@ fun TelaCadastroUsuario(navController: NavController) {
                     width = 150.dp,
                     height = 55.dp,
                     fontSize = 21,
-                    navController
+                    navController,
+                    "cadastro_usuario"
                 )
                 }
             }

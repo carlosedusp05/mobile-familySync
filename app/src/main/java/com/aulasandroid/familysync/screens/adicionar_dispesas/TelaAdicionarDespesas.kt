@@ -67,7 +67,7 @@ fun TelaAdicionarDespesas(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
-                    onClick = {/* TODO */},
+                    onClick = {navController.popBackStack()},
                     colors = ButtonDefaults.buttonColors(
                         containerColor = laranja
                     ),
@@ -191,7 +191,7 @@ fun TelaAdicionarDespesas(navController: NavController) {
             ) {
 
                 Button(
-                    onClick = {/* TODO */},
+                    onClick = {navController.navigate("despesas")},
                     colors = ButtonDefaults.buttonColors(
                         containerColor = laranjaEscuro
                     ),

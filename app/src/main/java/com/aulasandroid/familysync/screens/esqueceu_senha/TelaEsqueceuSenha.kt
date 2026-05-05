@@ -89,7 +89,8 @@ fun TelaEsqueceuSenha(navController: NavController) {
                     width = 200.dp,
                     height = 55.dp,
                     fontSize = 22,
-                    navController
+                    navController,
+                    "esqueceu_senha"
                 )
 
                 TextButton(

@@ -1,6 +1,5 @@
 package com.aulasandroid.familysync.components
 
-import android.widget.Button
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.ui.theme.creme
@@ -25,11 +23,18 @@ fun CremeButton(
     width: Dp,
     height: Dp,
     fontSize: Int,
-    navController: NavController
+    navController: NavController,
+    abaAtiva: String
 ) {
     Button(
         onClick = {
-            navController.navigate("cadastro_usuario")
+            when (abaAtiva) {
+                "login" -> navController.navigate("cadastro_usuario")
+                "alterar_endereco" -> navController.navigate("gerenciador_familiar")
+                "cadastro_usuario" -> navController.navigate("login")
+                "cadastro_familia" -> navController.popBackStack()
+                else -> navController.navigate("perfil")
+            }
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = creme

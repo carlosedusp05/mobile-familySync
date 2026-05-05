@@ -1,6 +1,5 @@
 package com.aulasandroid.familysync.components
 
-import android.widget.Button
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.ui.theme.laranja
@@ -24,11 +22,26 @@ fun OrangeButton(
     width: Dp,
     height: Dp,
     fontSize: Int,
-    navController: NavController
+    navController: NavController,
+    abaAtiva: String
 ) {
     Button(
         onClick = {
-            navController.navigate("home")
+            when(abaAtiva) {
+                "login"                 -> navController.navigate("home")
+                "esqueceu_senha"        -> navController.navigate("esqueceu_senha")
+                "cadastro_usuario"      -> navController.navigate("cadastro_usuario")
+                "perfil"                -> navController.navigate("perfil")
+                "cadastro_familia"      -> navController.navigate("cadastro_familia")
+                "home_sem_familia"      -> navController.navigate("cadastro_familia")
+                "adicionar_despesas"    -> navController.navigate("despesas")
+                "editar_despesas"       -> navController.navigate("despesas")
+                "alterar_endereco"      -> navController.navigate("gerenciador_familiar")
+                "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
+                "informacoes_familiar"  -> navController.navigate("informacoes_familiar")
+                "lista"                 -> navController.navigate("lista")
+                else                -> navController.navigate("home")
+            }
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = laranja

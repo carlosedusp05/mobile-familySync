@@ -203,7 +203,8 @@ fun TelaAlterarEndereco(navController: NavController) {
                         width = 150.dp,
                         height = 55.dp,
                         fontSize = 22,
-                        navController
+                        navController,
+                        "alterar_endereco"
                     )
 
                     OrangeButton(
@@ -212,7 +213,8 @@ fun TelaAlterarEndereco(navController: NavController) {
                         width = 150.dp,
                         height = 55.dp,
                         fontSize = 21,
-                        navController
+                        navController,
+                        "alterar_endereco"
                     )
                 }
             }

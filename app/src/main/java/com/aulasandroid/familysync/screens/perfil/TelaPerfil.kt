@@ -61,7 +61,7 @@ fun TelaPerfil(navController: NavController) {
             LeftArrow(navController)
 
             IconButton(
-                onClick = { /* TODO */ },
+                onClick = { navController.navigate("login") },
                 modifier = Modifier.size(43.dp)
             ) {
                 Icon(
@@ -174,7 +174,7 @@ fun TelaPerfil(navController: NavController) {
                         }
                     )
 
-                    AddButton(52.dp, navController)
+                    AddButton(52.dp, navController, "perfil")
                 }
 
                 Row(
@@ -190,7 +190,8 @@ fun TelaPerfil(navController: NavController) {
                         width = 150.dp,
                         height = 55.dp,
                         fontSize = 22,
-                        navController
+                        navController,
+                        "perfil"
                     )
 
                     OrangeButton(
@@ -199,7 +200,8 @@ fun TelaPerfil(navController: NavController) {
                         width = 150.dp,
                         height = 55.dp,
                         fontSize = 21,
-                        navController
+                        navController,
+                        "perfil"
                     )
                 }
             }

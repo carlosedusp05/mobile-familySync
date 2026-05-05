@@ -125,7 +125,8 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                     280.dp,
                     70.dp,
                     21,
-                    navController
+                    navController,
+                    "informacoes_familiar"
                 )
             }
         }

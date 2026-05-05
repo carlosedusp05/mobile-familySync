@@ -21,6 +21,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,16 +34,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
+import com.aulasandroid.familysync.components.AddButton
 import com.aulasandroid.familysync.components.Footer
+import com.aulasandroid.familysync.components.Graphic
 import com.aulasandroid.familysync.components.LeftArrow
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
+import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
@@ -51,6 +56,11 @@ fun TelaDespesas(navController: NavController) {
     var visivel by remember {
         mutableStateOf(false)
     }
+
+    var periodoSelecionado by remember {
+        mutableStateOf("Dia")
+    }
+
 
     Column(
         modifier = Modifier
@@ -176,12 +186,79 @@ fun TelaDespesas(navController: NavController) {
                 ),
                 elevation = CardDefaults.cardElevation(4.dp),
             ) {
-                Text(
-                    text = "kdks",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 21.sp,
-                    color = Color.Black
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(45.dp)
+                        .padding(horizontal = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        val periodos = listOf("Dia", "Semana", "Mês", "Ano")
+
+                        periodos.forEach { periodo ->
+                            val estaSelecionado = periodoSelecionado == periodo
+
+                            TextButton(
+                                onClick = { periodoSelecionado = periodo }
+                            ) {
+                                Text(
+                                    text = periodo,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 21.sp,
+                                    color = laranjaEscuro,
+                                    textDecoration = if (estaSelecionado) TextDecoration.Underline else TextDecoration.None
+                                )
+                            }
+                        }
+                    }
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(35.dp)
+                        .padding(horizontal = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "1 mai - 30 mai",
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 21.sp,
+                        color = laranjaEscuro
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(245.dp)
+                        .padding(start = 60.dp, end = 10.dp),
+                    verticalAlignment = Alignment.Bottom,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .width(210.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        val valores = listOf(50f, 30f, 20f)
+                        val listaCores = listOf(laranja, laranjaEscuro, Color(0xFFFFCC80))
+
+                        Graphic(
+                            fatias = valores,
+                            cores = listaCores
+                        )
+                    }
+
+                    AddButton(45.dp, navController, "despesas")
+                }
             }
         }
         Footer(navController, "despesa")

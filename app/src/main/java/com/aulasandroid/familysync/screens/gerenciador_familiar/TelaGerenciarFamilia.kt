@@ -123,7 +123,7 @@ fun TelaGerenciarFamilia(navController: NavController) {
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            AddButton(35.dp, navController)
+                            AddButton(35.dp, navController, "gerenciador_familiar")
                         }
                     }
 
@@ -172,7 +172,8 @@ fun TelaGerenciarFamilia(navController: NavController) {
                         180.dp,
                         50.dp,
                         21,
-                        navController
+                        navController,
+                        "gerenciador_familiar"
                     )
                 }
             }

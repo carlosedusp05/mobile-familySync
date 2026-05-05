@@ -77,7 +77,8 @@ fun TelaLogin(
                 width = 200.dp,
                 height = 55.dp,
                 fontSize = 24,
-                navController
+                navController,
+                "login"
             )
 
             TextButton(
@@ -96,7 +97,8 @@ fun TelaLogin(
                 width = 200.dp,
                 height = 55.dp,
                 fontSize = 24,
-                navController
+                navController,
+                "login"
             )
         }
     }

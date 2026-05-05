@@ -21,11 +21,17 @@ import com.aulasandroid.familysync.ui.theme.laranja
 @Composable
 fun AddButton(
     size: Dp,
-    navController: NavController
+    navController: NavController,
+    abaAtiva: String
 ) {
     Button(
         onClick = {
-            navController.navigate("cadastro_familia")
+            when(abaAtiva) {
+                "despesas"              -> navController.navigate("adicionar_despesas")
+                "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
+                "perfil"                -> navController.navigate("cadastro_familia")
+                else                -> navController.navigate("home")
+            }
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = laranja

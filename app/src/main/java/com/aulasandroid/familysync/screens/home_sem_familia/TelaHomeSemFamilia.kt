@@ -54,7 +54,8 @@ fun TelaHomeSemFamilia(navController: NavController) {
                 width = 245.dp,
                 height = 55.dp,
                 fontSize = 21,
-                navController
+                navController,
+                "home_sem_familia"
             )
         }
     }
