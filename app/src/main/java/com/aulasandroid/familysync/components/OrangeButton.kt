@@ -23,24 +23,29 @@ fun OrangeButton(
     height: Dp,
     fontSize: Int,
     navController: NavController,
-    abaAtiva: String
+    abaAtiva: String,
+    onClick: (() -> Unit)? = null
 ) {
     Button(
         onClick = {
-            when(abaAtiva) {
-                "login"                 -> navController.navigate("home")
-                "esqueceu_senha"        -> navController.navigate("esqueceu_senha")
-                "cadastro_usuario"      -> navController.navigate("cadastro_usuario")
-                "perfil"                -> navController.navigate("perfil")
-                "cadastro_familia"      -> navController.navigate("cadastro_familia")
-                "home_sem_familia"      -> navController.navigate("cadastro_familia")
-                "adicionar_despesas"    -> navController.navigate("despesas")
-                "editar_despesas"       -> navController.navigate("despesas")
-                "alterar_endereco"      -> navController.navigate("gerenciador_familiar")
-                "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
-                "informacoes_familiar"  -> navController.navigate("informacoes_familiar")
-                "lista"                 -> navController.navigate("lista")
-                else                -> navController.navigate("home")
+            if (onClick != null) {
+                onClick()
+            } else {
+                when(abaAtiva) {
+                    "login"                 -> navController.navigate("home")
+                    "esqueceu_senha"        -> navController.navigate("esqueceu_senha")
+                    "cadastro_usuario"      -> navController.navigate("cadastro_usuario")
+                    "perfil"                -> navController.navigate("perfil")
+                    "cadastro_familia"      -> navController.navigate("cadastro_familia")
+                    "home_sem_familia"      -> navController.navigate("cadastro_familia")
+                    "adicionar_despesas"    -> navController.navigate("despesas")
+                    "editar_despesas"       -> navController.navigate("despesas")
+                    "alterar_endereco"      -> navController.navigate("gerenciador_familiar")
+                    "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
+                    "informacoes_familiar"  -> navController.navigate("informacoes_familiar")
+                    "lista"                 -> navController.navigate("lista")
+                    else                -> navController.navigate("home")
+                }
             }
         },
         colors = ButtonDefaults.buttonColors(

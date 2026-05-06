@@ -1,25 +1,33 @@
 package com.aulasandroid.familysync.screens.despesas
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,7 +38,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
@@ -40,15 +51,20 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.AddButton
+import com.aulasandroid.familysync.components.Expences
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Graphic
 import com.aulasandroid.familysync.components.LeftArrow
+import com.aulasandroid.familysync.components.Notification
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
+import com.aulasandroid.familysync.ui.theme.jasmin
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
+import com.aulasandroid.familysync.ui.theme.vermelho
+import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
 fun TelaDespesas(navController: NavController) {
@@ -71,8 +87,7 @@ fun TelaDespesas(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.9f)
-                .background(Color.Green),
+                .fillMaxHeight(0.9f),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
@@ -248,8 +263,10 @@ fun TelaDespesas(navController: NavController) {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        val valores = listOf(50f, 30f, 20f)
-                        val listaCores = listOf(laranja, laranjaEscuro, Color(0xFFFFCC80))
+                        val valores = listOf(20f, 35f, 5f, 10f, 10f, 20F)
+                        val listaCores = listOf(laranja,
+                            Color.Blue, laranjaEscuro, Color(0xFFFFCC80), marrom, vermelhoEscuro
+                        )
 
                         Graphic(
                             fatias = valores,
@@ -259,6 +276,95 @@ fun TelaDespesas(navController: NavController) {
 
                     AddButton(45.dp, navController, "despesas")
                 }
+            }
+
+            Row(
+                modifier = Modifier
+                    .height(50.dp)
+                    .width(350.dp)
+                    .clip(shape = RoundedCornerShape(15.dp))
+                    .background(laranjaEscuro),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(50.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.coin),
+                        contentDescription = "seta-de-voltar",
+                        tint = branco,
+                        modifier = Modifier .size(40.dp)
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(80.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Renda",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = branco
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(50.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "60%",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = branco
+                    )
+                }
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(100.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = if (visivel) "R$ 5000" else "R$ *****",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp,
+                        color = branco
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier .height(20.dp))
+
+            Column(
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(200.dp)
+                    .verticalScroll(rememberScrollState())
+                    .imePadding()
+                    .padding(bottom = 15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                Expences(navController, "Mercado", laranja)
+                    Expences(navController, "Comida", Color.Blue)
+                Expences(navController, "Compras", laranjaEscuro)
+                Expences(navController, "passeio", Color(0xFFFFCC80))
+                Expences(navController, "escola", marrom)
+                Expences(navController, "festa", vermelhoEscuro)
             }
         }
         Footer(navController, "despesa")

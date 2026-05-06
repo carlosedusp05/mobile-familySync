@@ -67,7 +67,7 @@ fun TelaEditarDespesas(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
-                    onClick = {/* TODO */},
+                    onClick = {navController.popBackStack()},
                     colors = ButtonDefaults.buttonColors(
                         containerColor = laranja
                     ),
