@@ -15,18 +15,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode.Companion.Color
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.laranja
+import com.aulasandroid.familysync.ui.theme.vermelho
+import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
 fun OutilinedIcon(
     modifier: Modifier = Modifier,
     placeHolder: String,
     width: Dp,
-    height: Dp
+    height: Dp,
+    value: String,
+    onValueChange: (String) -> Unit,
+    isError: Boolean = false,
+    mensagemErro: String = ""
 ) {
 
     var visivel by remember {
@@ -35,15 +45,27 @@ fun OutilinedIcon(
 
     OutlinedTextField(
         modifier = modifier .width(width) .height(height),
-        value = "",
-        onValueChange = {/* TODO */},
+        isError = isError,
+        value = value,
+        onValueChange = onValueChange,
 
         shape = RoundedCornerShape(40),
+
+        visualTransformation = if (visivel) VisualTransformation.None else PasswordVisualTransformation(),
 
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = laranja,
             unfocusedBorderColor = laranja,
         ),
+
+        supportingText = {
+            if (isError) {
+                Text(
+                    text = mensagemErro,
+                    color = vermelhoEscuro
+                )
+            }
+        },
 
         trailingIcon = {
             if (visivel) {

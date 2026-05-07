@@ -12,22 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aulasandroid.familysync.screens.adicionar_dispesas.TelaAdicionarDespesas
-import com.aulasandroid.familysync.screens.alterar_endereco.TelaAlterarEndereco
-import com.aulasandroid.familysync.screens.cadastro_familia.TelaCadastroFamilia
-import com.aulasandroid.familysync.screens.cadastro_usuario.TelaCadastroUsuario
-import com.aulasandroid.familysync.screens.calendario.TelaCalendario
-import com.aulasandroid.familysync.screens.despesas.TelaDespesas
-import com.aulasandroid.familysync.screens.editar_despesas.TelaEditarDespesas
-import com.aulasandroid.familysync.screens.esqueceu_senha.TelaEsqueceuSenha
-import com.aulasandroid.familysync.screens.gerenciador_familiar.TelaGerenciarFamilia
-import com.aulasandroid.familysync.screens.home.TelaHome
-import com.aulasandroid.familysync.screens.home_sem_familia.TelaHomeSemFamilia
-import com.aulasandroid.familysync.screens.informacoes_familiar.TelaInformacoesFamiliar
-import com.aulasandroid.familysync.screens.listas.TelaLista
-import com.aulasandroid.familysync.screens.login.TelaLogin
-import com.aulasandroid.familysync.screens.notificacao.TelaNotificacao
-import com.aulasandroid.familysync.screens.perfil.TelaPerfil
+import com.aulasandroid.familysync.features.adicionar_dispesas.TelaAdicionarDespesas
+import com.aulasandroid.familysync.features.alterar_endereco.TelaAlterarEndereco
+import com.aulasandroid.familysync.features.cadastro_familia.TelaCadastroFamilia
+import com.aulasandroid.familysync.features.cadastro_usuario.TelaCadastroUsuario
+import com.aulasandroid.familysync.features.calendario.TelaCalendario
+import com.aulasandroid.familysync.features.despesas.TelaDespesas
+import com.aulasandroid.familysync.features.editar_despesas.TelaEditarDespesas
+import com.aulasandroid.familysync.features.esqueceu_senha.TelaEsqueceuSenha
+import com.aulasandroid.familysync.features.gerenciador_familiar.TelaGerenciarFamilia
+import com.aulasandroid.familysync.features.home.TelaHome
+import com.aulasandroid.familysync.features.home_sem_familia.TelaHomeSemFamilia
+import com.aulasandroid.familysync.features.informacoes_familiar.TelaInformacoesFamiliar
+import com.aulasandroid.familysync.features.listas.TelaLista
+import com.aulasandroid.familysync.features.login.TelaLogin
+import com.aulasandroid.familysync.features.notificacao.TelaNotificacao
+import com.aulasandroid.familysync.features.perfil.TelaPerfil
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

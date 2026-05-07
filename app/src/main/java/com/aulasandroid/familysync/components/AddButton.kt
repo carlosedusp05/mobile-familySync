@@ -22,15 +22,20 @@ import com.aulasandroid.familysync.ui.theme.laranja
 fun AddButton(
     size: Dp,
     navController: NavController,
-    abaAtiva: String
+    abaAtiva: String,
+    onClick: (() -> Unit)? = null
 ) {
     Button(
         onClick = {
-            when(abaAtiva) {
-                "despesas"              -> navController.navigate("adicionar_despesas")
-                "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
-                "perfil"                -> navController.navigate("cadastro_familia")
-                else                -> navController.navigate("home")
+            if (onClick != null) {
+                onClick()
+            } else {
+                when(abaAtiva) {
+                    "despesas"              -> navController.navigate("adicionar_despesas")
+                    "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
+                    "perfil"                -> navController.navigate("cadastro_familia")
+                    else                    -> navController.navigate("home")
+                }
             }
         },
         colors = ButtonDefaults.buttonColors(
