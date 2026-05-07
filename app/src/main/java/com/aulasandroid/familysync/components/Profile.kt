@@ -18,18 +18,21 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun Profile(size: Dp) {
+fun Profile(
+    size: Dp,
+    onClick: (() -> Unit)? = null
+) {
 
     Button(
         onClick = {/* TODO */},
+        modifier = Modifier .size(size),
+        shape = RoundedCornerShape(100),
+        contentPadding = PaddingValues(0.dp),
+        border = BorderStroke(2.dp, laranja),
         colors = ButtonDefaults.buttonColors(
             containerColor = branco,
 
-            ),
-        shape = RoundedCornerShape(100),
-        contentPadding = PaddingValues(0.dp),
-        modifier = Modifier .size(size),
-        border = BorderStroke(2.dp, laranja)
+            )
     ){
         Icon(
             painter = painterResource(R.drawable.user),

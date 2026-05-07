@@ -59,6 +59,9 @@ import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 @Composable
 fun TelaInformacoesFamiliar(navController: NavController) {
     var mostrarPopup by remember { mutableStateOf(false) }
+    var mostrarPopupEditar by remember { mutableStateOf(false) }
+
+    var estaSelecionado by remember { mutableStateOf("pessoa 0") }
 
     Column(
         modifier = Modifier
@@ -93,12 +96,42 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(30.dp)
             ) {
-                PersonInformation("pessoa 0")
-                PersonInformation("pessoa 1")
-                PersonInformation("pessoa 2")
-                PersonInformation("pessoa 3")
-                PersonInformation("pessoa 4")
-                PersonInformation("pessoa 5")
+                PersonInformation(
+                    "pessoa 0",
+                    (estaSelecionado == "pessoa 0"),
+                    {estaSelecionado = "pessoa 0"}
+                )
+
+                PersonInformation(
+                    "pessoa 1",
+                    (estaSelecionado == "pessoa 1"),
+                    {estaSelecionado = "pessoa 1"}
+                )
+
+                PersonInformation(
+                    "pessoa 2",
+                    (estaSelecionado == "pessoa 2"),
+                    {estaSelecionado = "pessoa 2"}
+                )
+
+                PersonInformation(
+                    "pessoa 3",
+                    (estaSelecionado == "pessoa 3"),
+                    {estaSelecionado = "pessoa 3"}
+                )
+
+                PersonInformation(
+                    "pessoa 4",
+                    (estaSelecionado == "pessoa 4"),
+                    {estaSelecionado = "pessoa 4"}
+                )
+
+                PersonInformation(
+                    "pessoa 5",
+                    (estaSelecionado == "pessoa 5"),
+                    {estaSelecionado = "pessoa 5"}
+                )
+
             }
 
             Column(
@@ -113,22 +146,37 @@ fun TelaInformacoesFamiliar(navController: NavController) {
             ) {
                 Information(
                     tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
+                    navController,
+                    {mostrarPopupEditar = true}
                 )
 
                 Information(
                     tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
+                    navController,
+                    {mostrarPopupEditar = true}
                 )
 
                 Information(
                     tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
+                    navController,
+                    {mostrarPopupEditar = true}
                 )
 
                 Information(
                     tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
+                    navController,
+                    {mostrarPopupEditar = true}
+                )
+
+                Information(
+                    tema = "Alergia",
+                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
+                    navController,
+                    {mostrarPopupEditar = true}
                 )
             }
 
@@ -172,19 +220,21 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                         OutlinedPopUp(
                             "Título",
                             150.dp,
-                            52.dp
+                            52.dp,
+                            ""
                         )
 
                         OutlinedPopUp(
                             "Descrição",
                             280.dp,
-                            150.dp
+                            150.dp,
+                            ""
                         )
 
                         Row(
                             modifier = Modifier
                                 .width(280.dp)
-                                .height(32.dp),
+                                .height(42.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -196,6 +246,56 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             OrangeButtonPopUp(
                                 "Criar",
                                 {mostrarPopup = false}
+                            )
+
+                        }
+                    }
+                }
+            }
+        }
+
+        if (mostrarPopupEditar) {
+            Dialog(onDismissRequest = { mostrarPopupEditar = false }) {
+                Card(
+                    modifier = Modifier
+                        .width(350.dp)
+                        .height(350.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                            .background(branco)
+                            .padding(30.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        OutlinedPopUp(
+                            "Título",
+                            150.dp,
+                            52.dp,
+                            "Alergia"
+                        )
+
+                        OutlinedPopUp(
+                            "Descrição",
+                            280.dp,
+                            150.dp,
+                            "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .width(280.dp)
+                                .height(42.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            CremeButtonPopUp(
+                                "Cancelar",
+                                {mostrarPopupEditar = false}
+                            )
+
+                            OrangeButtonPopUp(
+                                "Salvar",
+                                {mostrarPopupEditar = false}
                             )
 
                         }

@@ -19,11 +19,12 @@ import com.aulasandroid.familysync.ui.theme.laranja
 fun OutlinedPopUp(
     placeHolder: String,
     width: Dp,
-    height: Dp
+    height: Dp,
+    value: String
 ) {
     OutlinedTextField(
         modifier = Modifier .width(width) .height(height),
-        value = "",
+        value = value,
         onValueChange = {/* TODO */},
 
         shape = RoundedCornerShape(15.dp),

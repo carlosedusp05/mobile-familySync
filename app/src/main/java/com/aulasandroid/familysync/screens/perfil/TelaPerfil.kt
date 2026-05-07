@@ -16,12 +16,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,22 +35,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.AddButton
 import com.aulasandroid.familysync.components.CremeButton
+import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.LeftArrow
 import com.aulasandroid.familysync.components.OrangeButton
+import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.OutilinedIcon
+import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.Profile
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
+import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
 fun TelaPerfil(navController: NavController) {
+    var mostrarPopup by remember { mutableStateOf( false) }
+
     Column(
         modifier = Modifier.fillMaxSize().background(branco)
     ) {
@@ -61,7 +73,7 @@ fun TelaPerfil(navController: NavController) {
             LeftArrow(navController)
 
             IconButton(
-                onClick = { navController.navigate("login") },
+                onClick = { mostrarPopup = true },
                 modifier = Modifier.size(43.dp)
             ) {
                 Icon(
@@ -86,7 +98,7 @@ fun TelaPerfil(navController: NavController) {
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Profile(110.dp)
+                Profile(Modifier, 110.dp)
                 Text(
                     text = "Eu",
                     textAlign = TextAlign.Center,
@@ -203,6 +215,51 @@ fun TelaPerfil(navController: NavController) {
                         navController,
                         "perfil"
                     )
+                }
+            }
+        }
+
+        if (mostrarPopup) {
+            Dialog(onDismissRequest = { mostrarPopup = false }) {
+                Card(
+                    modifier = Modifier
+                        .width(350.dp)
+                        .height(350.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                            .background(branco)
+                            .padding(30.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            text = "Deseja memso sair da sua conta?",
+                            textAlign = TextAlign.Center,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = marrom
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .width(280.dp)
+                                .height(42.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            CremeButtonPopUp(
+                                "Cancelar",
+                                {mostrarPopup = false}
+                            )
+
+                            OrangeButtonPopUp(
+                                "Sair",
+                                {navController.navigate("login")}
+                            )
+
+                        }
+                    }
                 }
             }
         }
