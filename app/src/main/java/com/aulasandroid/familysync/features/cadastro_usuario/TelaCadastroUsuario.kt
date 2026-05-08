@@ -8,23 +8,21 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.Outilined
+import com.aulasandroid.familysync.components.OutilinedData
 import com.aulasandroid.familysync.components.OutilinedIcon
 import com.aulasandroid.familysync.components.Profile
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.features.cadastro_usuario.model.CadastroUsuarioViewModel
-import com.aulasandroid.familysync.features.login.model.LoginViewModel
+import com.aulasandroid.familysync.features.cadastro_usuario.ui.CpfVisualTransformation
 import com.aulasandroid.familysync.ui.theme.branco
 
 @Composable
@@ -64,7 +62,7 @@ fun TelaCadastroUsuario(
             ) {
                 Outilined(
                     modifier = Modifier,
-                    placeHolder = "Nome",
+                    placeHolder = "Nome completo",
                     width = 383.dp,
                     height = 75.dp,
                     viewModel.nome,
@@ -73,7 +71,7 @@ fun TelaCadastroUsuario(
                     mensagemErro = viewModel.nomeMensagem
                 )
 
-                Outilined(
+                OutilinedData(
                     modifier = Modifier,
                     placeHolder = "Data Nascimento",
                     width = 383.dp,
@@ -81,7 +79,8 @@ fun TelaCadastroUsuario(
                     viewModel.dataNascimento,
                     {viewModel.onDataNascimentoChange(it)},
                     isError = viewModel.dataNascimentoErro,
-                    mensagemErro = viewModel.dataNascimentoMensagem
+                    mensagemErro = viewModel.dataNascimentoMensagem,
+                    keyboardType = KeyboardType.Number
                 )
 
                 Outilined(
@@ -92,7 +91,10 @@ fun TelaCadastroUsuario(
                     viewModel.cpf,
                     {viewModel.onCpfChange(it)},
                     isError = viewModel.cpfErro,
-                    mensagemErro = viewModel.cpfMensagem
+                    mensagemErro = viewModel.cpfMensagem,
+                    CpfVisualTransformation(),
+                    keyboardType = KeyboardType.Number
+
                 )
 
                 Outilined(
@@ -103,7 +105,8 @@ fun TelaCadastroUsuario(
                     viewModel.email,
                     {viewModel.onEmailChange(it)},
                     isError = viewModel.emailErro,
-                    mensagemErro = viewModel.emailMensagem
+                    mensagemErro = viewModel.emailMensagem,
+                    keyboardType = KeyboardType.Email
                 )
 
                 OutilinedIcon(

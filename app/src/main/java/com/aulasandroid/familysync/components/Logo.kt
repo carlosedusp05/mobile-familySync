@@ -21,12 +21,13 @@ fun Logo(
     modifier: Modifier = Modifier,
     heigth: Dp,
     width: Dp,
-    navController: NavController
+    navController: NavController,
+    onClick: (() -> Unit)? = null
 ) {
     IconButton(
         modifier = modifier .height(heigth) .width(width),
         onClick = {
-            navController.navigate("home")
+            if (onClick != null)  onClick() else navController.navigate("home")
         }
     )  {
         Image(

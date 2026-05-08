@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -15,16 +17,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.laranja
-import com.aulasandroid.familysync.ui.theme.vermelho
 import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
@@ -36,8 +38,11 @@ fun OutilinedIcon(
     value: String,
     onValueChange: (String) -> Unit,
     isError: Boolean = false,
-    mensagemErro: String = ""
+    mensagemErro: String = "",
+    keyboardImeAction: ImeAction = ImeAction.Done
 ) {
+
+    val focusManager = LocalFocusManager.current
 
     var visivel by remember {
         mutableStateOf(false)
@@ -96,6 +101,24 @@ fun OutilinedIcon(
 
         placeholder = {
             Text(placeHolder)
-        }
+        },
+
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            imeAction = keyboardImeAction
+        ),
+
+        keyboardActions = KeyboardActions(
+            onDone = {
+                focusManager.clearFocus()
+            },
+            onNext = {
+                focusManager.clearFocus()
+
+            }
+        ),
+
+
+        singleLine = true
     )
 }

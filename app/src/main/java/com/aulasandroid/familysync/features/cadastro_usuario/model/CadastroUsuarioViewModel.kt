@@ -6,6 +6,8 @@ import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 
 class CadastroUsuarioViewModel : ViewModel() {
@@ -59,17 +61,19 @@ class CadastroUsuarioViewModel : ViewModel() {
         cpfMensagem = ""
     }
 
-    var dataNascimento by mutableStateOf("")
+    var dataNascimento by mutableStateOf(
+        TextFieldValue("")
+    )
     var dataNascimentoErro by mutableStateOf(false)
     var dataNascimentoMensagem by mutableStateOf("")
 
-    fun onDataNascimentoChange(novaData: String) {
+    fun onDataNascimentoChange(novaData: TextFieldValue) {
 
-        val numeros = novaData
+        val numeros = novaData.text
             .filter { it.isDigit() }
             .take(8)
 
-        dataNascimento = when {
+        val formatado = when {
 
             numeros.length <= 2 ->
                 numeros
@@ -84,18 +88,14 @@ class CadastroUsuarioViewModel : ViewModel() {
                         numeros.substring(4)
         }
 
+        dataNascimento = TextFieldValue(
+            text = formatado,
+
+            selection = TextRange(formatado.length)
+        )
+
         dataNascimentoErro = false
         dataNascimentoMensagem = ""
-    }
-
-    var confirmarSenha by mutableStateOf("")
-    var confirmarSenhaErro by mutableStateOf(false)
-    var confirmarSenhaMensagem by mutableStateOf("")
-
-    fun onConfirmarSenhaChange(novaSenha: String) {
-        confirmarSenha = novaSenha
-        confirmarSenhaErro = false
-        confirmarSenhaMensagem = ""
     }
 
     fun validarData(data: String): Boolean {
@@ -117,6 +117,15 @@ class CadastroUsuarioViewModel : ViewModel() {
         return true
     }
 
+    var confirmarSenha by mutableStateOf("")
+    var confirmarSenhaErro by mutableStateOf(false)
+    var confirmarSenhaMensagem by mutableStateOf("")
+
+    fun onConfirmarSenhaChange(novaSenha: String) {
+        confirmarSenha = novaSenha
+        confirmarSenhaErro = false
+        confirmarSenhaMensagem = ""
+    }
 
     fun validarDados(
         email: String,
@@ -152,7 +161,7 @@ class CadastroUsuarioViewModel : ViewModel() {
 
         val isCpfOk = cpf.length == 11
 
-        val isDataOk = validarData(dataNascimento)
+        val isDataOk = validarData(dataNascimento.text)
 
         val isConfirmarSenhaOk = confirmarSenha == senha
 
@@ -161,7 +170,7 @@ class CadastroUsuarioViewModel : ViewModel() {
             senha,
             nome,
             cpf,
-            dataNascimento
+            dataNascimento.text
         ) && isConfirmarSenhaOk
 
         if (dadosValidos){

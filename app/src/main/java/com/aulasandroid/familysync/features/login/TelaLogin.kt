@@ -12,6 +12,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -43,7 +44,12 @@ fun TelaLogin(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ){
-            Logo(modifier = Modifier, 110.dp, 250.dp,navController)
+            Logo(
+                modifier = Modifier,
+                110.dp,
+                250.dp,navController,
+                {}
+            )
         }
 
         Column(
@@ -61,7 +67,8 @@ fun TelaLogin(
                 viewModel.email,
                 {viewModel.email = it},
                 isError = viewModel.emailErro,
-                mensagemErro = viewModel.emailMensagem
+                mensagemErro = viewModel.emailMensagem,
+                keyboardType = KeyboardType.Email
 
             )
 
