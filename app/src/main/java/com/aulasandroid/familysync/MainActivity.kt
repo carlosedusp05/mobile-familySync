@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aulasandroid.familysync.features.adicionar_dispesas.TelaAdicionarDespesas
+import com.aulasandroid.familysync.features.adicionar_despesas.TelaAdicionarDespesas
 import com.aulasandroid.familysync.features.alterar_endereco.TelaAlterarEndereco
 import com.aulasandroid.familysync.features.cadastro_familia.TelaCadastroFamilia
 import com.aulasandroid.familysync.features.cadastro_usuario.TelaCadastroUsuario

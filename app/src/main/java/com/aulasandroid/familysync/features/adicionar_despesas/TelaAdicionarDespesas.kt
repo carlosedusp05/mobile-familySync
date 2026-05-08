@@ -1,4 +1,4 @@
-package com.aulasandroid.familysync.features.adicionar_dispesas
+package com.aulasandroid.familysync.features.adicionar_despesas
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

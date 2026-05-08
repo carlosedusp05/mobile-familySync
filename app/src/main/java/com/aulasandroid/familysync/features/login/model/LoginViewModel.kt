@@ -55,7 +55,7 @@ class LoginViewModel : ViewModel() {
             emailMensagem = if (!isEmailOk) "E-mail inválido" else ""
 
             senhaErro = !isSenhaOk
-            senhaMensagem = if (!isSenhaOk) "Mínimo 8 caracteres e 1 maiúscula" else ""
+            senhaMensagem = if (!isSenhaOk) "Mínimo 8 caracteres e 1 maiúscula e 1 carctere especial" else ""
         }
     }
 }

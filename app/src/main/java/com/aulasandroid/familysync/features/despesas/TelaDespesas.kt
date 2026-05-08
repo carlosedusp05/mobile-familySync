@@ -109,7 +109,7 @@ fun TelaDespesas(navController: NavController) {
                         Icon(
                             painter = painterResource(R.drawable.arrow),
                             contentDescription = "seta-de-voltar",
-                            tint = branco,
+                            tint = marrom,
                             modifier = Modifier .size(20.dp)
                         )
                     }
