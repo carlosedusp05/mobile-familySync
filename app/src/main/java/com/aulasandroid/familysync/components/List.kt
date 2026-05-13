@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.branco
+import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
 import com.aulasandroid.familysync.ui.theme.vermelho
@@ -61,7 +62,7 @@ fun List(
             .height(120.dp)
             .clickable(onClick = {navController.navigate("lista") },),
         colors = CardDefaults.cardColors(
-            containerColor = branco
+            containerColor = creme
         ),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {

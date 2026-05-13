@@ -20,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,15 +36,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CremeButton
+import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Footer
+import com.aulasandroid.familysync.components.Item
 import com.aulasandroid.familysync.components.ItemEdition
 import com.aulasandroid.familysync.components.OrangeButton
+import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.OutlinedComboBox
 import com.aulasandroid.familysync.components.OutlinedCreme
+import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
@@ -89,23 +95,32 @@ fun TelaEditarLista(navController: NavController) {
                 )
             }
 
-            Column (
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 60.dp),
-                verticalArrangement = Arrangement.SpaceBetween            ) {
-                Text(
-                    text = "Tema da Lista",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
-                )
+                    .height(80.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Tema da Lista",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = laranjaEscuro,
+                    )
+                }
 
                 Outilined(
                     modifier = Modifier,
                     placeHolder = "",
-                    width = 283.dp,
+                    width = 353.dp,
                     height = 75.dp,
                     "",
                     {}
@@ -115,20 +130,28 @@ fun TelaEditarLista(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 60.dp),
-                verticalArrangement = Arrangement.SpaceBetween
+                    .height(70.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Participantes",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Participantes",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = laranjaEscuro,
+                    )
+                }
 
                 OutlinedComboBox(
-                    283.dp,
-                    42.dp,
+                    353.dp,
+                    40.dp,
                     ""
                 )
             }
@@ -136,21 +159,29 @@ fun TelaEditarLista(navController: NavController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 60.dp),
-                verticalArrangement = Arrangement.SpaceBetween
+                    .height(80.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Nome do item da lista",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Nome do item",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = laranjaEscuro,
+                    )
+                }
 
                 Outilined(
                     modifier = Modifier,
                     placeHolder = "",
-                    width = 283.dp,
+                    width = 353.dp,
                     height = 75.dp,
                     "",
                     {}
@@ -233,10 +264,11 @@ fun TelaEditarLista(navController: NavController) {
                     .border(4.dp, marrom, RoundedCornerShape(15))
                     .background(creme)
                     .verticalScroll(rememberScrollState())
-                    .imePadding(),
+                    .imePadding()
+                    .padding(vertical = 15.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 ItemEdition(
                     navController,
                     "feijao",
@@ -293,7 +325,7 @@ fun TelaEditarLista(navController: NavController) {
                     height = 55.dp,
                     fontSize = 22,
                     navController,
-                    "editar-lista"
+                    ""
                 )
 
                 OrangeButton(
@@ -303,11 +335,12 @@ fun TelaEditarLista(navController: NavController) {
                     height = 55.dp,
                     fontSize = 21,
                     navController,
-                    "editar-lista"
+                    ""
                 )
             }
         }
 
         Footer(navController, "lista")
+
     }
 }

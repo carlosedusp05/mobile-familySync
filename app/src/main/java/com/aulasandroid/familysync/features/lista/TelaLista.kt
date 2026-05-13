@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CremeButton
@@ -45,6 +46,7 @@ import com.aulasandroid.familysync.components.Item
 import com.aulasandroid.familysync.components.List
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.RowBack
+import com.aulasandroid.familysync.features.lista.model.TelaListaViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
@@ -52,7 +54,10 @@ import com.aulasandroid.familysync.ui.theme.marrom
 import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
-fun TelaLista(navController: NavController) {
+fun TelaLista(
+    navController: NavController,
+    viewModel: TelaListaViewModel =  androidx.lifecycle.viewmodel.compose.viewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -113,7 +118,8 @@ fun TelaLista(navController: NavController) {
                     height = 33.dp,
                     fontSize = 14,
                     navController,
-                    "lista"
+                    "lista",
+                    {viewModel.selecionarTodos()}
                 )
 
                 IconButton(
@@ -141,89 +147,18 @@ fun TelaLista(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
-                Item(
-                    navController,
-                    "farinha",
-                    23.00,
-                    4
-                )
-
-                Item(
-                    navController,
-                    "suco",
-                    1.50,
-                    9
-                )
-
-                Item(
-                    navController,
-                    "Arroz 10Kg",
-                    73.00,
-                    1
-                )
-
-                Item(
-                    navController,
-                    "caldo de cana",
-                    13.00,
-                    2
-                )
-
-                Item(
-                    navController,
-                    "bola",
-                    42.50,
-                    1
-                )
-
-                Item(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                Item(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                Item(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                Item(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                Item(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                Item(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                Item(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
+                viewModel.listaProdutos.forEach { produto ->
+                    Item(
+                        navController = navController,
+                        nome = produto.nome,
+                        precoUnitario = produto.precoUnitario,
+                        quantidade = produto.quantidade,
+                        isChecked = produto.isChecked,
+                        onCheckChange = { novoValor ->
+                            viewModel.mudarCheckItem(produto.id, novoValor)
+                        }
+                    )
+                }
             }
         }
 

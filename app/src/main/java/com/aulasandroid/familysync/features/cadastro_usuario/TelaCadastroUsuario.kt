@@ -1,5 +1,8 @@
 package com.aulasandroid.familysync.features.cadastro_usuario
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,8 +32,14 @@ import com.aulasandroid.familysync.ui.theme.branco
 fun TelaCadastroUsuario(
     navController: NavController,
     viewModel: CadastroUsuarioViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
-
 ) {
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { viewModel.updateImageUri(it) }
+    }
+
     Column(
         modifier = Modifier .fillMaxSize() .background(branco)
     ) {
@@ -50,7 +59,13 @@ fun TelaCadastroUsuario(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Profile(110.dp)
+                Profile(
+                    110.dp,
+                    imageUri = viewModel.selectedImageUri,
+                    onClick = {
+                        galleryLauncher.launch("image/*")
+                    }
+                )
             }
 
             Column(

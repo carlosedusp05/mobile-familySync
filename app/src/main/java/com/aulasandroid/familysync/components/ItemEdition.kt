@@ -116,7 +116,7 @@ fun ItemEdition(
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.plus),
+                        painter = painterResource(R.drawable.less),
                         modifier = Modifier.size(15.dp),
                         contentDescription = "Adicionar",
                         colorFilter = ColorFilter.tint(Color.White)

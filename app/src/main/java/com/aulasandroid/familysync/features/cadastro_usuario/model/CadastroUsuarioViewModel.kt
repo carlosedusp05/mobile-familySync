@@ -1,6 +1,7 @@
 package com.aulasandroid.familysync.features.cadastro_usuario.model
 
 
+import android.net.Uri
 import android.util.Patterns
 
 import androidx.compose.runtime.getValue
@@ -194,5 +195,12 @@ class CadastroUsuarioViewModel : ViewModel() {
             confirmarSenhaErro = !isConfirmarSenhaOk
             confirmarSenhaMensagem = if (!isConfirmarSenhaOk) "As senhas não coincidem"  else ""
         }
+    }
+
+    var selectedImageUri by mutableStateOf<Uri?>(null)
+        private set
+
+    fun updateImageUri(uri: Uri) {
+        selectedImageUri = uri
     }
 }

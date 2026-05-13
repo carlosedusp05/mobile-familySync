@@ -36,7 +36,7 @@ fun PersonInformation(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Profile( 70.dp)
+        Profile( 70.dp, onClick)
 
         Text(
             text = nome,

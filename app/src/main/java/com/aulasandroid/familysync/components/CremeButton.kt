@@ -24,17 +24,23 @@ fun CremeButton(
     height: Dp,
     fontSize: Int,
     navController: NavController,
-    abaAtiva: String
+    abaAtiva: String,
+    onClick: (() -> Unit)? = null
 ) {
     Button(
         onClick = {
-            when (abaAtiva) {
-                "login" -> navController.navigate("cadastro_usuario")
-                "alterar_endereco" -> navController.navigate("gerenciador_familiar")
-                "cadastro_usuario" -> navController.navigate("login")
-                "cadastro_familia" -> navController.popBackStack()
-                "editar-lista"     -> navController.popBackStack()
-                else -> navController.navigate("perfil")
+            if (onClick != null) {
+                onClick()
+            } else {
+                when (abaAtiva) {
+                    "login" -> navController.navigate("cadastro_usuario")
+                    "alterar_endereco" -> navController.navigate("gerenciador_familiar")
+                    "cadastro_usuario" -> navController.navigate("login")
+                    "cadastro_familia" -> navController.popBackStack()
+                    "editar-lista" -> navController.popBackStack()
+                    "calendario"           -> navController.navigate("eventos")
+                    else -> navController.navigate("perfil")
+                }
             }
         },
         colors = ButtonDefaults.buttonColors(

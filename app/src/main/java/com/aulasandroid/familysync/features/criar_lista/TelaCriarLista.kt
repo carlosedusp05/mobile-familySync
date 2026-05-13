@@ -95,65 +95,90 @@ fun TelaCriarLista(navController: NavController) {
             Column (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 60.dp),
-                verticalArrangement = Arrangement.SpaceBetween            ) {
-                Text(
-                    text = "Tema da Lista",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
-                )
+                    .height(80.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Tema da Lista",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = laranjaEscuro,
+                    )
+                }
 
                 Outilined(
                     modifier = Modifier,
                     placeHolder = "",
-                    width = 283.dp,
+                    width = 353.dp,
                     height = 75.dp,
                     "",
                     {}
                 )
             }
 
-            Column(
+            Column (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 60.dp),
-                verticalArrangement = Arrangement.SpaceBetween
+                    .height(70.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Participantes",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Participantes",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = laranjaEscuro,
+                    )
+                }
 
                 OutlinedComboBox(
-                    283.dp,
-                    42.dp,
+                    353.dp,
+                    40.dp,
                     ""
                 )
             }
 
-            Column(
+            Column (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 60.dp),
-                verticalArrangement = Arrangement.SpaceBetween
+                    .height(80.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Nome do item da lista",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(25.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "Nome do item",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = laranjaEscuro,
+                    )
+                }
 
                 Outilined(
                     modifier = Modifier,
                     placeHolder = "",
-                    width = 283.dp,
+                    width = 353.dp,
                     height = 75.dp,
                     "",
                     {}
@@ -236,7 +261,8 @@ fun TelaCriarLista(navController: NavController) {
                     .border(4.dp, marrom, RoundedCornerShape(15))
                     .background(creme)
                     .verticalScroll(rememberScrollState())
-                    .imePadding(),
+                    .imePadding()
+                    .padding(vertical = 15.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){

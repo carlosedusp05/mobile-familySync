@@ -40,17 +40,12 @@ fun Item(
     navController: NavController,
     nome: String,
     precoUnitario: Double,
-    quantidade: Int
+    quantidade: Int,
+    isChecked: Boolean,
+    onCheckChange: (Boolean) -> Unit
 ) {
-    var isChecked by remember { mutableStateOf(false) }
-
-    fun onCheckChange(newValue: Boolean) {
-        isChecked = newValue
-    }
-
     val precoTotal = precoUnitario * quantidade
 
-    // O Card agora envolve a estrutura para dar a elevação de 4.dp
     Card(
         modifier = Modifier
             .width(350.dp)

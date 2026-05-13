@@ -8,29 +8,47 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import com.aulasandroid.familysync.components.Event
+import com.aulasandroid.familysync.components.CremeButton
+import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Header
+import com.aulasandroid.familysync.components.OrangeButton
+import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.OutlinedPopUp
+import com.aulasandroid.familysync.features.calendario.model.TelaCalendarioViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
+import com.aulasandroid.familysync.ui.theme.marrom
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaCalendario(navController: NavController) {
+fun TelaCalendario(
+    navController: NavController,
+    viewModel: TelaCalendarioViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    ) {
+    var mostrarPopup by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +60,7 @@ fun TelaCalendario(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.85f),
+                .fillMaxHeight(0.9f),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -59,52 +77,124 @@ fun TelaCalendario(navController: NavController) {
                     color = laranjaEscuro
                 )
             }
+
             Card(
                 modifier = Modifier
                     .padding(horizontal = 20.dp)
                     .fillMaxWidth()
-                    .height(300.dp),
+                    .height(390.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
 
             ) {
+                // Dentro dessa Column
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
                         .background(creme)
 
-                ) { }
+                ) {
+                    DatePicker(
+                        state = viewModel.datePickerState,
+                        showModeToggle = false,
+                        title = null,
+                        headline = null,
+                        colors = DatePickerDefaults.colors(
+                            navigationContentColor = marrom,
+                            yearContentColor = marrom,
+                            containerColor = creme,
+                            titleContentColor = laranjaEscuro,
+                            headlineContentColor = laranjaEscuro,
+                            weekdayContentColor = marrom,
+                            subheadContentColor = marrom,
+                            selectedDayContainerColor = laranjaEscuro,
+                            selectedDayContentColor = marrom,
+                            todayContentColor = laranjaEscuro,
+                            todayDateBorderColor = laranjaEscuro
+                        )
+                    )
+                }
             }
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(60.dp),
+                    .height(150.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text(
-                    text = "Eventos marcados:",
-                    fontSize = 21.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = laranjaEscuro
+                CremeButton(
+                    modifier = Modifier,
+                    text = "ver eventos",
+                    width = 170.dp,
+                    height = 55.dp,
+                    fontSize = 20,
+                    navController,
+                    "calendario"
                 )
-            }
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .verticalScroll(rememberScrollState())
-                    .imePadding()
-                    .padding(bottom = 15.dp),
-                verticalArrangement = Arrangement.spacedBy(15.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Event()
-                Event()
-                Event()
-                Event()
+
+                OrangeButton(
+                    modifier = Modifier,
+                    text = "criar eventos",
+                    width = 170.dp,
+                    height = 55.dp,
+                    fontSize = 18,
+                    navController,
+                    "",
+                    {mostrarPopup = true}
+                )
             }
         }
 
         Footer(navController, "calendario")
+
+        if (mostrarPopup) {
+            Dialog(onDismissRequest = { mostrarPopup = false }) {
+                Card(
+                    modifier = Modifier
+                        .width(350.dp)
+                        .height(350.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize()
+                            .background(branco)
+                            .padding(30.dp),
+                        verticalArrangement = Arrangement.SpaceEvenly,
+                    ) {
+                        OutlinedPopUp(
+                            "Título",
+                            150.dp,
+                            52.dp,
+                            "Alergia"
+                        )
+
+                        OutlinedPopUp(
+                            "Descrição",
+                            280.dp,
+                            150.dp,
+                            "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .width(280.dp)
+                                .height(42.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            CremeButtonPopUp(
+                                "Cancelar",
+                                {mostrarPopup = false}
+                            )
+
+                            OrangeButtonPopUp(
+                                "Salvar",
+                                {mostrarPopup = false}
+                            )
+
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -22,6 +22,7 @@ import com.aulasandroid.familysync.features.despesas.TelaDespesas
 import com.aulasandroid.familysync.features.editar_despesas.TelaEditarDespesas
 import com.aulasandroid.familysync.features.editar_lista.TelaEditarLista
 import com.aulasandroid.familysync.features.esqueceu_senha.TelaEsqueceuSenha
+import com.aulasandroid.familysync.features.eventos.TelaEventos
 import com.aulasandroid.familysync.features.gerenciador_familiar.TelaGerenciarFamilia
 import com.aulasandroid.familysync.features.home.TelaHome
 import com.aulasandroid.familysync.features.home_sem_familia.TelaHomeSemFamilia
@@ -77,6 +78,7 @@ class MainActivity : ComponentActivity() {
 
                         // Outros Recursos
                         composable(route = "calendario") { TelaCalendario(navController) }
+                        composable(route = "eventos") { TelaEventos(navController) }
                         composable(route = "notificacao") { TelaNotificacao(navController) }
                         composable(route = "perfil") { TelaPerfil(navController) }
                     }
