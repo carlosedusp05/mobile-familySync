@@ -58,7 +58,8 @@ fun List(
     Card(
         modifier = Modifier
             .width(380.dp)
-            .height(120.dp),
+            .height(120.dp)
+            .clickable(onClick = {navController.navigate("lista") },),
         colors = CardDefaults.cardColors(
             containerColor = branco
         ),

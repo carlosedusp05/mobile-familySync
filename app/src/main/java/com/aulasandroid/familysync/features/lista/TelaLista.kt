@@ -52,7 +52,7 @@ import com.aulasandroid.familysync.ui.theme.marrom
 import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
-fun TelaLista(navController: NavController, modifier: Modifier) {
+fun TelaLista(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -117,7 +117,7 @@ fun TelaLista(navController: NavController, modifier: Modifier) {
                 )
 
                 IconButton(
-                    onClick = {/* TODO */ },
+                    onClick = {navController.navigate("editar-lista") },
                     modifier = Modifier.size(50.dp)
                 ) {
                     Icon(

@@ -40,6 +40,7 @@ import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.LeftArrow
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.OutlinedComboBox
 import com.aulasandroid.familysync.components.Profile
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
@@ -148,34 +149,10 @@ fun TelaPerfil(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    OutlinedTextField(
-                        modifier = Modifier.width(313.dp) .height(52.dp),
-                        value = "",
-                        onValueChange = {/* TODO */ },
-
-                        shape = RoundedCornerShape(40),
-
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = laranja,
-                            unfocusedBorderColor = laranja,
-                        ),
-
-                        trailingIcon = {
-                            Icon(
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .clickable {
-                                        /* TODO */
-                                    },
-                                painter = painterResource(R.drawable.forward),
-                                contentDescription = "seta-familias",
-                                tint = laranja
-                            )
-                        },
-
-                        placeholder = {
-                            Text("Família")
-                        }
+                    OutlinedComboBox(
+                        313.dp,
+                        52.dp,
+                        "Família"
                     )
 
                     AddButton(52.dp, navController, "perfil")

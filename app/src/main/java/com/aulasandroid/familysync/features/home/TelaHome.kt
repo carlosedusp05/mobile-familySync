@@ -73,7 +73,7 @@ fun TelaHome(navController: NavController) {
                     "Lista compartilhada",
                     R.drawable.list,
                     navController,
-                    "lista"
+                    "listas"
                 )
 
                 CardFunctionality(

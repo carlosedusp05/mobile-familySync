@@ -44,6 +44,8 @@ fun OrangeButton(
                     "gerenciador_familiar"  -> navController.navigate("gerenciador_familiar")
                     "informacoes_familiar"  -> navController.navigate("informacoes_familiar")
                     "lista"                 -> navController.navigate("lista")
+                    "editar-lista"          -> navController.navigate("lista")
+                    "criar-lista"           -> navController.navigate("listas")
                     else                -> navController.navigate("home")
                 }
             }

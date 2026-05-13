@@ -33,6 +33,7 @@ fun CremeButton(
                 "alterar_endereco" -> navController.navigate("gerenciador_familiar")
                 "cadastro_usuario" -> navController.navigate("login")
                 "cadastro_familia" -> navController.popBackStack()
+                "editar-lista"     -> navController.popBackStack()
                 else -> navController.navigate("perfil")
             }
         },

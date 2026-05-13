@@ -68,7 +68,7 @@ fun Footer(
             IconButton(
                 modifier = Modifier .size(55.dp),
                 onClick = {
-                    navController.navigate("lista")
+                    navController.navigate("listas")
                 }
             )  {
                 Image(

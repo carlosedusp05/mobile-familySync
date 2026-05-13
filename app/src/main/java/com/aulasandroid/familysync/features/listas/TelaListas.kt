@@ -45,7 +45,7 @@ import com.aulasandroid.familysync.ui.theme.marrom
 import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
-fun TelaListas(navController: NavController, modifier: Modifier) {
+fun TelaListas(navController: NavController) {
         Column(
         modifier = Modifier
             .fillMaxSize()
