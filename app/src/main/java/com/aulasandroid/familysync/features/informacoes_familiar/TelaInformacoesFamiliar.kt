@@ -35,6 +35,7 @@ import com.aulasandroid.familysync.components.Header
 import com.aulasandroid.familysync.components.Information
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.PersonInformation
 import com.aulasandroid.familysync.ui.theme.branco
@@ -201,10 +202,10 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             .padding(30.dp),
                         verticalArrangement = Arrangement.SpaceEvenly,
                     ) {
-                        OutlinedPopUp(
+                        OutlinedMenorDp(
                             "Título",
                             150.dp,
-                            52.dp,
+                            42.dp,
                             ""
                         )
 
@@ -251,10 +252,10 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             .padding(30.dp),
                         verticalArrangement = Arrangement.SpaceEvenly,
                     ) {
-                        OutlinedPopUp(
+                        OutlinedMenorDp(
                             "Título",
                             150.dp,
-                            52.dp,
+                            42.dp,
                             "Alergia"
                         )
 

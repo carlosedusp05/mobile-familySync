@@ -1,7 +1,9 @@
 package com.aulasandroid.familysync
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import com.aulasandroid.familysync.ui.theme.FamilySyncTheme
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.aulasandroid.familysync.features.TelaTeste
 import com.aulasandroid.familysync.features.adicionar_despesas.TelaAdicionarDespesas
 import com.aulasandroid.familysync.features.alterar_endereco.TelaAlterarEndereco
 import com.aulasandroid.familysync.features.cadastro_familia.TelaCadastroFamilia
@@ -37,6 +41,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        window.statusBarColor = Color.TRANSPARENT
+
+        WindowInsetsControllerCompat(window, window.decorView)
+            .isAppearanceLightStatusBars = false
+
         setContent {
             FamilySyncTheme {
 
@@ -82,6 +92,7 @@ class MainActivity : ComponentActivity() {
                         composable(route = "notificacao") { TelaNotificacao(navController) }
                         composable(route = "perfil") { TelaPerfil(navController) }
                     }
+//                    TelaTeste( Modifier.padding(innerPadding))
                 }
             }
         }

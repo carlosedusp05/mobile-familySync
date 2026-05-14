@@ -1,6 +1,7 @@
 package com.aulasandroid.familysync.features.calendario
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DatePicker
@@ -23,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,12 +38,15 @@ import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Header
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.Outilined
+import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.features.calendario.model.TelaCalendarioViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
+import com.aulasandroid.familysync.ui.theme.vermelho
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -80,7 +87,8 @@ fun TelaCalendario(
 
             Card(
                 modifier = Modifier
-                    .padding(horizontal = 20.dp)
+                    .padding(horizontal = 15.dp)
+                    .border(4.dp, marrom, RoundedCornerShape(3))
                     .fillMaxWidth()
                     .height(390.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
@@ -152,32 +160,79 @@ fun TelaCalendario(
                 Card(
                     modifier = Modifier
                         .width(350.dp)
-                        .height(350.dp)
+                        .height(350.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = branco
+                    )
                 ) {
                     Column(
                         modifier = Modifier.fillMaxSize()
-                            .background(branco)
                             .padding(30.dp),
-                        verticalArrangement = Arrangement.SpaceEvenly,
+                        verticalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        OutlinedPopUp(
-                            "Título",
-                            150.dp,
-                            52.dp,
-                            "Alergia"
-                        )
+                        Row(
+                            modifier = Modifier
+                                .width(200.dp)
+                                .height(35.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "DATA:",
+                                fontSize = 20.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = laranjaEscuro
+                            )
 
-                        OutlinedPopUp(
-                            "Descrição",
-                            280.dp,
-                            150.dp,
-                            "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
-                        )
+                            OutlinedMenorDp(
+                                "Ex: 01/01/01",
+                                130.dp,
+                                30.dp,
+                                ""
+                            )
+                        }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            OutlinedMenorDp(
+                                "Ex: 01/01/01",
+                                150.dp,
+                                35.dp,
+                                ""
+                            )
+
+                            OutlinedMenorDp(
+                                "20:00",
+                                80.dp,
+                                35.dp,
+                                ""
+                            )
+                        }
+
 
                         Row(
                             modifier = Modifier
-                                .width(280.dp)
-                                .height(42.dp),
+                                .fillMaxWidth()
+                                .height(150.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            OutlinedPopUp(
+                                placeHolder = "Descrição",
+                                width = 285.dp,
+                                height = 140.dp,
+                                ""
+                            )
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
@@ -187,7 +242,7 @@ fun TelaCalendario(
                             )
 
                             OrangeButtonPopUp(
-                                "Salvar",
+                                "Criar",
                                 {mostrarPopup = false}
                             )
 

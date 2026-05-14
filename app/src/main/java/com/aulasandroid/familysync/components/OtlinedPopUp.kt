@@ -1,6 +1,5 @@
 package com.aulasandroid.familysync.components
 
-import android.icu.number.IntegerWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.CanvasHolder
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,15 +25,15 @@ fun OutlinedPopUp(
     value: String
 ) {
 
-    var tituloState by remember {
-        mutableStateOf("")
+    var textoState by remember {
+        mutableStateOf(value)
     }
 
     OutlinedTextField(
-        modifier = Modifier .width(width) .height(height),
-        value = tituloState,
+        modifier = Modifier.width(width) .height(height),
+        value = textoState,
         onValueChange = {
-            tituloState = it
+            textoState = it
         },
 
         shape = RoundedCornerShape(15.dp),

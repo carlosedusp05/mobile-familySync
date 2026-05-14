@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
@@ -37,11 +38,19 @@ import com.aulasandroid.familysync.ui.theme.marrom
 import com.aulasandroid.familysync.ui.theme.vermelho
 
 @Composable
-fun Event() {
+fun Event(
+    navController: NavController,
+    titulo: String,
+    descricao: String,
+    data: String,
+    horario: String,
+    criador: String,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .width(360.dp)
-            .height(90.dp),
+            .height(140.dp),
         colors = CardDefaults.cardColors(
             containerColor = creme
         ),
@@ -54,7 +63,7 @@ fun Event() {
         ) {
             Row(
                 modifier = Modifier
-                    .height(20.dp)
+                    .height(30.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -62,13 +71,13 @@ fun Event() {
                 Row(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(130.dp)
+                        .width(140.dp)
                         .background(marrom)
                         .padding(start = 5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Titulo",
+                        text = titulo,
                         fontWeight = FontWeight.Bold,
                         color = branco,
                         fontSize = 14.sp
@@ -77,31 +86,19 @@ fun Event() {
                 Row(
                     modifier = Modifier
                         .fillMaxHeight()
-                        .width(130.dp),
+                        .width(160.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    IconButton(
-                        modifier = Modifier.size(25.dp),
-                        onClick = {/* TODO */ }
-                    ) {
-                        Image(
-                            painter = painterResource(com.aulasandroid.familysync.R.drawable.pencil),
-                            contentDescription = "editar",
-                            colorFilter = ColorFilter.tint(marrom),
-                            modifier = Modifier.fillMaxSize(0.09f)
-                        )
-                    }
-
                     Text(
-                        text = "20:00",
+                        text = data,
                         fontWeight = FontWeight.Bold,
                         color = marrom,
                         fontSize = 14.sp
                     )
 
                     Text(
-                        text = "01/01",
+                        text = horario,
                         fontWeight = FontWeight.Bold,
                         color = marrom,
                         fontSize = 14.sp
@@ -109,36 +106,74 @@ fun Event() {
                 }
             }
 
+                Row(
+                    modifier = Modifier
+                        .height(80.dp)
+                        .fillMaxWidth()
+                        .padding(7.dp)
+                ) {
+                    Text(
+                        text = descricao,
+                        fontWeight = FontWeight.SemiBold,
+                        lineHeight = 1.2.em,
+                        color = laranjaEscuro,
+                        fontSize = 12.sp
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .height(30.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Row(
                         modifier = Modifier
-                            .height(50.dp)
-                            .fillMaxWidth()
-                            .padding(start = 7.dp),
-                        verticalAlignment = Alignment.CenterVertically,
+                            .fillMaxHeight()
+                            .width(140.dp)
+                            .padding(start = 5.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "chhjvccccccccccccccccccccccccccccccccccccc hcx bhjjjjhb chb hjjjjjj chhcbbhdhbvbfhdvbvfhabhdfbvhjb cdsacsda",
-                            fontWeight = FontWeight.SemiBold,
-                            lineHeight = 1.2.em,
-                            color = laranjaEscuro,
+                            text = "Created by $criador",
+                            color = marrom,
                             fontSize = 12.sp
                         )
                     }
 
                     Row(
                         modifier = Modifier
-                            .height(20.dp)
-                            .fillMaxWidth()
-                            .padding(end = 5.dp),
+                            .fillMaxHeight()
+                            .width(90.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        Text(
-                            text = "Created by Nome",
-                            color = vermelho,
-                            fontSize = 12.sp
-                        )
+                        IconButton(
+                            modifier = Modifier .size(25.dp),
+                            onClick = { onClick()}
+                        )  {
+                            Image(
+                                painter = painterResource(com.aulasandroid.familysync.R.drawable.pencil),
+                                contentDescription = "editar",
+                                colorFilter = ColorFilter.tint(marrom),
+                                modifier = Modifier .fillMaxSize()
+                            )
+                        }
+
+                        IconButton(
+                            modifier = Modifier .size(25.dp),
+                            onClick = {navController.navigate("eventos")}
+                        )  {
+                            Image(
+                                painter = painterResource(com.aulasandroid.familysync.R.drawable.trash),
+                                contentDescription = "apagar",
+                                colorFilter = ColorFilter.tint(marrom),
+                                modifier = Modifier .fillMaxSize()
+                            )
+                        }
                     }
+                }
             }
         }
 }
