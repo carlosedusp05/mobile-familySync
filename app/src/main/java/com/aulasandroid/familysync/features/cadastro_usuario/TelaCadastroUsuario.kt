@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.features.cadastro_usuario.model.CadastroUsuarioViewModel
 import com.aulasandroid.familysync.features.cadastro_usuario.ui.CpfVisualTransformation
 import com.aulasandroid.familysync.ui.theme.branco
+import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
 fun TelaCadastroUsuario(
@@ -88,7 +90,7 @@ fun TelaCadastroUsuario(
 
                 OutilinedData(
                     modifier = Modifier,
-                    placeHolder = "Data Nascimento",
+                    placeHolder = "Data Nascimento (AAAA-MM-DD)",
                     width = 383.dp,
                     height = 75.dp,
                     viewModel.dataNascimento,
@@ -155,6 +157,12 @@ fun TelaCadastroUsuario(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
+                if (viewModel.erroApi.isNotEmpty()) {
+                    Text(
+                        text = viewModel.erroApi,
+                        color = vermelhoEscuro
+                    )
+                }
                 CremeButton(
                     modifier = Modifier,
                     text = "Cancelar",
@@ -174,7 +182,7 @@ fun TelaCadastroUsuario(
                     navController,
                     "cadastro_usuario",
                     onClick = {
-                        viewModel.tentarCadastrar {
+                        viewModel.cadastrarUsuarioApi {
                             navController.navigate("login")
                         }
                     }

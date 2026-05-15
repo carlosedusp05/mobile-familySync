@@ -10,32 +10,52 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun Family(size: Dp) {
+fun Family(
+    size: Dp,
+    imageUri: Any? = null,
+    onClick: (() -> Unit)? = null
+) {
 
     Button(
-        onClick = {/* TODO */},
+        onClick = {
+            if (onClick != null) onClick()
+        },
         colors = ButtonDefaults.buttonColors(
             containerColor = branco,
-
-            ),
+        ),
         shape = RoundedCornerShape(100),
         contentPadding = PaddingValues(0.dp),
-        modifier = Modifier .size(size),
+        modifier = Modifier.size(size),
         border = BorderStroke(2.dp, laranja)
-    ){
-        Icon(
-            painter = painterResource(R.drawable.family),
-            contentDescription = "seta-de-voltar",
-            tint = laranja,
-            modifier = Modifier .fillMaxSize(0.65f)
-        )
+    ) {
+
+        if (imageUri != null) {
+
+            AsyncImage(
+                model = imageUri,
+                contentDescription = "Foto da família",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+        } else {
+
+            Icon(
+                painter = painterResource(R.drawable.family),
+                contentDescription = "Ícone família",
+                tint = laranja,
+                modifier = Modifier.fillMaxSize(0.65f)
+            )
+        }
     }
 }

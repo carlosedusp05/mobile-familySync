@@ -206,7 +206,8 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             "Título",
                             150.dp,
                             42.dp,
-                            ""
+                            "",
+                            {}
                         )
 
                         OutlinedPopUp(
@@ -256,7 +257,8 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             "Título",
                             150.dp,
                             42.dp,
-                            "Alergia"
+                            "Alergia",
+                            {}
                         )
 
                         OutlinedPopUp(

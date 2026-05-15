@@ -3,13 +3,15 @@ package com.aulasandroid.familysync.features.cadastro_usuario.model
 
 import android.net.Uri
 import android.util.Patterns
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.aulasandroid.familysync.features.cadastro_usuario.service.RetrofitFactory
+import kotlinx.coroutines.launch
 
 class CadastroUsuarioViewModel : ViewModel() {
 
@@ -76,22 +78,21 @@ class CadastroUsuarioViewModel : ViewModel() {
 
         val formatado = when {
 
-            numeros.length <= 2 ->
+            numeros.length <= 4 ->
                 numeros
 
-            numeros.length <= 4 ->
-                "${numeros.substring(0, 2)}/" +
-                        numeros.substring(2)
+            numeros.length <= 6 ->
+                "${numeros.substring(0, 4)}/" +
+                        numeros.substring(4)
 
             else ->
-                "${numeros.substring(0, 2)}/" +
-                        "${numeros.substring(2, 4)}/" +
-                        numeros.substring(4)
+                "${numeros.substring(0, 4)}/" +
+                        "${numeros.substring(4, 6)}/" +
+                        numeros.substring(6)
         }
 
         dataNascimento = TextFieldValue(
             text = formatado,
-
             selection = TextRange(formatado.length)
         )
 
@@ -107,13 +108,13 @@ class CadastroUsuarioViewModel : ViewModel() {
 
         if (partes.size != 3) return false
 
-        val dia = partes[0].toIntOrNull() ?: return false
+        val ano = partes[0].toIntOrNull() ?: return false
         val mes = partes[1].toIntOrNull() ?: return false
-        val ano = partes[2].toIntOrNull() ?: return false
+        val dia = partes[2].toIntOrNull() ?: return false
 
-        if (dia !in 1..31) return false
+        if (ano !in 1900..2100) return false
         if (mes !in 1..12) return false
-        if (ano !in 1900..2026) return false
+        if (dia !in 1..31) return false
 
         return true
     }
@@ -202,5 +203,47 @@ class CadastroUsuarioViewModel : ViewModel() {
 
     fun updateImageUri(uri: Uri) {
         selectedImageUri = uri
+    }
+
+    var carregando by mutableStateOf(false)
+        private set
+
+    var erroApi by mutableStateOf("")
+        private set
+
+    fun cadastrarUsuarioApi(onSucesso: () -> Unit) {
+
+        tentarCadastrar {
+
+            viewModelScope.launch {
+
+                try {
+
+                    carregando = true
+                    erroApi = ""
+
+                    val request = UsuarioRequest(
+                        nome = nome,
+                        dataNascimento = dataNascimento.text,
+                        cpf = cpf,
+                        email = email,
+                        senha = senha
+                    )
+
+                    val response = RetrofitFactory.api.cadastrarUsuario(request)
+
+                    if (response.isSuccessful) {
+                        onSucesso()
+                    } else {
+                        erroApi = "Erro ao cadastrar usuário (${response.code()})"
+                    }
+
+                } catch (e: Exception) {
+                    erroApi = "Erro de conexão"
+                } finally {
+                    carregando = false
+                }
+            }
+        }
     }
 }

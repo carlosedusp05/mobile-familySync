@@ -1,5 +1,8 @@
 package com.aulasandroid.familysync.features.cadastro_familia
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,6 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,11 +26,28 @@ import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.Family
 import com.aulasandroid.familysync.components.OrangeButton
+import com.aulasandroid.familysync.components.Outilined
+import com.aulasandroid.familysync.components.OutlinedMenorDp
+import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
+import com.aulasandroid.familysync.features.cadastro_familia.model.TelaCadastroFamiliaViewModel
+import com.aulasandroid.familysync.features.cadastro_familia.ui.CEPVisualTransformation
+import com.aulasandroid.familysync.features.cadastro_familia.ui.TelefoneVisualTransformation
 import com.aulasandroid.familysync.ui.theme.branco
+import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
-fun TelaCadastroFamilia(navController: NavController) {
+fun TelaCadastroFamilia(
+    navController: NavController,
+    viewModel: TelaCadastroFamiliaViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    ) {
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { viewModel.updateImageUri(it) }
+    }
+
     Column(
         modifier = Modifier.fillMaxSize().background(branco)
     ) {
@@ -45,13 +67,23 @@ fun TelaCadastroFamilia(navController: NavController) {
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Family(110.dp)
-                Text(
-                    text = "Nome da Família",
-                    textAlign = TextAlign.Center,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
+                Family(
+                    110.dp,
+                    imageUri = viewModel.selectedImageUri,
+                    onClick = {
+                        galleryLauncher.launch("image/*")
+                    }
                 )
+
+                if (viewModel.erroGeral.isNotEmpty()) {
+                    Text(
+                        text = viewModel.erroGeral,
+                        textAlign = TextAlign.Center,
+                        fontSize = 11.sp,
+                        color = vermelhoEscuro,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
             }
 
             Column(
@@ -68,12 +100,13 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Nome da família",
-//                        383.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp (
+                        placeHolder = "Nome da família",
+                        width = 383.dp,
+                        height = 52.dp,
+                        viewModel.nomeFamilia,
+                        {viewModel.onNomeFamiliaChange(it)}
+                    )
                 }
 
                 Row(
@@ -83,12 +116,13 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Membros(email)",
-//                        383.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp(
+                        placeHolder = "Membros(emails separados por espaço)",
+                        width = 383.dp,
+                        height = 52.dp,
+                        viewModel.membros,
+                        {viewModel.onMembrosChange(it)}
+                    )
                 }
 
                 Row(
@@ -98,19 +132,25 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Tel(Residencial)",
-//                        243.dp,
-//                        52.dp
-//                    )
-//
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "CEP",
-//                        133.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp(
+                        placeHolder = "Tel(Residencial)",
+                        width = 243.dp,
+                        height = 52.dp,
+                        viewModel.telefone,
+                        {viewModel.onTelefoneChange(it)},
+                        KeyboardType.Number,
+                        TelefoneVisualTransformation()
+                    )
+
+                    OutlinedMenorDp(
+                        placeHolder = "CEP",
+                        width = 133.dp,
+                        height = 52.dp,
+                        viewModel.cep,
+                        {viewModel.onCepChange(it)},
+                        KeyboardType.Number,
+                        CEPVisualTransformation()
+                    )
                 }
 
                 Row(
@@ -120,19 +160,21 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Cidade",
-//                        283.dp,
-//                        52.dp
-//                    )
-//
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "UF",
-//                        93.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp(
+                        placeHolder = "Cidade",
+                        width = 283.dp,
+                        height = 52.dp,
+                        viewModel.cidade,
+                        {viewModel.onCidadeChange(it)}
+                    )
+
+                    OutlinedMenorDp(
+                        placeHolder = "UF",
+                        width = 93.dp,
+                        height = 52.dp,
+                        viewModel.uf,
+                        {viewModel.onUfChange(it)}
+                    )
                 }
 
                 Row(
@@ -142,12 +184,13 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Bairro",
-//                        383.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp(
+                        placeHolder = "Bairro",
+                        width = 383.dp,
+                        height = 52.dp,
+                        viewModel.bairro,
+                        {viewModel.onBairroChange(it)}
+                    )
                 }
 
                 Row(
@@ -157,12 +200,13 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Logradouro",
-//                        383.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp(
+                        placeHolder = "Logradouro",
+                        width = 383.dp,
+                        height = 52.dp,
+                        viewModel.logradouro,
+                        {viewModel.onLogradouroChange(it)}
+                    )
                 }
 
                 Row(
@@ -172,19 +216,21 @@ fun TelaCadastroFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Numero",
-//                        133.dp,
-//                        52.dp
-//                    )
-//
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Complemento(Opcional)",
-//                        243.dp,
-//                        52.dp
-//                    )
+                    OutlinedMenorDp(
+                        placeHolder = "Numero",
+                        width = 133.dp,
+                        height = 52.dp,
+                        viewModel.numero,
+                        {viewModel.onNumeroChange(it)}
+                    )
+
+                    OutlinedMenorDp(
+                        placeHolder = "Complemento(Opcional)",
+                        width = 243.dp,
+                        height = 52.dp,
+                        viewModel.complemento,
+                        {viewModel.onComplementoChange(it)}
+                    )
                 }
 
 
@@ -202,7 +248,7 @@ fun TelaCadastroFamilia(navController: NavController) {
                         height = 55.dp,
                         fontSize = 22,
                         navController,
-                        "cadastro_familia"
+                        abaAtiva = "cadastro_familia"
                     )
 
                     OrangeButton(
@@ -212,7 +258,13 @@ fun TelaCadastroFamilia(navController: NavController) {
                         height = 55.dp,
                         fontSize = 21,
                         navController,
-                        "cadastro_familia"
+                        abaAtiva = "cadastro_familia",
+                        {
+                            viewModel.tentarCadastrar {
+                                navController.navigate("home")
+                            }
+                        }
+
                     )
                 }
             }
