@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aulasandroid.familysync.features.cadastro_usuario.service.RetrofitFactory
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class CadastroUsuarioViewModel : ViewModel() {
 
@@ -82,12 +83,12 @@ class CadastroUsuarioViewModel : ViewModel() {
                 numeros
 
             numeros.length <= 6 ->
-                "${numeros.substring(0, 4)}/" +
+                "${numeros.substring(0, 4)}-" +
                         numeros.substring(4)
 
             else ->
-                "${numeros.substring(0, 4)}/" +
-                        "${numeros.substring(4, 6)}/" +
+                "${numeros.substring(0, 4)}-" +
+                        "${numeros.substring(4, 6)}-" +
                         numeros.substring(6)
         }
 
@@ -104,7 +105,7 @@ class CadastroUsuarioViewModel : ViewModel() {
 
         if (data.length != 10) return false
 
-        val partes = data.split("/")
+        val partes = data.split("-")
 
         if (partes.size != 3) return false
 
@@ -211,34 +212,47 @@ class CadastroUsuarioViewModel : ViewModel() {
     var erroApi by mutableStateOf("")
         private set
 
+
     fun cadastrarUsuarioApi(onSucesso: () -> Unit) {
-
         tentarCadastrar {
-
             viewModelScope.launch {
-
                 try {
-
                     carregando = true
                     erroApi = ""
 
                     val request = UsuarioRequest(
                         nome = nome,
-                        dataNascimento = dataNascimento.text,
+                        data_nascimento = dataNascimento.text,
                         cpf = cpf,
-                        email = email,
-                        senha = senha
+                        senha = senha,
+                        email = email
                     )
+
+                    Log.i("API_FAMILY", "$request")
+
+                    // LOG 1: Ver o que você está enviando
+                    Log.d("API_FAMILY", "Enviando dados: $request")
 
                     val response = RetrofitFactory.api.cadastrarUsuario(request)
 
-                    if (response.isSuccessful) {
+                    val body = response.body()
+
+                    Log.d("API_FAMILY", "BODY: $body")
+
+                    if (response.isSuccessful && body?.StatusCode == 201) {
+
+                        Log.d("API_FAMILY", "Cadastro realizado")
                         onSucesso()
+
                     } else {
-                        erroApi = "Erro ao cadastrar usuário (${response.code()})"
+
+                        erroApi = body?.message ?: "Erro ao cadastrar"
+
+                        Log.e("API_FAMILY", "Erro API: ${body?.message}")
                     }
 
                 } catch (e: Exception) {
+                    Log.e("API_FAMILY", "Falha catastrófica de conexão", e)
                     erroApi = "Erro de conexão"
                 } finally {
                     carregando = false

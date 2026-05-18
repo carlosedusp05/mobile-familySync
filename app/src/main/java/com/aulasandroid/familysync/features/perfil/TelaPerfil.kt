@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,8 +41,12 @@ import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.LeftArrow
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.Outilined
+import com.aulasandroid.familysync.components.OutilinedData
+import com.aulasandroid.familysync.components.OutilinedIcon
 import com.aulasandroid.familysync.components.OutlinedComboBox
 import com.aulasandroid.familysync.components.Profile
+import com.aulasandroid.familysync.features.cadastro_usuario.ui.CpfVisualTransformation
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
@@ -107,33 +112,54 @@ fun TelaPerfil(navController: NavController) {
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-//                Outilined(
+
+                Outilined(
+                    modifier = Modifier,
+                    placeHolder = "Nome completo",
+                    width = 383.dp,
+                    height = 75.dp,
+                    "",
+                    { }
+                )
+
+//                OutilinedData(
 //                    modifier = Modifier,
-//                    placeHolder = "Nome",
+//                    placeHolder = "Data Nascimento (AAAA-MM-DD)",
 //                    width = 383.dp,
-//                    height = 52.dp
+//                    height = 75.dp,
+//                    viewModel.dataNascimento,
+//                    {viewModel.onDataNascimentoChange(it)},
+//                    isError = viewModel.dataNascimentoErro,
+//                    mensagemErro = viewModel.dataNascimentoMensagem,
+//                    keyboardType = KeyboardType.Number
 //                )
-//
-//                Outilined(
-//                    modifier = Modifier,
-//                    placeHolder = "Email",
-//                    width = 383.dp,
-//                    height = 52.dp
-//                )
-//
-//                Outilined(
-//                    modifier = Modifier,
-//                    placeHolder = "CPF",
-//                    width = 383.dp,
-//                    height = 52.dp
-//                )
-//
-//                Outilined(
-//                    modifier = Modifier,
-//                    placeHolder = "Data de Nascimento",
-//                    width = 383.dp,
-//                    height = 52.dp
-//                )
+
+                Outilined(
+                    modifier = Modifier,
+                    placeHolder = "CPF (apenas números)",
+                    width = 383.dp,
+                    height = 75.dp,
+                    "",
+                    { }
+                )
+
+                Outilined(
+                    modifier = Modifier,
+                    placeHolder = "E-mail",
+                    width = 383.dp,
+                    height = 75.dp,
+                    "",
+                    {}
+                )
+
+                OutilinedIcon(
+                    modifier = Modifier,
+                    placeHolder = "senha",
+                    width = 383.dp,
+                    height = 75.dp,
+                    "",
+                    {}
+                )
 //
 //                OutilinedIcon(
 //                    modifier = Modifier,
@@ -177,7 +203,7 @@ fun TelaPerfil(navController: NavController) {
 
                     OrangeButton(
                         modifier = Modifier,
-                        text = "Confirmar",
+                        text = "Salvar",
                         width = 150.dp,
                         height = 55.dp,
                         fontSize = 21,
