@@ -47,8 +47,8 @@ fun TelaLogin(
             Logo(
                 modifier = Modifier,
                 110.dp,
-                250.dp,navController,
-                {}
+                250.dp,navController//,
+//                {}
             )
         }
 

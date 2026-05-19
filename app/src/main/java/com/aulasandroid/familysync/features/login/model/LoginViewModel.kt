@@ -1,25 +1,29 @@
 package com.aulasandroid.familysync.features.login.model
 
+import android.util.Log
 import android.util.Patterns
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.aulasandroid.familysync.features.login.service.RetrofitLogin
+import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
 
-    // Estados dos campos
     var email by mutableStateOf("")
     var senha by mutableStateOf("")
 
-    // Estados de erro
     var emailErro by mutableStateOf(false)
     var emailMensagem by mutableStateOf("")
+
     var senhaErro by mutableStateOf(false)
     var senhaMensagem by mutableStateOf("")
 
-    // Funções de atualização (Eventos)
+    var carregando by mutableStateOf(false)
+        private set
+
     fun onEmailChange(novoEmail: String) {
         email = novoEmail
         emailErro = false
@@ -32,30 +36,78 @@ class LoginViewModel : ViewModel() {
         senhaMensagem = ""
     }
 
-    fun validarDados(email: String, senha: String): Boolean {
-        val emailValido = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val senhaRegex = "^(?=.*[A-Z]).{8,}$".toRegex()
-        val senhaValida = senhaRegex.matches(senha)
-
-        return emailValido && senhaValida
-
-    }
-
-
-        // Lógica de autenticação
     fun tentarLogar(onSucesso: () -> Unit) {
-        val isEmailOk = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val senhaRegex = "^(?=.*[A-Z]).{8,}$".toRegex()
-        val isSenhaOk = senhaRegex.matches(senha)
+
+        val isEmailOk = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        val isSenhaOk = senha.isNotBlank()
 
         if (isEmailOk && isSenhaOk) {
-            onSucesso()
-        } else {
+
+            viewModelScope.launch {
+
+                try {
+
+                    carregando = true
+
+                    val request = LoginRequest(
+                        email = email,
+                        senha = senha
+                    )
+
+                    Log.d("API_FAMILY", "Enviando: $request")
+
+                    val response = RetrofitLogin.api.logar(request)
+
+                    Log.d("API_FAMILY", "CODE: ${response.code()}")
+                    Log.d("API_FAMILY", "BODY: ${response.body()}")
+                    Log.d("API_FAMILY", "ERROR: ${response.errorBody()?.string()}")
+
+                    val body = response.body()
+
+                    Log.d("API_FAMILY", "BODY: $body")
+
+                    if (response.isSuccessful &&
+                        body?.status == true &&
+                        body.statusCode == 200
+                    ) {
+
+                        val token = body.tokenJwt
+
+                        Log.d("API_FAMILY", "TOKEN: $token")
+
+                        onSucesso()
+
+                    } else {
+
+                        senhaErro = true
+                        senhaMensagem = "E-mail ou senha incorretos"
+
+                        Log.e("API_FAMILY", "Erro login")
+
+                    }
+
+                } catch (e: Exception) {
+
+                    Log.e("API_FAMILY", "Erro conexão", e)
+
+                    senhaErro = true
+                    senhaMensagem = "Erro de conexão"
+
+                } finally {
+
+                    carregando = false
+                }
+            }
+
+
+
             emailErro = !isEmailOk
-            emailMensagem = if (!isEmailOk) "E-mail inválido" else ""
+            emailMensagem =
+                if (!isEmailOk) "E-mail inválido" else ""
 
             senhaErro = !isSenhaOk
-            senhaMensagem = if (!isSenhaOk) "Mínimo 8 caracteres e 1 maiúscula e 1 carctere especial" else ""
+            senhaMensagem =
+                if (!isSenhaOk) "Digite sua senha" else ""
         }
     }
 }
