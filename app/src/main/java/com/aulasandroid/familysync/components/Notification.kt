@@ -78,7 +78,7 @@ fun Notification() {
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = "18 nov 2026",
+                    text = "2026/12/08",
                     color = laranja,
                     fontSize = 15.sp
                 )

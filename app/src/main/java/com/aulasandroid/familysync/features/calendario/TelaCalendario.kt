@@ -67,7 +67,7 @@ fun TelaCalendario(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.9f),
+                .fillMaxHeight(0.87f),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Row(
@@ -90,7 +90,7 @@ fun TelaCalendario(
                     .padding(horizontal = 15.dp)
                     .border(4.dp, marrom, RoundedCornerShape(3))
                     .fillMaxWidth()
-                    .height(390.dp),
+                    .height(400.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
 
             ) {

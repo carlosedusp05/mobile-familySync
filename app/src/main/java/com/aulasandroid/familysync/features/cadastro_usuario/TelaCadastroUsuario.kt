@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.OrangeButton
@@ -33,7 +34,7 @@ import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 @Composable
 fun TelaCadastroUsuario(
     navController: NavController,
-    viewModel: CadastroUsuarioViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: CadastroUsuarioViewModel = viewModel()
 ) {
 
     val galleryLauncher = rememberLauncherForActivityResult(

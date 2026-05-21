@@ -37,6 +37,7 @@ import com.aulasandroid.familysync.components.Header
 import com.aulasandroid.familysync.components.Member
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
@@ -86,12 +87,14 @@ fun TelaGerenciarFamilia(navController: NavController) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-//                    Outilined(
-//                        modifier = Modifier,
-//                        "Nome da família",
-//                        383.dp,
-//                        52.dp
-//                    )
+                    Outilined(
+                        modifier = Modifier,
+                        "Nome da família",
+                        383.dp,
+                        102.dp,
+                        "",
+                        { }
+                    )
                 }
 
                 Card(

@@ -113,15 +113,6 @@ fun TelaCriarLista(navController: NavController) {
                         color = laranjaEscuro,
                     )
                 }
-
-                Outilined(
-                    modifier = Modifier,
-                    placeHolder = "",
-                    width = 353.dp,
-                    height = 75.dp,
-                    "",
-                    {}
-                )
             }
 
             Column (

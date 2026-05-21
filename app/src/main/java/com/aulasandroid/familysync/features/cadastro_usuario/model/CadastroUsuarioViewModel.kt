@@ -10,9 +10,9 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aulasandroid.familysync.features.cadastro_usuario.service.RetrofitFactory
 import kotlinx.coroutines.launch
 import android.util.Log
+import com.aulasandroid.familysync.Retrofit.RetrofitFactory
 
 class CadastroUsuarioViewModel : ViewModel() {
 
@@ -233,7 +233,7 @@ class CadastroUsuarioViewModel : ViewModel() {
                     // LOG 1: Ver o que você está enviando
                     Log.d("API_FAMILY", "Enviando dados: $request")
 
-                    val response = RetrofitFactory.api.cadastrarUsuario(request)
+                    val response = RetrofitFactory.usuarioService.cadastrarUsuario(request)
 
                     val body = response.body()
 

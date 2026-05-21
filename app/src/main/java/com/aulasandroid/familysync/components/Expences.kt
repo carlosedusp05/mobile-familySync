@@ -32,9 +32,121 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
-@Composable
-fun Expences(navController: NavController, gasto: String, cor: Color) {
+//@Composable
+//fun Expences(navController: NavController, gasto: String, cor: Color) {
+//
+//    Row(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .height(50.dp),
+//        horizontalArrangement = Arrangement.SpaceBetween,
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//        Row(
+//            modifier = Modifier
+//                .fillMaxHeight()
+//                .width(250.dp)
+//                .clip(RoundedCornerShape(15.dp))
+//                .border(3.dp, laranja, RoundedCornerShape(15.dp))
+//                .background(branco),
+//            horizontalArrangement = Arrangement.SpaceEvenly
+//        ) {
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .width(35.dp),
+//                verticalArrangement = Arrangement.Center,
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Icon(
+//                    painter = painterResource(R.drawable.meal),
+//                    contentDescription = "seta-de-voltar",
+//                    tint = cor,
+//                    modifier = Modifier .size(35.dp)
+//                )
+//            }
+//
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .width(75.dp),
+//                verticalArrangement = Arrangement.Center,
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text(
+//                    text = gasto,
+//                    fontWeight = FontWeight.Bold,
+//                    fontSize = 12.sp,
+//                    color = Color.Black
+//                )
+//            }
+//
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .width(30.dp),
+//                verticalArrangement = Arrangement.Center,
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text(
+//                    text = "60%",
+//                    fontWeight = FontWeight.Bold,
+//                    fontSize = 12.sp,
+//                    color = Color.Black
+//                )
+//            }
+//
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxHeight()
+//                    .width(70.dp),
+//                verticalArrangement = Arrangement.Center,
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text(
+//                    text = "R$ 5000",
+//                    fontWeight = FontWeight.Bold,
+//                    fontSize = 12.sp,
+//                    color = Color.Black
+//                )
+//            }
+//        }
+//
+//        IconButton(
+//            modifier = Modifier .size(45.dp),
+//            onClick = {navController.navigate("editar_despesas")}
+//        )  {
+//            Image(
+//                painter = painterResource(R.drawable.pencil),
+//                contentDescription = "editar",
+//                colorFilter = ColorFilter.tint(laranjaEscuro),
+//                modifier = Modifier .fillMaxSize()
+//            )
+//        }
+//
+//        IconButton(
+//            modifier = Modifier .size(45.dp),
+//            onClick = {navController.navigate("despesas")}
+//        )  {
+//            Image(
+//                painter = painterResource(R.drawable.trash),
+//                contentDescription = "excluir",
+//                colorFilter = ColorFilter.tint(laranjaEscuro),
+//                modifier = Modifier .fillMaxSize()
+//            )
+//        }
+//    }
+//}
 
+@Composable
+fun Expences(
+    navController: NavController,
+    gasto: String,            // Nome/Descrição (Ex: "Mercado")
+    iconeEmoji: String,       // Ícone vindo da API (Ex: "🛒")
+    porcentagem: String,      // String calculada (Ex: "24%")
+    valor: String,            // Valor formatado (Ex: "R$ 1200,00")
+    corBorda: Color = laranja // Mantém sua cor padrão de borda
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,10 +159,12 @@ fun Expences(navController: NavController, gasto: String, cor: Color) {
                 .fillMaxHeight()
                 .width(250.dp)
                 .clip(RoundedCornerShape(15.dp))
-                .border(3.dp, laranja, RoundedCornerShape(15.dp))
+                .border(3.dp, corBorda, RoundedCornerShape(15.dp))
                 .background(branco),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            // Coluna do Ícone (Alterado para Text para renderizar o Emoji da API)
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -58,14 +172,13 @@ fun Expences(navController: NavController, gasto: String, cor: Color) {
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.meal),
-                    contentDescription = "seta-de-voltar",
-                    tint = cor,
-                    modifier = Modifier .size(35.dp)
+                Text(
+                    text = iconeEmoji,
+                    fontSize = 20.sp
                 )
             }
 
+            // Coluna do Título da Despesa
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -81,6 +194,7 @@ fun Expences(navController: NavController, gasto: String, cor: Color) {
                 )
             }
 
+            // Coluna da Porcentagem Dinâmica
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -89,13 +203,14 @@ fun Expences(navController: NavController, gasto: String, cor: Color) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "60%",
+                    text = porcentagem, // Valor calculado passado por parâmetro
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.sp,
                     color = Color.Black
                 )
             }
 
+            // Coluna do Valor Monetário Real
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -104,7 +219,7 @@ fun Expences(navController: NavController, gasto: String, cor: Color) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "R$ 5000",
+                    text = valor, // Valor formatado vindo do ViewModel
                     fontWeight = FontWeight.Bold,
                     fontSize = 12.sp,
                     color = Color.Black
@@ -113,26 +228,26 @@ fun Expences(navController: NavController, gasto: String, cor: Color) {
         }
 
         IconButton(
-            modifier = Modifier .size(45.dp),
-            onClick = {navController.navigate("editar_despesas")}
-        )  {
+            modifier = Modifier.size(45.dp),
+            onClick = { navController.navigate("editar_despesas") }
+        ) {
             Image(
                 painter = painterResource(R.drawable.pencil),
                 contentDescription = "editar",
                 colorFilter = ColorFilter.tint(laranjaEscuro),
-                modifier = Modifier .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
         }
 
         IconButton(
-            modifier = Modifier .size(45.dp),
-            onClick = {navController.navigate("despesas")}
-        )  {
+            modifier = Modifier.size(45.dp),
+            onClick = { navController.navigate("despesas") }
+        ) {
             Image(
                 painter = painterResource(R.drawable.trash),
                 contentDescription = "excluir",
                 colorFilter = ColorFilter.tint(laranjaEscuro),
-                modifier = Modifier .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             )
         }
     }

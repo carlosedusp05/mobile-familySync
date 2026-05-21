@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aulasandroid.familysync.features.login.service.RetrofitLogin
+import com.aulasandroid.familysync.Retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
@@ -56,7 +56,7 @@ class LoginViewModel : ViewModel() {
 
                     Log.d("API_FAMILY", "Enviando: $request")
 
-                    val response = RetrofitLogin.api.logar(request)
+                    val response = RetrofitFactory.loginService.logar(request)
 
                     Log.d("API_FAMILY", "CODE: ${response.code()}")
                     Log.d("API_FAMILY", "BODY: ${response.body()}")
