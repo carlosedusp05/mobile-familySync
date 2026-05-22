@@ -46,7 +46,7 @@ import com.aulasandroid.familysync.components.OutilinedData
 import com.aulasandroid.familysync.components.OutilinedIcon
 import com.aulasandroid.familysync.components.OutlinedComboBox
 import com.aulasandroid.familysync.components.Profile
-import com.aulasandroid.familysync.features.cadastro_usuario.ui.CpfVisualTransformation
+import com.aulasandroid.familysync.mask.CpfVisualTransformation
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro

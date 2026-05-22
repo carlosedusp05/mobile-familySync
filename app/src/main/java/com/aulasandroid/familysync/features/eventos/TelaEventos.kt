@@ -210,7 +210,7 @@ fun TelaEventos(navController: NavController) {
                             )
 
                             OutlinedMenorDp(
-                                "Ex: 01/01/01",
+                                "Ex: 01-01-01",
                                 130.dp,
                                 30.dp,
                                 "",
@@ -225,8 +225,8 @@ fun TelaEventos(navController: NavController) {
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             OutlinedMenorDp(
-                                "Ex: 01/01/01",
-                                150.dp,
+                                "Nome",
+                                170.dp,
                                 35.dp,
                                 "",
                                 {}
@@ -235,7 +235,7 @@ fun TelaEventos(navController: NavController) {
                             OutlinedMenorDp(
                                 "20:00",
                                 80.dp,
-                                35.dp,
+                                30.dp,
                                 "",
                                 {}
                             )

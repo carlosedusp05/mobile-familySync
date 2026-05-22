@@ -31,8 +31,8 @@ import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.features.cadastro_familia.model.TelaCadastroFamiliaViewModel
-import com.aulasandroid.familysync.features.cadastro_familia.ui.CEPVisualTransformation
-import com.aulasandroid.familysync.features.cadastro_familia.ui.TelefoneVisualTransformation
+import com.aulasandroid.familysync.mask.CEPVisualTransformation
+import com.aulasandroid.familysync.mask.TelefoneVisualTransformation
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 

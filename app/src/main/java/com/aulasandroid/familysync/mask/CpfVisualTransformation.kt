@@ -1,16 +1,17 @@
-package com.aulasandroid.familysync.features.cadastro_familia.ui
+package com.aulasandroid.familysync.mask
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
-class CEPVisualTransformation: VisualTransformation  {
+class CpfVisualTransformation : VisualTransformation {
+
     override fun filter(text: AnnotatedString): TransformedText {
 
         val digits = text.text
             .filter { it.isDigit() }
-            .take(8)
+            .take(11)
 
         val formatted = buildString {
 
@@ -18,8 +19,9 @@ class CEPVisualTransformation: VisualTransformation  {
 
                 append(c)
 
-                if (index == 4) {
-                    append("-")
+                when (index) {
+                    2, 5 -> append(".")
+                    8 -> append("-")
                 }
             }
         }
@@ -30,9 +32,13 @@ class CEPVisualTransformation: VisualTransformation  {
 
                 return when {
 
-                    offset <= 4 -> offset
+                    offset <= 2 -> offset
 
-                    offset <= 8 -> offset + 1
+                    offset <= 5 -> offset + 1
+
+                    offset <= 8 -> offset + 2
+
+                    offset <= 11 -> offset + 3
 
                     else -> formatted.length
                 }
@@ -42,9 +48,13 @@ class CEPVisualTransformation: VisualTransformation  {
 
                 return when {
 
-                    offset <= 5 -> offset
+                    offset <= 2 -> offset
 
-                    offset <= 9 -> offset - 1
+                    offset <= 6 -> offset - 1
+
+                    offset <= 10 -> offset - 2
+
+                    offset <= 14 -> offset - 3
 
                     else -> digits.length
                 }
@@ -52,7 +62,7 @@ class CEPVisualTransformation: VisualTransformation  {
         }
 
         return TransformedText(
-            AnnotatedString(formatted),
+            androidx.compose.ui.text.AnnotatedString(formatted),
             offsetMapping
         )
     }

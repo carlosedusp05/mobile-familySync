@@ -1,4 +1,4 @@
-package com.aulasandroid.familysync.features.lista
+package com.aulasandroid.familysync.features.lista.model
 
 data class ProdutoItem(
     val id: Int,

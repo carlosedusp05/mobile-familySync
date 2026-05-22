@@ -4,7 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.aulasandroid.familysync.features.lista.ProdutoItem
+import com.aulasandroid.familysync.features.lista.model.ProdutoItem
 
 class TelaListaViewModel : ViewModel() {
 var listaProdutos by mutableStateOf(

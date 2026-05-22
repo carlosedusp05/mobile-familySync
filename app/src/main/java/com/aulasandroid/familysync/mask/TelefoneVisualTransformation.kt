@@ -1,4 +1,4 @@
-package com.aulasandroid.familysync.features.cadastro_familia.ui
+package com.aulasandroid.familysync.mask
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
@@ -51,7 +51,7 @@ class TelefoneVisualTransformation : VisualTransformation {
         }
 
         return TransformedText(
-            text = AnnotatedString(formatted),
+            text = androidx.compose.ui.text.AnnotatedString(formatted),
             offsetMapping = offsetTranslator
         )
     }
