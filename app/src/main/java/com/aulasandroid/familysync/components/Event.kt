@@ -44,7 +44,7 @@ fun Event(
     descricao: String,
     data: String,
     horario: String,
-    criador: String,
+    criador: String ,
     onClick: () -> Unit
 ) {
     Card(

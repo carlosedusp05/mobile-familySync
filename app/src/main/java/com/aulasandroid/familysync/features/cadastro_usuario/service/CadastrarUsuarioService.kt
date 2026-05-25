@@ -7,7 +7,7 @@ import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
-interface  UsuarioService {
+interface  CadastrarUsuarioService {
         @Headers(
             "Content-Type: application/json"
         )

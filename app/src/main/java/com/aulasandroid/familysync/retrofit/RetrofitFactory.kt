@@ -1,12 +1,17 @@
-package com.aulasandroid.familysync.Retrofit
+package com.aulasandroid.familysync.retrofit
 
-import com.aulasandroid.familysync.features.cadastro_usuario.service.UsuarioService
+import com.aulasandroid.familysync.features.cadastro_usuario.service.CadastrarUsuarioService
 import com.aulasandroid.familysync.features.despesas.service.DespesaService
+import com.aulasandroid.familysync.features.eventos.service.EventosService
 import com.aulasandroid.familysync.features.login.service.LoginService
+import com.aulasandroid.familysync.features.eventos.users.service.UsuarioService
+import com.aulasandroid.familysync.features.listas.service.ListasService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.getValue
+import kotlin.jvm.java
 
 object RetrofitFactory {
 
@@ -28,8 +33,8 @@ object RetrofitFactory {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val usuarioService: UsuarioService by lazy {
-        retrofit.create(UsuarioService::class.java)
+    val cadastrarUsuarioService: CadastrarUsuarioService by lazy {
+        retrofit.create(CadastrarUsuarioService::class.java)
     }
 
     val despesaService: DespesaService by lazy {
@@ -39,5 +44,19 @@ object RetrofitFactory {
     val loginService: LoginService by lazy {
 
         retrofit.create(LoginService::class.java)
+    }
+
+    val eventosService: EventosService by lazy {
+
+        retrofit.create(EventosService::class.java)
+    }
+
+    val usuarioService: UsuarioService by lazy {
+
+        retrofit.create(UsuarioService::class.java)
+    }
+
+    val listasService: ListasService by lazy {
+        retrofit.create(ListasService::class.java)
     }
 }

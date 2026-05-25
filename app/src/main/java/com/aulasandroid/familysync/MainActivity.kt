@@ -82,7 +82,18 @@ class MainActivity : ComponentActivity() {
 
                         // Lista
                         composable(route = "listas") { TelaListas(navController) }
-                        composable(route = "lista") { TelaLista(navController) }
+                        composable(route = "lista/{id_lista}") { backStackEntry ->
+
+                            val idLista =
+                                backStackEntry.arguments
+                                    ?.getString("id_lista")
+                                    ?.toIntOrNull() ?: 0
+
+                            TelaLista(
+                                navController = navController,
+                                id_lista = idLista
+                            )
+                        }
                         composable(route = "editar-lista") { TelaEditarLista(navController) }
                         composable(route = "criar-lista") { TelaCriarLista(navController) }
 

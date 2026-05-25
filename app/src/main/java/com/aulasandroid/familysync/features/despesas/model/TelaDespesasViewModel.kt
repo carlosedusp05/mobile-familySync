@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.aulasandroid.familysync.Retrofit.RetrofitFactory
-import com.aulasandroid.familysync.features.despesas.service.DespesaService
+import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
 class TelaDespesasViewModel :ViewModel() {

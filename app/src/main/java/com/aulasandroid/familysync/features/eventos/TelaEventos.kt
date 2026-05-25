@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Event
@@ -35,12 +36,17 @@ import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
+import com.aulasandroid.familysync.features.eventos.function.formatarData
+import com.aulasandroid.familysync.features.eventos.model.TelaEventosViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
 @Composable
-fun TelaEventos(navController: NavController) {
+fun TelaEventos(
+    navController: NavController,
+    viewModel: TelaEventosViewModel = viewModel()
+) {
 
     var mostrarPopup by remember { mutableStateOf(false) }
 
@@ -75,106 +81,20 @@ fun TelaEventos(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                Event(
-                    navController,
-                    "Aniversário da Vó",
-                    "Na rua canário Belga 130, é surpresa e tem que levar um prato de comida",
-                    "12/02/2026",
-                    "20:00",
-                    "Paulo",
-                    {mostrarPopup = true}
-                )
+                viewModel.listaEventos.forEach { evento ->
 
-                Event(
-                    navController,
-                    "Consulta Pediatra - Léo",
-                    "Levar a caderneta de vacinação e os últimos exames de sangue.",
-                    "15/05/2026",
-                    "09:30",
-                    "Mariana",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Vacina da Gripe",
-                    "Posto de saúde central. Não esquecer o cartão do SUS de todos.",
-                    "20/05/2026",
-                    "08:00",
-                    "Carlos",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Revisão do Carro",
-                    "Troca de óleo e pastilhas de freio. Orçamento já aprovado.",
-                    "18/05/2026",
-                    "14:00",
-                    "Paulo",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Dedetização da Casa",
-                    "Precisamos sair de casa por 4 horas. Combinar de levar o cachorro na pet.",
-                    "22/05/2026",
-                    "10:00",
-                    "Mariana",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Reunião de Pais e Mestres",
-                    "Discussão sobre a feira de ciências e formatura do fim do ano.",
-                    "25/05/2026",
-                    "19:30",
-                    "Carlos",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Compras do Mês - Atacadão",
-                    "Focar em itens de limpeza e estoque de arroz/feijão.",
-                    "05/06/2026",
-                    "18:30",
-                    "Paulo",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Vencimento Aluguel",
-                    "Confirmar se o boleto chegou por e-mail para evitar juros.",
-                    "10/06/2026",
-                    "09:00",
-                    "Mariana",
-                    {mostrarPopup = true}
-                )
-
-// --- SOCIAL E LAZER ---
-                Event(
-                    navController,
-                    "Churrasco com os Primos",
-                    "Cada família leva sua bebida. O Paulo ficou de comprar a carne.",
-                    "14/06/2026",
-                    "12:00",
-                    "Carlos",
-                    {mostrarPopup = true}
-                )
-
-                Event(
-                    navController,
-                    "Cinema em Família",
-                    "Estreia do novo filme de animação. Comprar ingressos online antes.",
-                    "28/05/2026",
-                    "16:00",
-                    "Paulo",
-                    {mostrarPopup = true}
-                )
+                    Event(
+                        navController = navController,
+                        titulo = evento.titulo,
+                        descricao = evento.descricao,
+                        data = formatarData(evento.data),
+                        horario = evento.hora.substring(0, 5),
+                        criador = viewModel.buscarNomeUsuario(evento.id_usuario),
+                        onClick = {
+                            mostrarPopup = true
+                        }
+                    )
+                }
             }
         }
 

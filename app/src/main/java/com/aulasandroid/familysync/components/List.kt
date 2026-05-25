@@ -47,9 +47,11 @@ import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 @Composable
 fun List(
     navController: NavController,
+    idLista: Int,
     criador: String,
     nome: String,
     porcentagem: Int
+
 ) {
 
     var favoritado by remember {
@@ -60,7 +62,7 @@ fun List(
         modifier = Modifier
             .width(380.dp)
             .height(120.dp)
-            .clickable(onClick = {navController.navigate("lista") },),
+            .clickable(onClick = {navController.navigate("lista/$idLista") },),
         colors = CardDefaults.cardColors(
             containerColor = creme
         ),

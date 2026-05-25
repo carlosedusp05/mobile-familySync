@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import android.util.Log
-import com.aulasandroid.familysync.Retrofit.RetrofitFactory
+import com.aulasandroid.familysync.retrofit.RetrofitFactory
 
 class CadastroUsuarioViewModel : ViewModel() {
 
@@ -233,7 +233,7 @@ class CadastroUsuarioViewModel : ViewModel() {
                     // LOG 1: Ver o que você está enviando
                     Log.d("API_FAMILY", "Enviando dados: $request")
 
-                    val response = RetrofitFactory.usuarioService.cadastrarUsuario(request)
+                    val response = RetrofitFactory.cadastrarUsuarioService.cadastrarUsuario(request)
 
                     val body = response.body()
 
