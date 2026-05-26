@@ -12,24 +12,34 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Notification
 import com.aulasandroid.familysync.components.RowBack
+import com.aulasandroid.familysync.features.notificacao.model.TelaNotificacaoViewModel
+import com.aulasandroid.familysync.mask.function.formatarData
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun TelaNotificacao(navController: NavController) {
+fun TelaNotificacao(
+    navController: NavController,
+    viewModel: TelaNotificacaoViewModel = viewModel()
+) {
     Column(
         modifier = Modifier.fillMaxSize().background(branco),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        LaunchedEffect(Unit) {
+            viewModel.buscarNotificacoes()
+        }
 
         RowBack(navController)
 
@@ -57,14 +67,13 @@ fun TelaNotificacao(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                Notification()
-                Notification()
-                Notification()
-                Notification()
-                Notification()
-                Notification()
-                Notification()
-                Notification()
+                viewModel.listaNotificacoes.forEach { notificacao ->
+                    Notification(
+                        tema = notificacao.titulo,
+                        descricao = notificacao.descricao,
+                        data = formatarData( notificacao.data)
+                    )
+                }
             }
         }
 

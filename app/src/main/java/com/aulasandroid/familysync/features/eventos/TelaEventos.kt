@@ -36,7 +36,7 @@ import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
-import com.aulasandroid.familysync.features.eventos.function.formatarData
+import com.aulasandroid.familysync.mask.function.formatarData
 import com.aulasandroid.familysync.features.eventos.model.TelaEventosViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
@@ -85,13 +85,19 @@ fun TelaEventos(
 
                     Event(
                         navController = navController,
+                        id = evento.id_eventos,
                         titulo = evento.titulo,
                         descricao = evento.descricao,
                         data = formatarData(evento.data),
                         horario = evento.hora.substring(0, 5),
                         criador = viewModel.buscarNomeUsuario(evento.id_usuario),
                         onClick = {
-                            mostrarPopup = true
+
+                        },
+                        onDelete = { id ->
+                            viewModel.deletarEvento(id) {
+                                viewModel.buscarEventos()
+                            }
                         }
                     )
                 }
@@ -145,7 +151,7 @@ fun TelaEventos(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             OutlinedMenorDp(
-                                "Nome",
+                                "Evento",
                                 170.dp,
                                 35.dp,
                                 "",
@@ -173,7 +179,8 @@ fun TelaEventos(
                                 placeHolder = "Descrição",
                                 width = 285.dp,
                                 height = 140.dp,
-                                ""
+                                "",
+                                {}
                             )
                         }
 

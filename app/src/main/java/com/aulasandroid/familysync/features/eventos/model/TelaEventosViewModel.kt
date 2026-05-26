@@ -1,6 +1,10 @@
 package com.aulasandroid.familysync.features.eventos.model
 
+import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aulasandroid.familysync.retrofit.RetrofitFactory
@@ -83,4 +87,62 @@ class TelaEventosViewModel : ViewModel() {
             ?.nome
             ?: "Usuário"
     }
+
+    fun deletarEvento(
+        id: Int,
+        onSucesso: () -> Unit
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                val response =
+                    RetrofitFactory
+                        .eventosService
+                        .deletarEvento(id)
+
+                Log.d(
+                    "API_FAMILY",
+                    "DELETE CODE: ${response.code()}"
+                )
+
+                Log.d(
+                    "API_FAMILY",
+                    "DELETE BODY: ${response.body()}"
+                )
+
+                val body = response.body()
+
+                if (
+                    response.isSuccessful &&
+                    body?.StatusCode == 200
+                ) {
+
+                    Log.d(
+                        "API_FAMILY",
+                        body.Response
+                    )
+
+                    onSucesso()
+
+                } else {
+
+                    Log.e(
+                        "API_FAMILY",
+                        "ERRO AO DELETAR"
+                    )
+                }
+
+            } catch (e: Exception) {
+
+                Log.e(
+                    "API_FAMILY",
+                    "ERRO CONEXAO DELETE",
+                    e
+                )
+            }
+        }
+    }
+
 }

@@ -6,6 +6,7 @@ import com.aulasandroid.familysync.features.eventos.service.EventosService
 import com.aulasandroid.familysync.features.login.service.LoginService
 import com.aulasandroid.familysync.features.eventos.users.service.UsuarioService
 import com.aulasandroid.familysync.features.listas.service.ListasService
+import com.aulasandroid.familysync.features.notificacao.service.NotificacaoService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -58,5 +59,9 @@ object RetrofitFactory {
 
     val listasService: ListasService by lazy {
         retrofit.create(ListasService::class.java)
+    }
+
+    val notificacaoService: NotificacaoService by lazy {
+        retrofit.create(NotificacaoService::class.java)
     }
 }

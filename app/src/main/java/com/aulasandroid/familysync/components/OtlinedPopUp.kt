@@ -22,19 +22,13 @@ fun OutlinedPopUp(
     placeHolder: String,
     width: Dp,
     height: Dp,
-    value: String
+    value: String,
+    onValueChange: (String) -> Unit,
 ) {
-
-    var textoState by remember {
-        mutableStateOf(value)
-    }
-
     OutlinedTextField(
         modifier = Modifier.width(width) .height(height),
-        value = textoState,
-        onValueChange = {
-            textoState = it
-        },
+        value = value,
+        onValueChange = onValueChange,
 
         shape = RoundedCornerShape(15.dp),
 

@@ -81,7 +81,7 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(30.dp)
             ) {
-                PersonInformation(
+                 PersonInformation(
                     "pessoa 0",
                     (estaSelecionado == "pessoa 0"),
                     {estaSelecionado = "pessoa 0"}
@@ -214,7 +214,8 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             "Descrição",
                             280.dp,
                             150.dp,
-                            ""
+                            "",
+                            {}
                         )
 
                         Row(
@@ -265,7 +266,8 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                             "Descrição",
                             280.dp,
                             150.dp,
-                            "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv"
+                            "",
+                            {}
                         )
 
                         Row(

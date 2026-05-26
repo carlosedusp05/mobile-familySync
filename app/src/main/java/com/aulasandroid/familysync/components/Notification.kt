@@ -1,6 +1,5 @@
 package com.aulasandroid.familysync.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
@@ -25,7 +23,11 @@ import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
 @Composable
-fun Notification() {
+fun Notification(
+    tema: String,
+    descricao: String,
+    data: String
+) {
     Card(
         modifier = Modifier
             .width(380.dp)
@@ -48,7 +50,7 @@ fun Notification() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "tema da notificação",
+                    text = tema,
                     fontWeight = FontWeight.Bold,
                     color = laranjaEscuro,
                     fontSize = 20.sp
@@ -62,7 +64,7 @@ fun Notification() {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = "xsadsccccccadddccccccccczxnhcsb cguggcfdvbhdbbvchx hvc xvchjxb chhjvccccccccccccccccccccccccccccccccccccc hcx bhjjjjhb chb hjjjjjj chhcbbhdhbvbfhdvbvfhabhdfbvhjb cdsacsda",
+                    text = descricao,
                     fontWeight = FontWeight.SemiBold,
                     lineHeight = 1.2.em,
                     color = laranjaEscuro,
@@ -78,7 +80,7 @@ fun Notification() {
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = "2026/12/08",
+                    text = data,
                     color = laranja,
                     fontSize = 15.sp
                 )

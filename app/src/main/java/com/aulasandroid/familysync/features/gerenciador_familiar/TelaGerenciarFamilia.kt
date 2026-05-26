@@ -218,14 +218,16 @@ fun TelaGerenciarFamilia(navController: NavController) {
                             "Grau de parentesco",
                             155.dp,
                             52.dp,
-                            ""
+                            "",
+                            {}
                         )
 
                         OutlinedPopUp(
                             "Nome do usuário",
                             280.dp,
                             52.dp,
-                            ""
+                            "",
+                            {}
                         )
 
                         Row(

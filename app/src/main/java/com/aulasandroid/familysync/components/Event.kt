@@ -40,12 +40,14 @@ import com.aulasandroid.familysync.ui.theme.vermelho
 @Composable
 fun Event(
     navController: NavController,
+    id: Int,
     titulo: String,
     descricao: String,
     data: String,
     horario: String,
     criador: String ,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDelete: (Int) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -162,14 +164,18 @@ fun Event(
                         }
 
                         IconButton(
-                            modifier = Modifier .size(25.dp),
-                            onClick = {navController.navigate("eventos")}
-                        )  {
+                            modifier = Modifier.size(25.dp),
+                            onClick = {
+                                onDelete(id)
+                            }
+                        ) {
                             Image(
-                                painter = painterResource(com.aulasandroid.familysync.R.drawable.trash),
+                                painter = painterResource(
+                                    com.aulasandroid.familysync.R.drawable.trash
+                                ),
                                 contentDescription = "apagar",
                                 colorFilter = ColorFilter.tint(marrom),
-                                modifier = Modifier .fillMaxSize()
+                                modifier = Modifier.fillMaxSize()
                             )
                         }
                     }

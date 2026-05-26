@@ -1,4 +1,4 @@
-package com.aulasandroid.familysync.features.eventos.function
+package com.aulasandroid.familysync.mask.function
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

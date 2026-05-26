@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,6 +29,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -39,6 +42,7 @@ import com.aulasandroid.familysync.components.Header
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.Outilined
+import com.aulasandroid.familysync.components.OutlinedDataMenorDp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.features.calendario.model.TelaCalendarioViewModel
@@ -94,7 +98,6 @@ fun TelaCalendario(
                 elevation = CardDefaults.cardElevation(4.dp)
 
             ) {
-                // Dentro dessa Column
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -184,12 +187,13 @@ fun TelaCalendario(
                                 color = laranjaEscuro
                             )
 
-                            OutlinedMenorDp(
-                                "Ex: 01/01/01",
+                            OutlinedDataMenorDp(
+                                "AAAA-MM-DD",
                                 130.dp,
                                 30.dp,
-                                "",
-                                {}
+                                viewModel.data,
+                                {viewModel.onDataChange(it)},
+                                keyboardType = KeyboardType.Number
                             )
                         }
                         Row(
@@ -200,19 +204,20 @@ fun TelaCalendario(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             OutlinedMenorDp(
-                                "Ex: 01/01/01",
+                                "Evento",
                                 150.dp,
                                 35.dp,
-                                "",
-                                {}
+                                viewModel.titulo,
+                                {viewModel.onTituloChange(it)}
                             )
 
-                            OutlinedMenorDp(
+                            OutlinedDataMenorDp(
                                 "20:00",
                                 80.dp,
                                 35.dp,
-                                "",
-                                {}
+                                 viewModel.hora,
+                                {viewModel.onHoraChange(it)},
+                                keyboardType = KeyboardType.Number
                             )
                         }
 
@@ -228,7 +233,8 @@ fun TelaCalendario(
                                 placeHolder = "Descrição",
                                 width = 285.dp,
                                 height = 140.dp,
-                                ""
+                                value = viewModel.descricao,
+                                onValueChange = {viewModel.onDescricaoChange(it)}
                             )
                         }
 
@@ -246,9 +252,11 @@ fun TelaCalendario(
 
                             OrangeButtonPopUp(
                                 "Criar",
-                                {mostrarPopup = false}
+                                {viewModel.criarEvento {
+                                    mostrarPopup = false
+                                    navController.navigate("eventos")
+                                } }
                             )
-
                         }
                     }
                 }
