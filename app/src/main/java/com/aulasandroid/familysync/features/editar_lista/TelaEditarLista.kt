@@ -20,7 +20,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,21 +35,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CremeButton
-import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Footer
-import com.aulasandroid.familysync.components.Item
 import com.aulasandroid.familysync.components.ItemEdition
 import com.aulasandroid.familysync.components.OrangeButton
-import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.OutlinedComboBox
 import com.aulasandroid.familysync.components.OutlinedCreme
-import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
+import com.aulasandroid.familysync.features.editar_lista.model.TelaEditarListaViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
@@ -58,12 +54,11 @@ import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaEditarLista(navController: NavController) {
-
-    var valorUnitario by remember { mutableStateOf("") }
-    var quantidade by remember { mutableStateOf("") }
-    var isChecked by remember { mutableStateOf(false) }
-
+fun TelaEditarLista(
+    navController: NavController,
+    idLista: Int,
+    viewModel: TelaEditarListaViewModel = viewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -218,23 +213,23 @@ fun TelaEditarLista(navController: NavController) {
                             .size(30.dp)
                             .clip(CircleShape)
                             .border(2.dp, Color.White, CircleShape)
-                            .background(if (isChecked) laranja else Color.Transparent)
-                            .clickable { isChecked = !isChecked },
+                            .background(if (viewModel.comprado) laranja else Color.Transparent)
+                            .clickable { viewModel.comprado = !viewModel.comprado },
                         contentAlignment = Alignment.Center
                     ) {
 
                     }
 
                     OutlinedCreme(
-                        value = valorUnitario,
-                        onValueChange = { valorUnitario = it },
+                        value = viewModel.valorUnitario,
+                        onValueChange = { viewModel.valorUnitario = it },
                         placeholder = "R$0,00",
                         modifier = Modifier.width(130.dp)
                     )
 
                     OutlinedCreme(
-                        value = quantidade,
-                        onValueChange = { quantidade = it },
+                        value = viewModel.quantidade,
+                        onValueChange = { viewModel.quantidade = it },
                         placeholder = "0",
                         modifier = Modifier.width(70.dp)
                     )
@@ -243,7 +238,9 @@ fun TelaEditarLista(navController: NavController) {
                             .size(35.dp)
                             .clip(CircleShape)
                             .background(laranja)
-                            .clickable { /* Lógica de adicionar */ },
+                            .clickable {
+                                viewModel.adicionarItem()
+                            },
                         contentAlignment = Alignment.Center
                     ) {
                         Image(
@@ -269,47 +266,17 @@ fun TelaEditarLista(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
+                viewModel.listaItens.forEach { item ->
 
-                ItemEdition(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                ItemEdition(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
+                    ItemEdition(
+                        nome = item.nome,
+                        precoUnitario = item.valorUnitario,
+                        quantidade = item.quantidade,
+                        onDelete = {
+                            viewModel.removerItem(item)
+                        }
+                    )
+                }
             }
             Row(
                 modifier = Modifier
@@ -335,7 +302,10 @@ fun TelaEditarLista(navController: NavController) {
                     height = 55.dp,
                     fontSize = 21,
                     navController,
-                    ""
+                    "",
+                    {
+                        viewModel.salvarItens(idLista)
+                    }
                 )
             }
         }

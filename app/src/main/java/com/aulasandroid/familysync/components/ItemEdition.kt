@@ -37,10 +37,10 @@ import com.aulasandroid.familysync.ui.theme.vermelhoEscuro
 
 @Composable
 fun ItemEdition(
-    navController: NavController,
     nome: String,
     precoUnitario: Double,
-    quantidade: Int
+    quantidade: Int,
+    onDelete: () -> Unit
 ) {
     val precoTotal = precoUnitario * quantidade
     Card(
@@ -112,7 +112,9 @@ fun ItemEdition(
                         .size(30.dp)
                         .clip(CircleShape)
                         .background(vermelhoEscuro)
-                        .clickable { /* Lógica de adicionar */ },
+                        .clickable {
+                            onDelete()
+                        },
                     contentAlignment = Alignment.Center
                 ) {
                     Image(

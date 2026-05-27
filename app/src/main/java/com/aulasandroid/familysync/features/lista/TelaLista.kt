@@ -38,12 +38,12 @@ import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 @Composable
 fun TelaLista(
     navController: NavController,
-    id_lista: Int,
+    idLista: Int,
     viewModel: TelaListaViewModel =  androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
     LaunchedEffect(Unit) {
 
-        viewModel.buscarItens(id_lista)
+        viewModel.buscarItens(idLista)
     }
 
     Column(

@@ -257,47 +257,47 @@ fun TelaCriarLista(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                ItemEdition(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
-
-                ItemEdition(
-                    navController,
-                    "azeite",
-                    53.00,
-                    1
-                )
-
-                ItemEdition(
-                    navController,
-                    "feijao",
-                    13.00,
-                    3
-                )
+//                ItemEdition(
+//                    navController,
+//                    "feijao",
+//                    13.00,
+//                    3
+//                )
+//
+//                ItemEdition(
+//                    navController,
+//                    "azeite",
+//                    53.00,
+//                    1
+//                )
+//
+//                ItemEdition(
+//                    navController,
+//                    "feijao",
+//                    13.00,
+//                    3
+//                )
+//
+//                ItemEdition(
+//                    navController,
+//                    "feijao",
+//                    13.00,
+//                    3
+//                )
+//
+//                ItemEdition(
+//                    navController,
+//                    "azeite",
+//                    53.00,
+//                    1
+//                )
+//
+//                ItemEdition(
+//                    navController,
+//                    "feijao",
+//                    13.00,
+//                    3
+//                )
             }
             Row(
                 modifier = Modifier
