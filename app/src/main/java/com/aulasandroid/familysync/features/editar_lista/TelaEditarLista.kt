@@ -305,6 +305,7 @@ fun TelaEditarLista(
                     "",
                     {
                         viewModel.salvarItens(idLista)
+                        navController.navigate("lista")
                     }
                 )
             }

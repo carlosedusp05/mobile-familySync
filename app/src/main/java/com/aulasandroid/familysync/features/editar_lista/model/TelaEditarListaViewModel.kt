@@ -36,58 +36,66 @@ class TelaEditarListaViewModel : ViewModel() {
 
                 Log.d(
                     "API_FAMILY",
-                    "BUSCANDO ITENS DA LISTA: $idLista"
+                    "BUSCANDO FAMILIA COMPLETA"
                 )
 
                 val response =
                     RetrofitFactory
                         .listasService
-                        .buscarItens(idLista)
+                        .buscarFamiliaCompleta(1)
 
                 Log.d(
                     "API_FAMILY",
-                    "GET CODE: ${response.code()}"
+                    "CODE: ${response.code()}"
                 )
 
                 Log.d(
                     "API_FAMILY",
-                    "GET BODY: ${response.body()}"
+                    "BODY: ${response.body()}"
                 )
 
                 if (response.isSuccessful) {
 
                     val body = response.body()
 
-                    body?.response?.let { itens ->
+                    val usuarios =
+                        body?.response?.usuarios ?: emptyList()
 
-                        listaItens.clear()
+                    val listaEncontrada =
+                        usuarios
+                            .flatMap { it.listas }
+                            .find { it.idLista == idLista }
 
-                        listaItens.addAll(
+                    val itens =
+                        listaEncontrada?.itens ?: emptyList()
 
-                            itens.map {
+                    listaItens.clear()
 
-                                ItemLista(
-                                    id_item = it.id_item,
-                                    nome = it.nome_item,
-                                    quantidade = it.quantidade,
-                                    valorUnitario = it.valor_unitario.toDouble(),
-                                    comprado = it.comprado,
-                                    veioDaApi = true
-                                )
-                            }
-                        )
+                    listaItens.addAll(
 
-                        Log.d(
-                            "API_FAMILY",
-                            "ITENS CARREGADOS: ${listaItens.size}"
-                        )
-                    }
+                        itens.map {
+
+                            ItemLista(
+                                id_item = it.idItem,
+                                nome = it.nomeItem,
+                                quantidade = it.quantidade,
+                                valorUnitario = it.valorUnitario.toDouble(),
+                                comprado = it.comprado == 1,
+                                veioDaApi = true
+                            )
+                        }
+                    )
+
+                    Log.d(
+                        "API_FAMILY",
+                        "ITENS CARREGADOS: ${listaItens.size}"
+                    )
 
                 } else {
 
                     Log.e(
                         "API_FAMILY",
-                        "ERRO GET: ${response.errorBody()?.string()}"
+                        "ERRO API: ${response.errorBody()?.string()}"
                     )
                 }
 
@@ -95,7 +103,7 @@ class TelaEditarListaViewModel : ViewModel() {
 
                 Log.e(
                     "API_FAMILY",
-                    "ERRO BUSCAR ITENS: ${e.message}"
+                    "ERRO: ${e.message}"
                 )
 
                 e.printStackTrace()

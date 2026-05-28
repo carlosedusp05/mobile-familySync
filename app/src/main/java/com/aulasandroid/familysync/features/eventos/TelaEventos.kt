@@ -24,6 +24,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -33,6 +35,7 @@ import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Event
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.OrangeButtonPopUp
+import com.aulasandroid.familysync.components.OutlinedDataMenorDp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
@@ -92,7 +95,11 @@ fun TelaEventos(
                         horario = evento.hora.substring(0, 5),
                         criador = viewModel.buscarNomeUsuario(evento.id_usuario),
                         onClick = {
+                                viewModel.preencherCampos(evento)
 
+                                mostrarPopup = true
+
+                                mostrarPopup = true
                         },
                         onDelete = { id ->
                             viewModel.deletarEvento(id) {
@@ -135,12 +142,15 @@ fun TelaEventos(
                                 color = laranjaEscuro
                             )
 
-                            OutlinedMenorDp(
-                                "Ex: 01-01-01",
+                            OutlinedDataMenorDp(
+                                "AAAA-MM-DD",
                                 130.dp,
                                 30.dp,
-                                "",
-                                {}
+                                viewModel.dataEvento,
+                                {
+                                    viewModel.onDataEventoChange(it)
+                                },
+                                keyboardType = KeyboardType.Number
                             )
                         }
                         Row(
@@ -154,16 +164,21 @@ fun TelaEventos(
                                 "Evento",
                                 170.dp,
                                 35.dp,
-                                "",
-                                {}
+                                viewModel.tituloEvento,
+                                {
+                                    viewModel.onTituloEventoChange(it)
+                                }
                             )
 
-                            OutlinedMenorDp(
+                            OutlinedDataMenorDp(
                                 "20:00",
                                 80.dp,
                                 30.dp,
-                                "",
-                                {}
+                                viewModel.horaEvento,
+                                {
+                                    viewModel.onHoraEventoChange(it)
+                                },
+                                keyboardType = KeyboardType.Number
                             )
                         }
 
@@ -179,8 +194,10 @@ fun TelaEventos(
                                 placeHolder = "Descrição",
                                 width = 285.dp,
                                 height = 140.dp,
-                                "",
-                                {}
+                                viewModel.descricaoEvento,
+                                {
+                                    viewModel.onDescricaoEventoChange(it)
+                                }
                             )
                         }
 
@@ -198,7 +215,12 @@ fun TelaEventos(
 
                             OrangeButtonPopUp(
                                 "Salvar",
-                                {mostrarPopup = false}
+                                {
+                                    viewModel.atualizarEvento {
+                                    viewModel.buscarEventos()
+                                    mostrarPopup = false
+                                    }
+                                }
                             )
 
                         }

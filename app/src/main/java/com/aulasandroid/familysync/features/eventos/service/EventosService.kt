@@ -1,9 +1,10 @@
 package com.aulasandroid.familysync.features.eventos.service
 
+import com.aulasandroid.familysync.features.eventos.model.AtualizarEventoRequest
+import com.aulasandroid.familysync.features.eventos.model.AtualizarEventoResponse
 import com.aulasandroid.familysync.features.eventos.model.CriarEventoResponse
-import com.aulasandroid.familysync.features.eventos.model.DeletarEventoResponse
+import com.aulasandroid.familysync.features.eventos.model.DeletarEventoRequest
 import com.aulasandroid.familysync.features.eventos.model.EventoRequest
-import com.aulasandroid.familysync.features.eventos.model.EventoResponse
 import com.aulasandroid.familysync.features.eventos.model.EventosAPIResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -11,6 +12,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface EventosService {
@@ -28,5 +30,14 @@ interface EventosService {
     @DELETE("v1/familysync/evento/{id}")
     suspend fun deletarEvento(
         @Path("id") id: Int
-    ): Response<DeletarEventoResponse>
+    ): Response<DeletarEventoRequest>
+
+    @Headers("Content-Type: application/json")
+    @PUT("v1/familysync/evento/{id}")
+    suspend fun atualizarEvento(
+
+        @Path("id") id: Int,
+        @Body request: AtualizarEventoRequest
+
+    ): Response<AtualizarEventoResponse>
 }

@@ -1,6 +1,6 @@
 package com.aulasandroid.familysync.features.eventos.model
 
-data class DeletarEventoResponse(
+data class DeletarEventoRequest(
 
     val Desenvolvedor: String,
     val Version: String,

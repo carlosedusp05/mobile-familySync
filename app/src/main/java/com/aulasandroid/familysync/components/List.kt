@@ -1,8 +1,10 @@
 package com.aulasandroid.familysync.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -50,12 +52,13 @@ fun List(
     idLista: Int,
     criador: String,
     nome: String,
-    porcentagem: Int
+    porcentagem: Int,
+    favorita: Boolean
 
 ) {
 
     var favoritado by remember {
-        mutableStateOf(false)
+        mutableStateOf(favorita)
     }
 
     Card(
@@ -157,24 +160,29 @@ fun List(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
+                    Box(
                         modifier = Modifier
-                        .fillMaxWidth(0.85f)
-                        .fillMaxHeight()
-                        .clip(RoundedCornerShape(15.dp))
-                        .background(marrom)
-                    ) { }
+                            .fillMaxWidth(0.85f)
+                            .fillMaxHeight()
+                            .border(
+                                width = 2.dp,
+                                color = marrom,
+                                shape = RoundedCornerShape(50.dp)
+                            )
+                    ) {
 
-//                    Row(
-//                        modifier = Modifier
-//                            .width(30.dp)
-//                            .fillMaxHeight()
-//                            .background(Color.Green),
-//                        verticalAlignment = Alignment.CenterVertically,
-//                        horizontalArrangement = Arrangement.Center
-//                    ) {
-//
-//                    }
+                        Row(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .fillMaxWidth(
+                                    porcentagem / 100f
+                                )
+                                .background(
+                                    color = marrom,
+                                    shape = RoundedCornerShape(50.dp)
+                                )
+                        ) {}
+                    }
                     Text(
                         text = "$porcentagem%",
                         fontSize = 10.sp,

@@ -13,3 +13,11 @@ data class EventoResponse(
     val data: String,
     val hora: String
 )
+
+data class AtualizarEventoResponse(
+
+    val Desenvolvedor: String,
+    val Version: String,
+    val StatusCode: Int,
+    val Response: String
+)

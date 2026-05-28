@@ -68,7 +68,7 @@ fun TelaLista(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Nome da Lista",
+                    text = viewModel.nomeLista.value,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = laranjaEscuro
@@ -84,7 +84,7 @@ fun TelaLista(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Fulano, pedro, paulo, joao, rafael ...",
+                    text = viewModel.participantes.value,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold,
                     color = laranjaEscuro
@@ -136,11 +136,12 @@ fun TelaLista(
 
             ) {
                 viewModel.listaProdutos.forEach { produto ->
+
                     Item(
                         navController = navController,
-                        nome = produto.nome_item,
+                        nome = produto.nomeItem,
                         precoUnitario =
-                            produto.valor_unitario.toDouble(),
+                            produto.valorUnitario.toDouble(),
                         quantidade = produto.quantidade,
                         isChecked = produto.comprado == 1,
                         onCheckChange = {}

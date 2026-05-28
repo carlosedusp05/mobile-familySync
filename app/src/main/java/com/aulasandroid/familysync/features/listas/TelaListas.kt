@@ -56,12 +56,14 @@ fun TelaListas(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 viewModel.listaListas.forEach { lista ->
+
                     List(
                         navController = navController,
-                        idLista = lista.id_lista,
-                        criador = viewModel.buscarNomeUsuario(lista.id_usuario),
-                        nome = lista.nome,
-                        porcentagem = 70
+                        idLista = lista.idLista,
+                        criador = lista.nomeUsuario,
+                        nome = lista.nomeLista,
+                        porcentagem = viewModel.calcularPorcentagem(lista),
+                        favorita = lista.favorita == 1
                     )
                 }
             }
