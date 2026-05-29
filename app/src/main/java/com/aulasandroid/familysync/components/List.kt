@@ -24,14 +24,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -53,30 +48,33 @@ fun List(
     criador: String,
     nome: String,
     porcentagem: Int,
-    favorita: Boolean
-
+    favorita: Boolean,
+    onFavoritoChange: (Boolean) -> Unit,
+    onDelete: () -> Unit
 ) {
-
-    var favoritado by remember {
-        mutableStateOf(favorita)
-    }
 
     Card(
         modifier = Modifier
             .width(380.dp)
             .height(120.dp)
-            .clickable(onClick = {navController.navigate("lista/$idLista") },),
+            .clickable(
+                onClick = {
+                    navController.navigate("lista/$idLista")
+                },
+            ),
         colors = CardDefaults.cardColors(
             containerColor = creme
         ),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(10.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
+
             Row(
                 modifier = Modifier
                     .height(35.dp)
@@ -84,6 +82,7 @@ fun List(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+
                 Row(
                     modifier = Modifier
                         .fillMaxHeight()
@@ -91,6 +90,7 @@ fun List(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Text(
                         text = nome,
                         fontSize = 16.sp,
@@ -98,25 +98,28 @@ fun List(
                         color = laranjaEscuro
                     )
 
-                    if (favoritado) {
+                    if (favorita) {
 
                         Icon(
                             modifier = Modifier
                                 .size(25.dp)
-                                .clickable{
-                                    favoritado = false
+                                .clickable {
+
+                                    onFavoritoChange(false)
                                 },
                             imageVector = Icons.Default.Favorite,
                             tint = vermelhoEscuro,
                             contentDescription = "Favorite icon"
                         )
-                    }else {
+
+                    } else {
 
                         Icon(
                             modifier = Modifier
                                 .size(25.dp)
-                                .clickable{
-                                    favoritado = true
+                                .clickable {
+
+                                    onFavoritoChange(true)
                                 },
                             imageVector = Icons.Default.FavoriteBorder,
                             tint = vermelhoEscuro,
@@ -133,26 +136,31 @@ fun List(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
+
                     IconButton(
-                        onClick = {/* TODO */},
+                        onClick = {
+                            onDelete()
+                        },
                         modifier = Modifier.fillMaxSize()
                     ) {
+
                         Icon(
                             painter = painterResource(R.drawable.trash),
                             tint = branco,
                             contentDescription = "icon apagar",
-                            modifier = Modifier .fillMaxSize(0.8f)
+                            modifier = Modifier.fillMaxSize(0.8f)
                         )
                     }
                 }
             }
 
-            Column (
+            Column(
                 modifier = Modifier
                     .height(45.dp)
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -160,6 +168,7 @@ fun List(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth(0.85f)
@@ -183,6 +192,7 @@ fun List(
                                 )
                         ) {}
                     }
+
                     Text(
                         text = "$porcentagem%",
                         fontSize = 10.sp,
@@ -201,6 +211,7 @@ fun List(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
+
                     Text(
                         text = "Criado por $criador",
                         fontSize = 10.sp,

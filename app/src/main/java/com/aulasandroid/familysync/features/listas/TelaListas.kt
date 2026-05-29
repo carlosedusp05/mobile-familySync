@@ -63,7 +63,20 @@ fun TelaListas(
                         criador = lista.nomeUsuario,
                         nome = lista.nomeLista,
                         porcentagem = viewModel.calcularPorcentagem(lista),
-                        favorita = lista.favorita == 1
+                        favorita = lista.favorita == 1,
+                        onFavoritoChange = { favorito ->
+
+                            viewModel.atualizarFavorita(
+                                lista.idLista,
+                                favorito
+                            )
+                        },
+                        onDelete = {
+
+                            viewModel.deletarLista(
+                                lista.idLista
+                            )
+                        }
                     )
                 }
             }

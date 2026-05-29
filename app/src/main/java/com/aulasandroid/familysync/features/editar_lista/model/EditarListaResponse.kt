@@ -58,6 +58,9 @@ data class ListaResponse(
     @SerializedName("nome_lista")
     val nomeLista: String,
 
+    @SerializedName("favorita")
+    val favorita: Int,
+
     @SerializedName("itens")
     val itens: List<ItemResponse>
 )

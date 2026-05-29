@@ -59,7 +59,13 @@ class TelaListasViewModel : ViewModel() {
 
                     usuarios.forEach { usuario ->
 
-                        usuario.listas.forEach { lista ->
+                        val listasOrdenadas =
+                            usuario.listas.sortedByDescending {
+
+                                it.favorita
+                            }
+
+                        listasOrdenadas.forEach { lista ->
 
                             listaListas.add(
 
@@ -81,5 +87,101 @@ class TelaListasViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
+    }
+
+    fun atualizarFavorita(
+        idLista: Int,
+        favorita: Boolean
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                val request =
+                    FavoritaRequest(
+                        favorita = favorita
+                    )
+
+                val response =
+                    RetrofitFactory
+                        .listasService
+                        .atualizarFavorita(
+                            idLista,
+                            request
+                        )
+
+                if (response.isSuccessful) {
+
+                    val index =
+                        listaListas.indexOfFirst {
+
+                            it.idLista == idLista
+                        }
+
+                    if (index != -1) {
+
+                        val listaAtualizada =
+                            listaListas[index].copy(
+
+                                favorita =
+                                    if (favorita) 1 else 0
+                            )
+
+                        listaListas[index] =
+                            listaAtualizada
+                    }
+
+                    ordenarListas()
+                }
+
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun deletarLista(
+        idLista: Int
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                val response =
+                    RetrofitFactory
+                        .listasService
+                        .deletarLista(idLista)
+
+                if (response.isSuccessful) {
+
+                    listaListas.removeAll {
+
+                        it.idLista == idLista
+                    }
+                }
+
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun ordenarListas() {
+
+        val listasOrdenadas =
+            listaListas.sortedByDescending {
+
+                it.favorita
+            }
+
+        listaListas.clear()
+
+        listaListas.addAll(
+            listasOrdenadas
+        )
     }
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CremeButton
@@ -47,7 +48,9 @@ import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.OutlinedComboBox
 import com.aulasandroid.familysync.components.OutlinedCreme
+import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.RowBack
+import com.aulasandroid.familysync.features.criar_lista.model.TelaCriarListaViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
@@ -55,7 +58,10 @@ import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaCriarLista(navController: NavController) {
+fun TelaCriarLista(
+    navController: NavController,
+    viewModel: TelaCriarListaViewModel = viewModel()
+) {
 
     var valorUnitario by remember { mutableStateOf("") }
     var quantidade by remember { mutableStateOf("") }
@@ -96,7 +102,7 @@ fun TelaCriarLista(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -113,13 +119,23 @@ fun TelaCriarLista(navController: NavController) {
                         color = laranjaEscuro,
                     )
                 }
+                    OutlinedMenorDp(
+                        placeHolder = "Tema da lista",
+                        width = 353.dp,
+                        height = 40.dp,
+                        value = viewModel.nomeLista.value,
+                        onValueChange = {
+
+                            viewModel.atualizarNomeLista(it)
+                        }
+                    )
             }
 
             Column (
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(70.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -139,7 +155,7 @@ fun TelaCriarLista(navController: NavController) {
 
                 OutlinedComboBox(
                     353.dp,
-                    40.dp,
+                    35.dp,
                     ""
                 )
             }
@@ -148,7 +164,7 @@ fun TelaCriarLista(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -166,11 +182,10 @@ fun TelaCriarLista(navController: NavController) {
                     )
                 }
 
-                Outilined(
-                    modifier = Modifier,
-                    placeHolder = "",
+                OutlinedMenorDp(
+                    placeHolder = "Nome do item",
                     width = 353.dp,
-                    height = 75.dp,
+                    height = 40.dp,
                     "",
                     {}
                 )
@@ -323,7 +338,14 @@ fun TelaCriarLista(navController: NavController) {
                     height = 55.dp,
                     fontSize = 21,
                     navController,
-                    ""
+                    "",
+                    onClick = {
+
+                        viewModel.criarLista {
+
+                            navController.popBackStack()
+                        }
+                    }
                 )
             }
         }
