@@ -112,7 +112,6 @@ fun TelaCadastroUsuario(
                     mensagemErro = viewModel.cpfMensagem,
                     CpfVisualTransformation(),
                     keyboardType = KeyboardType.Number
-
                 )
 
                 Outilined(

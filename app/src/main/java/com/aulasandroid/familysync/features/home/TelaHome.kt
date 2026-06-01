@@ -23,16 +23,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CardFunctionality
 import com.aulasandroid.familysync.components.Header
+import com.aulasandroid.familysync.features.home.model.TelaHomeViewModel
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaHome(navController: NavController) {
+fun TelaHome(
+    navController: NavController,
+    viewModel: TelaHomeViewModel = viewModel()
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -46,7 +51,7 @@ fun TelaHome(navController: NavController) {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Nome da família",
+                text = viewModel.nomeFamilia.value,
                 color = marrom,
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp

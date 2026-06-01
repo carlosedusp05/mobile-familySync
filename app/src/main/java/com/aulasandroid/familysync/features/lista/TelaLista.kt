@@ -29,6 +29,7 @@ import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.Item
+import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.features.lista.model.TelaListaViewModel
 import com.aulasandroid.familysync.ui.theme.branco
@@ -53,7 +54,7 @@ fun TelaLista(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-       RowBack(navController)
+       RowBack(navController, "lista")
 
         Column(
             modifier = Modifier
@@ -99,17 +100,33 @@ fun TelaLista(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                CremeButton(
-                    modifier = Modifier,
-                    text = "selecionar todos",
-                    width = 160.dp,
-                    height = 33.dp,
-                    fontSize = 14,
-                    navController,
-                    "lista",
-                    {}
-                )
-
+                    if (viewModel.todosSelecionados()) {
+                        OrangeButton(
+                            modifier = Modifier,
+                            text = "desmarcar todos",
+                            width = 160.dp,
+                            height = 33.dp,
+                            fontSize = 14,
+                            navController,
+                            "lista",
+                            {
+                                viewModel.alterarTodosItens()
+                            }
+                        )
+                    } else {
+                        CremeButton(
+                            modifier = Modifier,
+                            text = "marcar todos",
+                            width = 160.dp,
+                            height = 33.dp,
+                            fontSize = 14,
+                            navController,
+                            "lista",
+                            {
+                                viewModel.alterarTodosItens()
+                            }
+                        )
+                    }
                 IconButton(
                     onClick = {navController.navigate("editar-lista") },
                     modifier = Modifier.size(50.dp)
@@ -144,7 +161,12 @@ fun TelaLista(
                             produto.valorUnitario.toDouble(),
                         quantidade = produto.quantidade,
                         isChecked = produto.comprado == 1,
-                        onCheckChange = {}
+                        onCheckChange = { checked ->
+                            viewModel.atualizarItemComprado(
+                                produto,
+                                checked
+                            )
+                        }
                     )
                 }
             }

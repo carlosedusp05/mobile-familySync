@@ -24,7 +24,8 @@ import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
 fun RowBack(
-    navController: NavController
+    navController: NavController,
+    abaAtiva: String? = null
 ) {
     Row(
         modifier = Modifier
@@ -33,6 +34,6 @@ fun RowBack(
             .padding(horizontal = 25.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        LeftArrow(navController)
+        LeftArrow(navController, abaAtiva)
     }
 }

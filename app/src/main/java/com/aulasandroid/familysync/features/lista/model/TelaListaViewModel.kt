@@ -19,7 +19,11 @@ class TelaListaViewModel : ViewModel() {
     var participantes =
         mutableStateOf("")
 
+    var idListaAtual = 0
+
     fun buscarItens(idLista: Int) {
+
+        idListaAtual = idLista
 
         viewModelScope.launch {
 
@@ -77,6 +81,91 @@ class TelaListaViewModel : ViewModel() {
 
                 e.printStackTrace()
             }
+        }
+    }
+
+    fun atualizarItemComprado(
+        item: ItemResponse,
+        comprado: Boolean
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                val request =
+                    AtualizarItemRequest(
+
+                        id_lista = idListaAtual,
+
+                        nome_item = item.nomeItem,
+
+                        quantidade = item.quantidade,
+
+                        valor_unitario = item.valorUnitario,
+
+                        valor_total = item.valorTotal,
+
+                        comprado = comprado
+                    )
+
+                val response =
+                    RetrofitFactory
+                        .listasService
+                        .atualizarItem(
+                            item.idItem,
+                            request
+                        )
+
+                if (response.isSuccessful) {
+
+                    val index =
+                        listaProdutos.indexOfFirst {
+
+                            it.idItem == item.idItem
+                        }
+
+                    if (index != -1) {
+
+                        listaProdutos[index] =
+                            listaProdutos[index].copy(
+
+                                comprado =
+                                    if (comprado) 1 else 0
+                            )
+                    }
+                }
+
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun todosSelecionados(): Boolean {
+
+        return listaProdutos.isNotEmpty() &&
+                listaProdutos.all {
+
+                    it.comprado == 1
+                }
+    }
+
+    fun alterarTodosItens() {
+
+        val marcarTodos =
+            listaProdutos.any {
+
+                it.comprado == 0
+            }
+
+        listaProdutos.forEach { item ->
+
+            atualizarItemComprado(
+                item,
+                marcarTodos
+            )
         }
     }
 }

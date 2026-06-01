@@ -12,7 +12,6 @@ data class ListaComUsuario(
 )
 
 data class FavoritaResponse(
-
     val Desenvolvedor: String?,
     val Version: String?,
     val StatusCode: Int,

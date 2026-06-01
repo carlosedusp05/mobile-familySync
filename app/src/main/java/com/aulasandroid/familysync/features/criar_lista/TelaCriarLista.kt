@@ -182,13 +182,33 @@ fun TelaCriarLista(
                     )
                 }
 
-                OutlinedMenorDp(
-                    placeHolder = "Nome do item",
-                    width = 353.dp,
-                    height = 40.dp,
-                    "",
-                    {}
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .padding(start = 30.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    OutlinedMenorDp(
+                        placeHolder = "Nome do item",
+                        width = 193.dp,
+                        height = 40.dp,
+                        "",
+                        {}
+                    )
+
+                    OrangeButton(
+                        modifier = Modifier,
+                        text = "Adicionar",
+                        width = 150.dp,
+                        height = 40.dp,
+                        fontSize = 21,
+                        navController,
+                        "",
+                        onClick = { }
+                    )
+                }
             }
 
             Column(
@@ -241,21 +261,6 @@ fun TelaCriarLista(
                         placeholder = "0",
                         modifier = Modifier.width(70.dp)
                     )
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .clip(CircleShape)
-                            .background(laranja)
-                            .clickable { /* Lógica de adicionar */ },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.plus),
-                            modifier = Modifier.size(15.dp),
-                            contentDescription = "Adicionar",
-                            colorFilter = ColorFilter.tint(Color.White)
-                        )
-                    }
                 }
             }
 

@@ -6,6 +6,8 @@ import com.aulasandroid.familysync.features.editar_lista.model.CriarItemRequest
 import com.aulasandroid.familysync.features.editar_lista.model.CriarItemResponse
 import com.aulasandroid.familysync.features.editar_lista.model.DeleteItemResponse
 import com.aulasandroid.familysync.features.editar_lista.model.FamiliaCompletaResponse
+import com.aulasandroid.familysync.features.lista.model.AtualizarItemRequest
+import com.aulasandroid.familysync.features.lista.model.AtualizarItemResponse
 import com.aulasandroid.familysync.features.listas.model.FavoritaRequest
 import com.aulasandroid.familysync.features.listas.model.FavoritaResponse
 import retrofit2.Response
@@ -18,10 +20,22 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ListasService {
+
+    // GETS
     @GET("v1/familysync/lista/completa/familia/{id}")
     suspend fun buscarFamiliaCompleta(
         @Path("id") id: Int
     ): Response<FamiliaCompletaResponse>
+
+
+    // POSTS
+    @Headers(
+        "Content-Type: application/json"
+    )
+    @POST("v1/familysync/lista")
+    suspend fun criarLista(
+        @Body request: CriarListaRequest
+    ): Response<CriarListaResponse>
 
     @Headers("Content-Type: application/json")
     @POST("v1/familysync/item")
@@ -29,11 +43,20 @@ interface ListasService {
         @Body request: CriarItemRequest
     ): Response<CriarItemResponse>
 
+
+    // DELETES
     @DELETE("v1/familysync/item/{id}")
     suspend fun deletarItem(
         @Path("id") id: Int
     ): Response<DeleteItemResponse>
 
+    @DELETE("v1/familysync/lista/{id}")
+    suspend fun deletarLista(
+        @Path("id") id: Int
+    ): Response<FavoritaResponse>
+
+
+    //PUTS
     @Headers(
         "Content-Type: application/json"
     )
@@ -43,16 +66,12 @@ interface ListasService {
         @Body request: FavoritaRequest
     ): Response<FavoritaResponse>
 
-    @DELETE("v1/familysync/lista/{id}")
-    suspend fun deletarLista(
-        @Path("id") id: Int
-    ): Response<FavoritaResponse>
-
     @Headers(
         "Content-Type: application/json"
     )
-    @POST("v1/familysync/lista")
-    suspend fun criarLista(
-        @Body request: CriarListaRequest
-    ): Response<CriarListaResponse>
+    @PUT("v1/familysync/item/{id}")
+    suspend fun atualizarItem(
+        @Path("id") id: Int,
+        @Body request: AtualizarItemRequest
+    ): Response<AtualizarItemResponse>
 }

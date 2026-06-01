@@ -16,10 +16,20 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
-fun LeftArrow(navController: NavController) {
+fun LeftArrow(
+    navController: NavController,
+    abaAtiva: String? = null
+) {
     Button(
         onClick = {
-            navController.popBackStack()
+            if (abaAtiva != null) {
+                navController.popBackStack()
+            } else {
+                when (abaAtiva) {
+                    "lista" -> navController.navigate("listas")
+                    else -> navController.navigate("home")
+                }
+            }
         },
         colors = ButtonDefaults.buttonColors(
             containerColor = laranja

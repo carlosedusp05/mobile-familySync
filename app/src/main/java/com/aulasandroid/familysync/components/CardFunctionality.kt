@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
+import com.aulasandroid.familysync.ui.theme.marrom
 import okhttp3.Route
 
 @Composable
