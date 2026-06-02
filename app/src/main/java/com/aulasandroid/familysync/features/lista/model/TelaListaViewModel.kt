@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aulasandroid.familysync.features.editar_lista.model.ItemResponse
+import com.aulasandroid.familysync.features.listas.model.ItemResponse
 import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
@@ -39,12 +39,12 @@ class TelaListaViewModel : ViewModel() {
                     val body = response.body()
 
                     val usuarios =
-                        body?.response?.usuarios ?: emptyList()
+                        body?.Response?.usuarios ?: emptyList()
 
                     val listaEncontrada =
                         usuarios
                             .flatMap { it.listas }
-                            .find { it.idLista == idLista }
+                            .find { it.id_lista == idLista }
 
                     val itens =
                         listaEncontrada?.itens ?: emptyList()
@@ -53,12 +53,12 @@ class TelaListaViewModel : ViewModel() {
                     listaProdutos.addAll(itens)
 
                     nomeLista.value =
-                        listaEncontrada?.nomeLista ?: ""
+                        listaEncontrada?.nome_lista ?: ""
 
                     val nomesUsuarios =
                         usuarios.map {
 
-                            it.nomeUsuario
+                            it.nome_usuario
                                 .split(" ")
                                 .take(2)
                                 .joinToString(" ")
@@ -98,13 +98,13 @@ class TelaListaViewModel : ViewModel() {
 
                         id_lista = idListaAtual,
 
-                        nome_item = item.nomeItem,
+                        nome_item = item.nome_item,
 
                         quantidade = item.quantidade,
 
-                        valor_unitario = item.valorUnitario,
+                        valor_unitario = item.valor_unitario,
 
-                        valor_total = item.valorTotal,
+                        valor_total = item.valor_total,
 
                         comprado = comprado
                     )
@@ -113,7 +113,7 @@ class TelaListaViewModel : ViewModel() {
                     RetrofitFactory
                         .listasService
                         .atualizarItem(
-                            item.idItem,
+                            item.id_item,
                             request
                         )
 
@@ -122,7 +122,7 @@ class TelaListaViewModel : ViewModel() {
                     val index =
                         listaProdutos.indexOfFirst {
 
-                            it.idItem == item.idItem
+                            it.id_item == item.id_item
                         }
 
                     if (index != -1) {
@@ -146,7 +146,7 @@ class TelaListaViewModel : ViewModel() {
     fun todosSelecionados(): Boolean {
 
         return listaProdutos.isNotEmpty() &&
-                listaProdutos.all {
+                listaProdutos.all    {
 
                     it.comprado == 1
                 }

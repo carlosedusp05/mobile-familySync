@@ -21,7 +21,6 @@ import com.aulasandroid.familysync.features.alterar_endereco.TelaAlterarEndereco
 import com.aulasandroid.familysync.features.cadastro_familia.TelaCadastroFamilia
 import com.aulasandroid.familysync.features.cadastro_usuario.TelaCadastroUsuario
 import com.aulasandroid.familysync.features.calendario.TelaCalendario
-import com.aulasandroid.familysync.features.criar_lista.TelaCriarLista
 import com.aulasandroid.familysync.features.despesas.TelaDespesas
 import com.aulasandroid.familysync.features.editar_despesas.TelaEditarDespesas
 import com.aulasandroid.familysync.features.editar_lista.TelaEditarLista
@@ -94,7 +93,8 @@ class MainActivity : ComponentActivity() {
                                 idLista = idLista
                             )
                         }
-                        composable(route = "editar-lista") { backStackEntry ->
+
+                        composable(route = "editar-lista/{id_lista}") { backStackEntry ->
 
                             val idLista =
                                 backStackEntry.arguments
@@ -106,7 +106,6 @@ class MainActivity : ComponentActivity() {
                                 idLista = idLista
                             )
                         }
-                        composable(route = "criar-lista") { TelaCriarLista(navController) }
 
                         // Outros Recursos
                         composable(route = "calendario") { TelaCalendario(navController) }

@@ -1,6 +1,11 @@
 package com.aulasandroid.familysync.features.listas.model
 
+
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aulasandroid.familysync.retrofit.RetrofitFactory
@@ -10,6 +15,9 @@ class TelaListasViewModel : ViewModel() {
 
     var listaListas =
         mutableStateListOf<ListaComUsuario>()
+
+    var nomeLista =
+        mutableStateOf("")
 
     init {
 
@@ -52,7 +60,7 @@ class TelaListasViewModel : ViewModel() {
 
                     val usuarios =
                         response.body()
-                            ?.response
+                            ?.Response
                             ?.usuarios ?: emptyList()
 
                     listaListas.clear()
@@ -70,10 +78,10 @@ class TelaListasViewModel : ViewModel() {
                             listaListas.add(
 
                                 ListaComUsuario(
-                                    idLista = lista.idLista,
-                                    idUsuario = usuario.idUsuario,
-                                    nomeLista = lista.nomeLista,
-                                    nomeUsuario = usuario.nomeUsuario,
+                                    idLista = lista.id_lista,
+                                    idUsuario = usuario.id_usuario,
+                                    nomeLista = lista.nome_lista,
+                                    nomeUsuario = usuario.nome_usuario,
                                     favorita = lista.favorita,
                                     itens = lista.itens
                                 )
@@ -183,5 +191,38 @@ class TelaListasViewModel : ViewModel() {
         listaListas.addAll(
             listasOrdenadas
         )
+    }
+
+    fun criarLista(
+        nomeLista: String
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                val request =
+                    CriarListaRequest(
+
+                        id_familia = 1,
+                        id_usuario = 59,
+                        nome = nomeLista
+                    )
+
+                val response =
+                    RetrofitFactory
+                        .listasService
+                        .criarLista(request)
+
+                if (response.isSuccessful) {
+
+                    buscarListas()
+                }
+
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+            }
+        }
     }
 }

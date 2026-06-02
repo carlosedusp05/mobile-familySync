@@ -1,43 +1,102 @@
 package com.aulasandroid.familysync.features.editar_lista.model
 
 import android.util.Log
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.aulasandroid.familysync.features.listas.model.ItemResponse
 import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
 class TelaEditarListaViewModel : ViewModel() {
 
-    var nomeItem by mutableStateOf("")
-    var valorUnitario by mutableStateOf("")
-    var quantidade by mutableStateOf("")
-    var comprado by mutableStateOf(false)
+    var nomeLista =
+        mutableStateOf("")
 
-    var listaItens =
-        mutableStateListOf<ItemLista>()
+    var nomeOriginalLista =
+        mutableStateOf("")
 
-    var itensRemovidos =
-        mutableStateListOf<ItemLista>()
+    var nomeItem =
+        mutableStateOf("")
 
-    init {
+    var usarPreco =
+        mutableStateOf(false)
 
-        buscarItens(1)
+    var precoItem =
+        mutableStateOf("")
+
+    var quantidadeItem =
+        mutableStateOf("1")
+
+    var itensLista =
+        mutableStateListOf<ItemResponse>()
+
+    var itensParaExcluir =
+        mutableStateListOf<Int>()
+
+    var idListaAtual = 0
+
+    fun alterarNomeLista(
+        valor: String
+    ) {
+
+        if (valor.length <= 20) {
+
+            nomeLista.value = valor
+        }
     }
 
-    fun buscarItens(idLista: Int) {
+    fun alterarNomeItem(
+        valor: String
+    ) {
+
+        if (valor.length <= 11) {
+
+            nomeItem.value = valor
+        }
+    }
+
+    fun alterarPreco(
+        valor: String
+    ) {
+        precoItem.value = valor
+    }
+
+    fun alterarQuantidade(
+        valor: String
+    ) {
+
+        quantidadeItem.value = valor
+    }
+
+    fun alterarUsarPreco(
+        valor: Boolean
+    ) {
+
+        usarPreco.value = valor
+    }
+
+    fun alternarUsarPreco() {
+
+        usarPreco.value =
+            !usarPreco.value
+    }
+
+    fun carregarLista(
+        idLista: Int
+    ) {
+
+        idListaAtual = idLista
+
+        Log.d(
+            "API_FAMILY",
+            "ID recebido: $idLista"
+        )
 
         viewModelScope.launch {
 
             try {
-
-                Log.d(
-                    "API_FAMILY",
-                    "BUSCANDO FAMILIA COMPLETA"
-                )
 
                 val response =
                     RetrofitFactory
@@ -46,56 +105,83 @@ class TelaEditarListaViewModel : ViewModel() {
 
                 Log.d(
                     "API_FAMILY",
-                    "CODE: ${response.code()}"
-                )
-
-                Log.d(
-                    "API_FAMILY",
-                    "BODY: ${response.body()}"
+                    "Código HTTP: ${response.code()}"
                 )
 
                 if (response.isSuccessful) {
 
                     val body = response.body()
 
+                    Log.d(
+                        "API_FAMILY",
+                        "Body: $body"
+                    )
+
                     val usuarios =
-                        body?.response?.usuarios ?: emptyList()
+                        body?.Response?.usuarios
+                            ?: emptyList()
 
-                    val listaEncontrada =
-                        usuarios
-                            .flatMap { it.listas }
-                            .find { it.idLista == idLista }
+                    Log.d(
+                        "EDITAR_LISTA",
+                        "Usuários encontrados: ${usuarios.size}"
+                    )
 
-                    val itens =
-                        listaEncontrada?.itens ?: emptyList()
+                    usuarios.forEach { usuario ->
 
-                    listaItens.clear()
+                        Log.d(
+                            "API_FAMILY",
+                            "Usuario: ${usuario.nome_usuario}"
+                        )
 
-                    listaItens.addAll(
+                        usuario.listas.forEach { lista ->
 
-                        itens.map {
-
-                            ItemLista(
-                                id_item = it.idItem,
-                                nome = it.nomeItem,
-                                quantidade = it.quantidade,
-                                valorUnitario = it.valorUnitario.toDouble(),
-                                comprado = it.comprado == 1,
-                                veioDaApi = true
+                            Log.d(
+                                "API_FAMILY",
+                                """
+                            Lista:
+                            id=${lista.id_lista}
+                            nome=${lista.nome_lista}
+                            itens=${lista.itens.size}
+                            """.trimIndent()
                             )
                         }
+                    }
+
+                    val lista =
+                        usuarios
+                            .flatMap {
+                                it.listas
+                            }
+                            .find {
+                                it.id_lista == idLista
+                            }
+
+                    Log.d(
+                        "API_FAMILY",
+                        "Lista encontrada: $lista"
+                    )
+
+                    nomeOriginalLista.value =
+                        lista?.nome_lista ?: ""
+
+                    nomeLista.value = ""
+
+                    itensLista.clear()
+
+                    itensLista.addAll(
+                        lista?.itens ?: emptyList()
                     )
 
                     Log.d(
                         "API_FAMILY",
-                        "ITENS CARREGADOS: ${listaItens.size}"
+                        "Itens carregados: ${itensLista.size}"
                     )
 
                 } else {
 
                     Log.e(
                         "API_FAMILY",
-                        "ERRO API: ${response.errorBody()?.string()}"
+                        "Erro HTTP: ${response.errorBody()?.string()}"
                     )
                 }
 
@@ -103,292 +189,168 @@ class TelaEditarListaViewModel : ViewModel() {
 
                 Log.e(
                     "API_FAMILY",
-                    "ERRO: ${e.message}"
+                    "Exceção",
+                    e
                 )
-
-                e.printStackTrace()
             }
         }
     }
 
-    fun onNomeItemChange(novoNome: String) {
+    fun adicionarItemTemporario() {
 
-        nomeItem =
-            novoNome.take(20)
-    }
-
-    fun onValorUnitarioChange(novoValor: String) {
-
-        var valorFiltrado =
-            novoValor.filter {
-
-                it.isDigit() || it == '.'
-            }
-
-        val partes =
-            valorFiltrado.split(".")
-
-        if (partes.size > 2) {
-
-            valorFiltrado =
-                partes[0] + "." + partes[1]
-        }
-
-        if (partes.size == 2) {
-
-            valorFiltrado =
-                partes[0] + "." +
-                        partes[1].take(2)
-        }
-
-        valorUnitario = valorFiltrado
-    }
-
-    fun onQuantidadeChange(novaQuantidade: String) {
-
-        quantidade =
-            novaQuantidade.filter {
-
-                it.isDigit()
-            }
-    }
-
-    fun onCompradoChange() {
-
-        comprado = !comprado
-    }
-
-    fun adicionarItem() {
-
-        Log.d(
-            "API_FAMILY",
-            "TENTANDO ADICIONAR ITEM"
-        )
-
-        if (
-            nomeItem.isBlank() ||
-            quantidade.isBlank() ||
-            valorUnitario.isBlank()
-        ) {
-
-            Log.e(
-                "API_FAMILY",
-                "CAMPOS VAZIOS"
-            )
+        if (nomeItem.value.isBlank()) {
 
             return
         }
 
-        val quantidadeInt =
-            quantidade.toIntOrNull()
+        itensLista.add(
 
-        val valorDouble =
-            valorUnitario.toDoubleOrNull()
+            ItemResponse(
+                id_item = 0,
+                nome_item = nomeItem.value,
 
-        if (
-            quantidadeInt == null ||
-            valorDouble == null
-        ) {
+                quantidade =
+                    if (usarPreco.value)
+                        quantidadeItem.value.toIntOrNull() ?: 1
+                    else
+                        0,
 
-            Log.e(
-                "API_FAMILY",
-                "VALORES INVALIDOS"
-            )
+                valor_unitario =
+                    if (usarPreco.value)
+                        precoItem.value.ifBlank {
+                            "0.00"
+                        }
+                    else
+                        "0.00",
 
-            return
-        }
+                valor_total = null,
 
-        listaItens.add(
-
-            ItemLista(
-                nome = nomeItem,
-                quantidade = quantidadeInt,
-                valorUnitario = valorDouble,
-                comprado = comprado,
-                veioDaApi = false
+                comprado = 0
             )
         )
 
-        Log.d(
-            "API_FAMILY",
-            "ITEM ADICIONADO COM SUCESSO"
-        )
-
-        Log.d(
-            "API_FAMILY",
-            "TOTAL ITENS: ${listaItens.size}"
-        )
-
-        nomeItem = ""
-        quantidade = ""
-        valorUnitario = ""
-        comprado = false
+        nomeItem.value = ""
+        precoItem.value = ""
+        quantidadeItem.value = "1"
+        usarPreco.value = false
     }
 
-    fun removerItem(item: ItemLista) {
+    fun removerItem(
+        item: ItemResponse
+    ) {
 
-        listaItens.remove(item)
+        if (item.id_item != 0) {
 
-        Log.d(
-            "API_FAMILY",
-            "ITEM REMOVIDO DO CARD"
-        )
-
-        if (item.veioDaApi) {
-
-            itensRemovidos.add(item)
-
-            Log.d(
-                "API_FAMILY",
-                "ITEM MARCADO PARA DELETE API"
+            itensParaExcluir.add(
+                item.id_item
             )
         }
+
+        itensLista.remove(item)
     }
 
-    fun salvarItens(idLista: Int) {
+    fun salvarLista(
+        onSuccess: () -> Unit
+    ) {
 
         viewModelScope.launch {
 
             try {
 
-                Log.d(
-                    "API_FAMILY",
-                    "======================="
-                )
+                val nomeFinal =
+                    if (nomeLista.value.isBlank())
+                        nomeOriginalLista.value
+                    else
+                        nomeLista.value
 
                 Log.d(
                     "API_FAMILY",
-                    "INICIANDO SALVAMENTO"
+                    "Nome final: $nomeFinal"
                 )
+
+                val requestLista =
+                    AtualizarListaRequest(
+                        id_familia = 1,
+                        id_usuario = 59,
+                        nome = nomeFinal
+                    )
+
+                val responseLista =
+                    RetrofitFactory
+                        .listasService
+                        .atualizarLista(
+                            idListaAtual,
+                            requestLista
+                        )
 
                 Log.d(
                     "API_FAMILY",
-                    "ID LISTA: $idLista"
+                    "Atualizar lista: ${responseLista.code()}"
                 )
 
-                listaItens
-                    .filter { !it.veioDaApi }
-                    .forEach { item ->
+                itensParaExcluir.forEach { idItem ->
 
-                        try {
+                    val responseDelete =
+                        RetrofitFactory
+                            .listasService
+                            .deletarItem(idItem)
 
-                            val request =
-                                CriarItemRequest(
-
-                                    id_lista = idLista,
-                                    nome_item = item.nome,
-                                    quantidade = item.quantidade,
-                                    valor_unitario =
-                                        item.valorUnitario.toString(),
-                                    valor_total = null,
-                                    comprado = item.comprado
-                                )
-
-                            Log.d(
-                                "API_FAMILY",
-                                "POST REQUEST: $request"
-                            )
-
-                            val response =
-                                RetrofitFactory
-                                    .listasService
-                                    .criarItem(request)
-
-                            Log.d(
-                                "API_FAMILY",
-                                "POST CODE: ${response.code()}"
-                            )
-
-                            Log.d(
-                                "API_FAMILY",
-                                "POST BODY: ${response.body()}"
-                            )
-
-                            val erro =
-                                response.errorBody()?.string()
-
-                            Log.d(
-                                "API_FAMILY",
-                                "POST ERROR: $erro"
-                            )
-
-                        } catch (e: Exception) {
-
-                            Log.e(
-                                "API_FAMILY",
-                                "ERRO POST ITEM: ${e.message}"
-                            )
-
-                            e.printStackTrace()
-                        }
-                    }
-
-                itensRemovidos.forEach { item ->
-
-                    item.id_item?.let { id ->
-
-                        try {
-
-                            Log.d(
-                                "API_FAMILY",
-                                "DELETE ITEM ID: $id"
-                            )
-
-                            val response =
-                                RetrofitFactory
-                                    .listasService
-                                    .deletarItem(id)
-
-                            Log.d(
-                                "API_FAMILY",
-                                "DELETE CODE: ${response.code()}"
-                            )
-
-                            Log.d(
-                                "API_FAMILY",
-                                "DELETE BODY: ${response.body()}"
-                            )
-
-                            val erro =
-                                response.errorBody()?.string()
-
-                            Log.d(
-                                "API_FAMILY",
-                                "DELETE ERROR: $erro"
-                            )
-
-                        } catch (e: Exception) {
-
-                            Log.e(
-                                "API_FAMILY",
-                                "ERRO DELETE ITEM: ${e.message}"
-                            )
-
-                            e.printStackTrace()
-                        }
-                    }
+                    Log.d(
+                        "API_FAMILY",
+                        "Delete item $idItem -> ${responseDelete.code()}"
+                    )
                 }
 
-                itensRemovidos.clear()
+                itensLista
+                    .filter {
+                        it.id_item == 0
+                    }
+                    .forEach { item ->
 
-                Log.d(
-                    "API_FAMILY",
-                    "PROCESSO FINALIZADO"
-                )
+                        Log.d(
+                            "API_FAMILY",
+                            """
+                        Criando item:
+                        nome=${item.nome_item}
+                        quantidade=${item.quantidade}
+                        valor=${item.valor_unitario}
+                        """.trimIndent()
+                        )
 
-                Log.d(
-                    "API_FAMILY",
-                    "======================="
-                )
+                        val responseItem =
+                            RetrofitFactory
+                                .listasService
+                                .criarItem(
+                                    CriarItemRequest(
+                                        id_lista = idListaAtual,
+                                        nome_item = item.nome_item,
+                                        quantidade = item.quantidade,
+                                        valor_unitario = item.valor_unitario,
+                                        valor_total = null,
+                                        comprado = false
+                                    )
+                                )
+
+                        Log.d(
+                            "API_FAMILY",
+                            "Criar item: ${responseItem.code()}"
+                        )
+
+                        Log.d(
+                            "API_FAMILY",
+                            "Resposta item: ${responseItem.body()}"
+                        )
+                    }
+
+                onSuccess()
 
             } catch (e: Exception) {
 
                 Log.e(
                     "API_FAMILY",
-                    "ERRO GERAL: ${e.message}"
+                    "Erro ao salvar",
+                    e
                 )
-
-                e.printStackTrace()
             }
         }
     }

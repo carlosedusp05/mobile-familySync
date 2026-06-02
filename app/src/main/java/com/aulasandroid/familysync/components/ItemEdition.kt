@@ -43,6 +43,10 @@ fun ItemEdition(
     onDelete: () -> Unit
 ) {
     val precoTotal = precoUnitario * quantidade
+
+    val mostrarPreco =
+        precoUnitario > 0
+
     Card(
         modifier = Modifier
             .width(330.dp)
@@ -76,30 +80,38 @@ fun ItemEdition(
                 )
             }
 
-            Row(
-                modifier = Modifier
-                    .height(35.dp)
-                    .width(110.dp)
-                    .clip(RoundedCornerShape(35))
-                    .background(laranjaEscuro),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+            if (mostrarPreco) {
+
+                val precoTotal =
+                    precoUnitario * quantidade
+
+                Row(
+                    modifier = Modifier
+                        .height(35.dp)
+                        .width(110.dp)
+                        .clip(RoundedCornerShape(35))
+                        .background(laranjaEscuro),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "R$ $precoUnitario X $quantidade",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = branco
+                    )
+                }
+
                 Text(
-                    text = "R$ $precoUnitario X $quantidade",
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = branco
+                    text = "R$ $precoTotal",
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = laranjaEscuro,
+                    modifier = Modifier.width(70.dp),
+                    textAlign = TextAlign.End
                 )
             }
-            Text(
-                text = "R$ $precoTotal",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = laranjaEscuro,
-                modifier = Modifier.width(70.dp),
-                textAlign = TextAlign.End
-            )
+
             Row(
                 modifier = Modifier
                     .fillMaxHeight()

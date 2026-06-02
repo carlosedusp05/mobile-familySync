@@ -229,7 +229,7 @@ fun TelaPerfil(navController: NavController) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "Deseja memso sair da sua conta?",
+                            text = "Deseja mesmo sair da sua conta?",
                             textAlign = TextAlign.Center,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,

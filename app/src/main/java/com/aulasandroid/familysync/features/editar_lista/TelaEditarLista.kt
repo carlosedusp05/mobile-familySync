@@ -1,6 +1,6 @@
 package com.aulasandroid.familysync.features.editar_lista
 
-import androidx.compose.foundation.Image
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -22,28 +22,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.aulasandroid.familysync.R
 import com.aulasandroid.familysync.components.CremeButton
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.ItemEdition
 import com.aulasandroid.familysync.components.OrangeButton
-import com.aulasandroid.familysync.components.Outilined
-import com.aulasandroid.familysync.components.OutlinedComboBox
+import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedCreme
 import com.aulasandroid.familysync.components.RowBack
 import com.aulasandroid.familysync.features.editar_lista.model.TelaEditarListaViewModel
@@ -59,6 +52,11 @@ fun TelaEditarLista(
     idLista: Int,
     viewModel: TelaEditarListaViewModel = viewModel()
 ) {
+    LaunchedEffect(Unit) {
+        Log.d("API_FAMILY", "ID QUE CHEGOU NA TELA = $idLista")
+        viewModel.carregarLista(idLista)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,7 +92,7 @@ fun TelaEditarLista(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -112,50 +110,51 @@ fun TelaEditarLista(
                     )
                 }
 
-                Outilined(
-                    modifier = Modifier,
-                    placeHolder = "",
+                OutlinedMenorDp(
+                    placeHolder = viewModel.nomeOriginalLista.value,
                     width = 353.dp,
-                    height = 75.dp,
-                    "",
-                    {}
+                    height = 45.dp,
+                    value = viewModel.nomeLista.value,
+                    onValueChange = {
+                        viewModel.alterarNomeLista(it)
+                    }
                 )
             }
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(70.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(25.dp)
-                        .padding(start = 30.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = "Participantes",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = laranjaEscuro,
-                    )
-                }
-
-                OutlinedComboBox(
-                    353.dp,
-                    40.dp,
-                    ""
-                )
-            }
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(70.dp),
+//                verticalArrangement = Arrangement.SpaceBetween,
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Row(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .height(25.dp)
+//                        .padding(start = 30.dp),
+//                    verticalAlignment = Alignment.CenterVertically,
+//                ) {
+//                    Text(
+//                        text = "Participantes",
+//                        fontSize = 16.sp,
+//                        fontWeight = FontWeight.Bold,
+//                        color = laranjaEscuro,
+//                    )
+//                }
+//
+//                OutlinedComboBox(
+//                    353.dp,
+//                    40.dp,
+//                    ""
+//                )
+//            }
 
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
+                verticalArrangement = Arrangement.SpaceEvenly,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
@@ -173,14 +172,35 @@ fun TelaEditarLista(
                     )
                 }
 
-                Outilined(
-                    modifier = Modifier,
-                    placeHolder = "",
-                    width = 353.dp,
-                    height = 75.dp,
-                    "",
-                    {}
-                )
+                Row(
+                    modifier = Modifier.width(353.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    OutlinedMenorDp(
+                        placeHolder = "",
+                        width = 200.dp,
+                        height = 45.dp,
+                        value = viewModel.nomeItem.value,
+                        onValueChange = {
+                            viewModel.alterarNomeItem(it)
+                        }
+                    )
+
+                    OrangeButton(
+                        modifier = Modifier,
+                        text = "Adicionar",
+                        width = 140.dp,
+                        height = 45.dp,
+                        fontSize = 16,
+                        navController,
+                        "",
+                        onClick = {
+                            viewModel.adicionarItemTemporario()
+                        }
+                    )
+                }
             }
 
             Column(
@@ -213,41 +233,36 @@ fun TelaEditarLista(
                             .size(30.dp)
                             .clip(CircleShape)
                             .border(2.dp, Color.White, CircleShape)
-                            .background(if (viewModel.comprado) laranja else Color.Transparent)
-                            .clickable { viewModel.comprado = !viewModel.comprado },
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                    }
-
-                    OutlinedCreme(
-                        value = viewModel.valorUnitario,
-                        onValueChange = { viewModel.valorUnitario = it },
-                        placeholder = "R$0,00",
-                        modifier = Modifier.width(130.dp)
-                    )
-
-                    OutlinedCreme(
-                        value = viewModel.quantidade,
-                        onValueChange = { viewModel.quantidade = it },
-                        placeholder = "0",
-                        modifier = Modifier.width(70.dp)
-                    )
-                    Box(
-                        modifier = Modifier
-                            .size(35.dp)
-                            .clip(CircleShape)
-                            .background(laranja)
+                            .background(
+                                if (viewModel.usarPreco.value)
+                                    laranja
+                                else
+                                    Color.Transparent
+                            )
                             .clickable {
-                                viewModel.adicionarItem()
+                                viewModel.alternarUsarPreco()
                             },
                         contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.plus),
-                            modifier = Modifier.size(15.dp),
-                            contentDescription = "Adicionar",
-                            colorFilter = ColorFilter.tint(Color.White)
+                    ){}
+
+                    if (viewModel.usarPreco.value) {
+
+                        OutlinedCreme(
+                            value = viewModel.precoItem.value,
+                            onValueChange = {
+                                viewModel.precoItem.value = it
+                            },
+                            placeholder = "R$0,00",
+                            modifier = Modifier.width(130.dp)
+                        )
+
+                        OutlinedCreme(
+                            value = viewModel.quantidadeItem.value,
+                            onValueChange = {
+                                viewModel.quantidadeItem.value = it
+                            },
+                            placeholder = "0",
+                            modifier = Modifier.width(70.dp)
                         )
                     }
                 }
@@ -256,7 +271,7 @@ fun TelaEditarLista(
             Column(
                 modifier = Modifier
                     .width(353.dp)
-                    .height(180.dp)
+                    .height(250.dp)
                     .clip(RoundedCornerShape(15))
                     .border(4.dp, marrom, RoundedCornerShape(15))
                     .background(creme)
@@ -266,11 +281,11 @@ fun TelaEditarLista(
                 verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                viewModel.listaItens.forEach { item ->
+                viewModel.itensLista.forEach { item ->
 
                     ItemEdition(
-                        nome = item.nome,
-                        precoUnitario = item.valorUnitario,
+                        nome = item.nome_item,
+                        precoUnitario = item.valor_unitario.toDoubleOrNull() ?: 0.0,
                         quantidade = item.quantidade,
                         onDelete = {
                             viewModel.removerItem(item)
@@ -292,7 +307,10 @@ fun TelaEditarLista(
                     height = 55.dp,
                     fontSize = 22,
                     navController,
-                    ""
+                    "",
+                    {
+                        navController.popBackStack()
+                    }
                 )
 
                 OrangeButton(
@@ -303,9 +321,10 @@ fun TelaEditarLista(
                     fontSize = 21,
                     navController,
                     "",
-                    {
-                        viewModel.salvarItens(idLista)
-                        navController.navigate("lista")
+                    onClick = {
+                        viewModel.salvarLista {
+                            navController.popBackStack()
+                        }
                     }
                 )
             }

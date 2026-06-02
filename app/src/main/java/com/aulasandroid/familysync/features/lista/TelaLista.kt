@@ -128,7 +128,7 @@ fun TelaLista(
                         )
                     }
                 IconButton(
-                    onClick = {navController.navigate("editar-lista") },
+                    onClick = {navController.navigate("editar-lista/$idLista") },
                     modifier = Modifier.size(50.dp)
                 ) {
                     Icon(
@@ -156,9 +156,9 @@ fun TelaLista(
 
                     Item(
                         navController = navController,
-                        nome = produto.nomeItem,
+                        nome = produto.nome_item,
                         precoUnitario =
-                            produto.valorUnitario.toDouble(),
+                            produto.valor_unitario.toDouble(),
                         quantidade = produto.quantidade,
                         isChecked = produto.comprado == 1,
                         onCheckChange = { checked ->

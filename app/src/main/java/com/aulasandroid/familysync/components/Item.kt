@@ -46,6 +46,9 @@ fun Item(
 ) {
     val precoTotal = precoUnitario * quantidade
 
+    val ehListaCompra =
+        precoUnitario > 0
+
     Card(
         modifier = Modifier
             .width(350.dp)
@@ -65,62 +68,54 @@ fun Item(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(80.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+
+            Text(
+                text = nome,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = marrom,
+                modifier = Modifier.weight(1f)
+            )
+
+            if (ehListaCompra) {
+
+                Row(
+                    modifier = Modifier
+                        .height(35.dp)
+                        .width(110.dp)
+                        .clip(RoundedCornerShape(35))
+                        .background(laranjaEscuro),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "R$ $precoUnitario X $quantidade",
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = branco
+                    )
+                }
+
                 Text(
-                    text = nome,
+                    text = "R$ $precoTotal",
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = marrom
+                    fontWeight = FontWeight.Bold,
+                    color = laranjaEscuro,
+                    modifier = Modifier.width(70.dp),
+                    textAlign = TextAlign.End
                 )
             }
 
-            Row(
-                modifier = Modifier
-                    .height(35.dp)
-                    .width(110.dp)
-                    .clip(RoundedCornerShape(35))
-                    .background(laranjaEscuro),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "R$ $precoUnitario X $quantidade",
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = branco
+            Checkbox(
+                checked = isChecked,
+                onCheckedChange = { onCheckChange(it) },
+                modifier = Modifier.size(35.dp),
+                colors = CheckboxDefaults.colors(
+                    checkedColor = laranja,
+                    uncheckedColor = marrom,
+                    checkmarkColor = branco
                 )
-            }
-            Text(
-                text = "R$ $precoTotal",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Bold,
-                color = laranjaEscuro,
-                modifier = Modifier.width(70.dp),
-                textAlign = TextAlign.End
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(40.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = isChecked,
-                    onCheckedChange = { onCheckChange(it) },
-                    modifier = Modifier.size(35.dp),
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = laranja,
-                        uncheckedColor = marrom,
-                        checkmarkColor = branco
-                    )
-                )
-            }
         }
     }
 }
