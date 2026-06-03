@@ -27,6 +27,7 @@ fun LeftArrow(
             } else {
                 when (abaAtiva) {
                     "lista" -> navController.navigate("listas")
+                    "editar-lista" -> navController.navigate("lista")
                     else -> navController.navigate("home")
                 }
             }

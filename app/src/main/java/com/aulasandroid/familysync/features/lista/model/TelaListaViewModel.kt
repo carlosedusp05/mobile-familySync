@@ -10,6 +10,8 @@ import kotlinx.coroutines.launch
 
 class TelaListaViewModel : ViewModel() {
 
+    var nomeOriginalLista =
+        mutableStateOf("")
     var listaProdutos =
         mutableStateListOf<ItemResponse>()
 
@@ -52,6 +54,9 @@ class TelaListaViewModel : ViewModel() {
                     listaProdutos.clear()
                     listaProdutos.addAll(itens)
 
+                    nomeOriginalLista.value =
+                        listaEncontrada?.nome_lista ?: ""
+
                     nomeLista.value =
                         listaEncontrada?.nome_lista ?: ""
 
@@ -76,6 +81,43 @@ class TelaListaViewModel : ViewModel() {
                                 .joinToString(", ")
                         }
                 }
+
+            } catch (e: Exception) {
+
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun alterarNomeLista(
+        valor: String
+    ) {
+
+        if (valor.length <= 20) {
+
+            nomeLista.value = valor
+        }
+    }
+
+    fun salvarNomeLista() {
+
+        viewModelScope.launch {
+
+            try {
+
+                RetrofitFactory
+                    .listasService
+                    .atualizarLista(
+                        idListaAtual,
+                        AtualizarListaRequest(
+                            id_familia = 1,
+                            id_usuario = 59,
+                            nome = nomeLista.value
+                        )
+                    )
+
+                nomeOriginalLista.value =
+                    nomeLista.value
 
             } catch (e: Exception) {
 
@@ -167,5 +209,11 @@ class TelaListaViewModel : ViewModel() {
                 marcarTodos
             )
         }
+    }
+
+    fun abrirPopupEdicao() {
+
+        nomeLista.value =
+            nomeOriginalLista.value
     }
 }

@@ -11,76 +11,37 @@ import kotlinx.coroutines.launch
 
 class TelaEditarListaViewModel : ViewModel() {
 
-    var nomeLista =
-        mutableStateOf("")
+    var nomeItem = mutableStateOf("")
 
-    var nomeOriginalLista =
-        mutableStateOf("")
+    var usarPreco = mutableStateOf(false)
 
-    var nomeItem =
-        mutableStateOf("")
+    var precoItem = mutableStateOf("")
 
-    var usarPreco =
-        mutableStateOf(false)
+    var quantidadeItem = mutableStateOf("1")
 
-    var precoItem =
-        mutableStateOf("")
+    var itensLista = mutableStateListOf<ItemResponse>()
 
-    var quantidadeItem =
-        mutableStateOf("1")
-
-    var itensLista =
-        mutableStateListOf<ItemResponse>()
-
-    var itensParaExcluir =
-        mutableStateListOf<Int>()
+    var itensParaExcluir = mutableStateListOf<Int>()
 
     var idListaAtual = 0
 
-    fun alterarNomeLista(
-        valor: String
-    ) {
-
-        if (valor.length <= 20) {
-
-            nomeLista.value = valor
-        }
-    }
-
-    fun alterarNomeItem(
-        valor: String
-    ) {
+    fun alterarNomeItem(valor: String) {
 
         if (valor.length <= 11) {
-
             nomeItem.value = valor
         }
     }
 
-    fun alterarPreco(
-        valor: String
-    ) {
+    fun alterarPreco(valor: String) {
         precoItem.value = valor
     }
 
-    fun alterarQuantidade(
-        valor: String
-    ) {
-
+    fun alterarQuantidade(valor: String) {
         quantidadeItem.value = valor
     }
 
-    fun alterarUsarPreco(
-        valor: Boolean
-    ) {
-
-        usarPreco.value = valor
-    }
-
     fun alternarUsarPreco() {
-
-        usarPreco.value =
-            !usarPreco.value
+        usarPreco.value = !usarPreco.value
     }
 
     fun carregarLista(
@@ -138,33 +99,24 @@ class TelaEditarListaViewModel : ViewModel() {
                             Log.d(
                                 "API_FAMILY",
                                 """
-                            Lista:
-                            id=${lista.id_lista}
-                            nome=${lista.nome_lista}
-                            itens=${lista.itens.size}
-                            """.trimIndent()
+                                Lista:
+                                id=${lista.id_lista}
+                                nome=${lista.nome_lista}
+                                itens=${lista.itens.size}
+                                """.trimIndent()
                             )
                         }
                     }
 
                     val lista =
                         usuarios
-                            .flatMap {
-                                it.listas
-                            }
-                            .find {
-                                it.id_lista == idLista
-                            }
+                            .flatMap { it.listas }
+                            .find { it.id_lista == idLista }
 
                     Log.d(
                         "API_FAMILY",
                         "Lista encontrada: $lista"
                     )
-
-                    nomeOriginalLista.value =
-                        lista?.nome_lista ?: ""
-
-                    nomeLista.value = ""
 
                     itensLista.clear()
 
@@ -199,12 +151,23 @@ class TelaEditarListaViewModel : ViewModel() {
     fun adicionarItemTemporario() {
 
         if (nomeItem.value.isBlank()) {
-
             return
         }
 
-        itensLista.add(
+        Log.d(
+            "TESTE_ITEM",
+            """
+            usarPreco=${usarPreco.value}
+            preco=${precoItem.value}
+            quantidade=${quantidadeItem.value}
+            """.trimIndent()
+        )
+        Log.d(
+            "TESTE_ITEM",
+            "usarPreco=${usarPreco.value} preco=${precoItem.value} quantidade=${quantidadeItem.value}"
+        )
 
+        itensLista.add(
             ItemResponse(
                 id_item = 0,
                 nome_item = nomeItem.value,
@@ -213,17 +176,17 @@ class TelaEditarListaViewModel : ViewModel() {
                     if (usarPreco.value)
                         quantidadeItem.value.toIntOrNull() ?: 1
                     else
-                        0,
+                        1,
 
                 valor_unitario =
                     if (usarPreco.value)
-                        precoItem.value.ifBlank {
-                            "0.00"
-                        }
+                        precoItem.value
+                            .replace(",", ".")
+                            .ifBlank { "0.00" }
                     else
                         "0.00",
 
-                valor_total = null,
+                valor_total = "0",
 
                 comprado = 0
             )
@@ -257,37 +220,6 @@ class TelaEditarListaViewModel : ViewModel() {
 
             try {
 
-                val nomeFinal =
-                    if (nomeLista.value.isBlank())
-                        nomeOriginalLista.value
-                    else
-                        nomeLista.value
-
-                Log.d(
-                    "API_FAMILY",
-                    "Nome final: $nomeFinal"
-                )
-
-                val requestLista =
-                    AtualizarListaRequest(
-                        id_familia = 1,
-                        id_usuario = 59,
-                        nome = nomeFinal
-                    )
-
-                val responseLista =
-                    RetrofitFactory
-                        .listasService
-                        .atualizarLista(
-                            idListaAtual,
-                            requestLista
-                        )
-
-                Log.d(
-                    "API_FAMILY",
-                    "Atualizar lista: ${responseLista.code()}"
-                )
-
                 itensParaExcluir.forEach { idItem ->
 
                     val responseDelete =
@@ -310,11 +242,11 @@ class TelaEditarListaViewModel : ViewModel() {
                         Log.d(
                             "API_FAMILY",
                             """
-                        Criando item:
-                        nome=${item.nome_item}
-                        quantidade=${item.quantidade}
-                        valor=${item.valor_unitario}
-                        """.trimIndent()
+                            Criando item:
+                            nome=${item.nome_item}
+                            quantidade=${item.quantidade}
+                            valor=${item.valor_unitario}
+                            """.trimIndent()
                         )
 
                         val responseItem =
@@ -326,19 +258,19 @@ class TelaEditarListaViewModel : ViewModel() {
                                         nome_item = item.nome_item,
                                         quantidade = item.quantidade,
                                         valor_unitario = item.valor_unitario,
-                                        valor_total = null,
+                                        valor_total = "0",
                                         comprado = false
                                     )
                                 )
 
                         Log.d(
                             "API_FAMILY",
-                            "Criar item: ${responseItem.code()}"
+                            "Código criar item: ${responseItem.code()}"
                         )
 
                         Log.d(
                             "API_FAMILY",
-                            "Resposta item: ${responseItem.body()}"
+                            "Body criar item: ${responseItem.body()}"
                         )
                     }
 

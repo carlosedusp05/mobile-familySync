@@ -214,7 +214,7 @@ fun TelaListas(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "* Para adicionar itens a lista você deve cria-la primeiro e depois edta-la para atribuir os itens.",
+                            text = "* Para adicionar itens a lista você deve cria-la primeiro e depois edita-la para atribuir os itens.",
                             color = marrom,
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,

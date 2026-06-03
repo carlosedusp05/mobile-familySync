@@ -20,22 +20,32 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButton
+import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Footer
 import com.aulasandroid.familysync.components.ItemEdition
 import com.aulasandroid.familysync.components.OrangeButton
+import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedCreme
 import com.aulasandroid.familysync.components.RowBack
@@ -64,7 +74,7 @@ fun TelaEditarLista(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        RowBack(navController)
+        RowBack(navController, "editar-lista")
 
         Column(
             modifier = Modifier
@@ -81,74 +91,12 @@ fun TelaEditarLista(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Editar Lista",
+                    text = "Editar Itens",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = laranjaEscuro
                 )
             }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(80.dp),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(25.dp)
-                        .padding(start = 30.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = "Tema da Lista",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = laranjaEscuro,
-                    )
-                }
-
-                OutlinedMenorDp(
-                    placeHolder = viewModel.nomeOriginalLista.value,
-                    width = 353.dp,
-                    height = 45.dp,
-                    value = viewModel.nomeLista.value,
-                    onValueChange = {
-                        viewModel.alterarNomeLista(it)
-                    }
-                )
-            }
-
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(70.dp),
-//                verticalArrangement = Arrangement.SpaceBetween,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Row(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .height(25.dp)
-//                        .padding(start = 30.dp),
-//                    verticalAlignment = Alignment.CenterVertically,
-//                ) {
-//                    Text(
-//                        text = "Participantes",
-//                        fontSize = 16.sp,
-//                        fontWeight = FontWeight.Bold,
-//                        color = laranjaEscuro,
-//                    )
-//                }
-//
-//                OutlinedComboBox(
-//                    353.dp,
-//                    40.dp,
-//                    ""
-//                )
-//            }
 
             Column(
                 modifier = Modifier
@@ -243,35 +191,34 @@ fun TelaEditarLista(
                                 viewModel.alternarUsarPreco()
                             },
                         contentAlignment = Alignment.Center
-                    ){}
+                    ) {}
 
-                    if (viewModel.usarPreco.value) {
+                    OutlinedCreme(
+                        value = viewModel.precoItem.value,
+                        onValueChange = {
+                            viewModel.alterarPreco(it)
+                        },
+                        placeholder = "R$0,00",
+                        modifier = Modifier.width(130.dp),
+                        enabled = viewModel.usarPreco.value
+                    )
 
-                        OutlinedCreme(
-                            value = viewModel.precoItem.value,
-                            onValueChange = {
-                                viewModel.precoItem.value = it
-                            },
-                            placeholder = "R$0,00",
-                            modifier = Modifier.width(130.dp)
-                        )
-
-                        OutlinedCreme(
-                            value = viewModel.quantidadeItem.value,
-                            onValueChange = {
-                                viewModel.quantidadeItem.value = it
-                            },
-                            placeholder = "0",
-                            modifier = Modifier.width(70.dp)
-                        )
-                    }
+                    OutlinedCreme(
+                        value = viewModel.quantidadeItem.value,
+                        onValueChange = {
+                            viewModel.alterarQuantidade(it)
+                        },
+                        placeholder = "0",
+                        modifier = Modifier.width(70.dp),
+                        enabled = viewModel.usarPreco.value
+                    )
                 }
             }
 
             Column(
                 modifier = Modifier
                     .width(353.dp)
-                    .height(250.dp)
+                    .height(320.dp)
                     .clip(RoundedCornerShape(15))
                     .border(4.dp, marrom, RoundedCornerShape(15))
                     .background(creme)
@@ -331,6 +278,5 @@ fun TelaEditarLista(
         }
 
         Footer(navController, "lista")
-
     }
 }

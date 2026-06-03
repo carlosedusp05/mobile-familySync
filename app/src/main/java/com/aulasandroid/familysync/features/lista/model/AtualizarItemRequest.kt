@@ -8,3 +8,9 @@ data class AtualizarItemRequest(
     val valor_total: String?,
     val comprado: Boolean
 )
+
+data class AtualizarListaRequest(
+    val id_familia: Int,
+    val id_usuario: Int,
+    val nome: String
+)

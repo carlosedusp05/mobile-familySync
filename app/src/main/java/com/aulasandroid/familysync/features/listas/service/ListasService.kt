@@ -1,10 +1,11 @@
 package com.aulasandroid.familysync.features.listas.service
 
 
-import com.aulasandroid.familysync.features.editar_lista.model.AtualizarListaRequest
+import com.aulasandroid.familysync.features.editar_lista.model.AdicionarItemResponse
 import com.aulasandroid.familysync.features.editar_lista.model.CriarItemRequest
 import com.aulasandroid.familysync.features.lista.model.AtualizarItemRequest
 import com.aulasandroid.familysync.features.lista.model.AtualizarItemResponse
+import com.aulasandroid.familysync.features.lista.model.AtualizarListaRequest
 import com.aulasandroid.familysync.features.listas.model.APIListasResponse
 import com.aulasandroid.familysync.features.listas.model.CriarListaRequest
 import com.aulasandroid.familysync.features.listas.model.FamiliaCompletaListasResponse
@@ -38,7 +39,7 @@ interface ListasService {
     @POST("v1/familysync/item")
     suspend fun criarItem(
         @Body request: CriarItemRequest
-    ): Response<APIListasResponse>
+    ): Response<AdicionarItemResponse>
 
 
     // DELETES

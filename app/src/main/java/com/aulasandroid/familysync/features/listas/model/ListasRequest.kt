@@ -11,8 +11,3 @@ data class CriarListaRequest(
     val nome: String
 )
 
-data class AtualizarListaRequest(
-    val id_familia: Int,
-    val id_usuario: Int,
-    val nome: String
-)

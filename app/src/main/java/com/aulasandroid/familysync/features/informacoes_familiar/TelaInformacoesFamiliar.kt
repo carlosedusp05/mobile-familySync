@@ -23,11 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.aulasandroid.familysync.components.CremeButtonPopUp
 import com.aulasandroid.familysync.components.Footer
@@ -38,15 +40,27 @@ import com.aulasandroid.familysync.components.OrangeButtonPopUp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.PersonInformation
+import com.aulasandroid.familysync.features.informacoes_familiar.model.TelaInformacoesFamiliarViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
+import androidx.compose.runtime.LaunchedEffect
+import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
-fun TelaInformacoesFamiliar(navController: NavController) {
+fun TelaInformacoesFamiliar(
+        navController: NavController,
+        viewModel: TelaInformacoesFamiliarViewModel = viewModel()
+    ) {
     var mostrarPopup by remember { mutableStateOf(false) }
     var mostrarPopupEditar by remember { mutableStateOf(false) }
 
-    var estaSelecionado by remember { mutableStateOf("pessoa 0") }
+    val informacoes =
+        viewModel.usuarioSelecionado.value?.informacoes
+            ?: emptyList()
+
+    LaunchedEffect(Unit) {
+        viewModel.buscarInformacoesFamilia()
+    }
 
     Column(
         modifier = Modifier
@@ -81,41 +95,20 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(30.dp)
             ) {
-                 PersonInformation(
-                    "pessoa 0",
-                    (estaSelecionado == "pessoa 0"),
-                    {estaSelecionado = "pessoa 0"}
-                )
+                viewModel.usuarios.forEach { usuario ->
 
-                PersonInformation(
-                    "pessoa 1",
-                    (estaSelecionado == "pessoa 1"),
-                    {estaSelecionado = "pessoa 1"}
-                )
+                    PersonInformation(
 
-                PersonInformation(
-                    "pessoa 2",
-                    (estaSelecionado == "pessoa 2"),
-                    {estaSelecionado = "pessoa 2"}
-                )
+                        usuario.nome_usuario,
 
-                PersonInformation(
-                    "pessoa 3",
-                    (estaSelecionado == "pessoa 3"),
-                    {estaSelecionado = "pessoa 3"}
-                )
+                        viewModel.usuarioSelecionado.value?.id_usuario ==
+                                usuario.id_usuario,
 
-                PersonInformation(
-                    "pessoa 4",
-                    (estaSelecionado == "pessoa 4"),
-                    {estaSelecionado = "pessoa 4"}
-                )
-
-                PersonInformation(
-                    "pessoa 5",
-                    (estaSelecionado == "pessoa 5"),
-                    {estaSelecionado = "pessoa 5"}
-                )
+                        {
+                            viewModel.selecionarUsuario(usuario)
+                        }
+                    )
+                }
 
             }
 
@@ -129,168 +122,154 @@ fun TelaInformacoesFamiliar(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                Information(
-                    tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
-                    navController,
-                    {mostrarPopupEditar = true}
-                )
 
-                Information(
-                    tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
-                    navController,
-                    {mostrarPopupEditar = true}
-                )
+                if (informacoes.isEmpty()) {
 
-                Information(
-                    tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
-                    navController,
-                    {mostrarPopupEditar = true}
-                )
+                    Text(
+                        text = "Nenhuma informação cadastrada.",
+                        color = marrom
+                    )
 
-                Information(
-                    tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
-                    navController,
-                    {mostrarPopupEditar = true}
-                )
+                } else {
 
-                Information(
-                    tema = "Alergia",
-                    conteudo = "jchbhwubehwvcwruievcruiewvcrievgcghdvskdg vgdfhksvcfghkdfvcsghkdvcfghksvcsdikv",
-                    navController,
-                    {mostrarPopupEditar = true}
-                )
+                    informacoes.forEach { info ->
+
+                        Information(
+                            tema = info.titulo,
+                            conteudo = info.descricao,
+                            navController = navController,
+                            {
+                                mostrarPopupEditar = true
+                            }
+                        )
+                    }
+                }
             }
 
-
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                OrangeButton(
-                    Modifier,
-                    "Criar uma informação",
-                    280.dp,
-                    70.dp,
-                    21,
-                    navController,
-                    "informacoes_familiar",
-                    onClick = { mostrarPopup = true }
-                )
-            }
-        }
-
-        Footer(navController, "informacao")
-
-        if (mostrarPopup) {
-            Dialog(onDismissRequest = { mostrarPopup = false }) {
-                Card(
+                Row(
                     modifier = Modifier
-                        .width(350.dp)
-                        .height(350.dp)
+                        .fillMaxWidth()
+                        .height(100.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                            .background(branco)
-                            .padding(30.dp),
-                        verticalArrangement = Arrangement.SpaceEvenly,
+                    OrangeButton(
+                        Modifier,
+                        "Criar uma informação",
+                        280.dp,
+                        70.dp,
+                        21,
+                        navController,
+                        "informacoes_familiar",
+                        onClick = { mostrarPopup = true }
+                    )
+                }
+            }
+
+            Footer(navController, "informacao")
+
+            if (mostrarPopup) {
+                Dialog(onDismissRequest = { mostrarPopup = false }) {
+                    Card(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .height(350.dp)
                     ) {
-                        OutlinedMenorDp(
-                            "Título",
-                            150.dp,
-                            42.dp,
-                            "",
-                            {}
-                        )
-
-                        OutlinedPopUp(
-                            "Descrição",
-                            280.dp,
-                            150.dp,
-                            "",
-                            {}
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .width(280.dp)
-                                .height(42.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                        Column(
+                            modifier = Modifier.fillMaxSize()
+                                .background(branco)
+                                .padding(30.dp),
+                            verticalArrangement = Arrangement.SpaceEvenly,
                         ) {
-                            CremeButtonPopUp(
-                                "Cancelar",
-                                {mostrarPopup = false}
+                            OutlinedMenorDp(
+                                "Título",
+                                150.dp,
+                                42.dp,
+                                "",
+                                {}
                             )
 
-                            OrangeButtonPopUp(
-                                "Criar",
-                                {mostrarPopup = false}
+                            OutlinedPopUp(
+                                "Descrição",
+                                280.dp,
+                                150.dp,
+                                "",
+                                {}
                             )
 
+                            Row(
+                                modifier = Modifier
+                                    .width(280.dp)
+                                    .height(42.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                CremeButtonPopUp(
+                                    "Cancelar",
+                                    { mostrarPopup = false }
+                                )
+
+                                OrangeButtonPopUp(
+                                    "Criar",
+                                    { mostrarPopup = false }
+                                )
+
+                            }
                         }
                     }
                 }
             }
-        }
 
-        if (mostrarPopupEditar) {
-            Dialog(onDismissRequest = { mostrarPopupEditar = false }) {
-                Card(
-                    modifier = Modifier
-                        .width(350.dp)
-                        .height(350.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                            .background(branco)
-                            .padding(30.dp),
-                        verticalArrangement = Arrangement.SpaceEvenly,
+            if (mostrarPopupEditar) {
+                Dialog(onDismissRequest = { mostrarPopupEditar = false }) {
+                    Card(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .height(350.dp)
                     ) {
-                        OutlinedMenorDp(
-                            "Título",
-                            150.dp,
-                            42.dp,
-                            "Alergia",
-                            {}
-                        )
-
-                        OutlinedPopUp(
-                            "Descrição",
-                            280.dp,
-                            150.dp,
-                            "",
-                            {}
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .width(280.dp)
-                                .height(42.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                        Column(
+                            modifier = Modifier.fillMaxSize()
+                                .background(branco)
+                                .padding(30.dp),
+                            verticalArrangement = Arrangement.SpaceEvenly,
                         ) {
-                            CremeButtonPopUp(
-                                "Cancelar",
-                                {mostrarPopupEditar = false}
+                            OutlinedMenorDp(
+                                "Título",
+                                150.dp,
+                                42.dp,
+                                "Alergia",
+                                {}
                             )
 
-                            OrangeButtonPopUp(
-                                "Salvar",
-                                {mostrarPopupEditar = false}
+                            OutlinedPopUp(
+                                "Descrição",
+                                280.dp,
+                                150.dp,
+                                "",
+                                {}
                             )
 
+                            Row(
+                                modifier = Modifier
+                                    .width(280.dp)
+                                    .height(42.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                CremeButtonPopUp(
+                                    "Cancelar",
+                                    { mostrarPopupEditar = false }
+                                )
+
+                                OrangeButtonPopUp(
+                                    "Salvar",
+                                    { mostrarPopupEditar = false }
+                                )
+
+                            }
                         }
                     }
                 }
             }
         }
     }
-}
