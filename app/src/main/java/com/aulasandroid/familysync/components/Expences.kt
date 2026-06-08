@@ -32,120 +32,14 @@ import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
 
-//@Composable
-//fun Expences(navController: NavController, gasto: String, cor: Color) {
-//
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .height(50.dp),
-//        horizontalArrangement = Arrangement.SpaceBetween,
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxHeight()
-//                .width(250.dp)
-//                .clip(RoundedCornerShape(15.dp))
-//                .border(3.dp, laranja, RoundedCornerShape(15.dp))
-//                .background(branco),
-//            horizontalArrangement = Arrangement.SpaceEvenly
-//        ) {
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxHeight()
-//                    .width(35.dp),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Icon(
-//                    painter = painterResource(R.drawable.meal),
-//                    contentDescription = "seta-de-voltar",
-//                    tint = cor,
-//                    modifier = Modifier .size(35.dp)
-//                )
-//            }
-//
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxHeight()
-//                    .width(75.dp),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Text(
-//                    text = gasto,
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 12.sp,
-//                    color = Color.Black
-//                )
-//            }
-//
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxHeight()
-//                    .width(30.dp),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Text(
-//                    text = "60%",
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 12.sp,
-//                    color = Color.Black
-//                )
-//            }
-//
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxHeight()
-//                    .width(70.dp),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Text(
-//                    text = "R$ 5000",
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 12.sp,
-//                    color = Color.Black
-//                )
-//            }
-//        }
-//
-//        IconButton(
-//            modifier = Modifier .size(45.dp),
-//            onClick = {navController.navigate("editar_despesas")}
-//        )  {
-//            Image(
-//                painter = painterResource(R.drawable.pencil),
-//                contentDescription = "editar",
-//                colorFilter = ColorFilter.tint(laranjaEscuro),
-//                modifier = Modifier .fillMaxSize()
-//            )
-//        }
-//
-//        IconButton(
-//            modifier = Modifier .size(45.dp),
-//            onClick = {navController.navigate("despesas")}
-//        )  {
-//            Image(
-//                painter = painterResource(R.drawable.trash),
-//                contentDescription = "excluir",
-//                colorFilter = ColorFilter.tint(laranjaEscuro),
-//                modifier = Modifier .fillMaxSize()
-//            )
-//        }
-//    }
-//}
-
 @Composable
 fun Expences(
     navController: NavController,
-    gasto: String,            // Nome/Descrição (Ex: "Mercado")
-    iconeEmoji: String,       // Ícone vindo da API (Ex: "🛒")
-    porcentagem: String,      // String calculada (Ex: "24%")
-    valor: String,            // Valor formatado (Ex: "R$ 1200,00")
-    corBorda: Color = laranja // Mantém sua cor padrão de borda
+    gasto: String,
+    iconeEmoji: String,
+    porcentagem: String,
+    valor: String,
+    corBorda: Color = laranja
 ) {
     Row(
         modifier = Modifier
@@ -164,7 +58,6 @@ fun Expences(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Coluna do Ícone (Alterado para Text para renderizar o Emoji da API)
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -178,7 +71,6 @@ fun Expences(
                 )
             }
 
-            // Coluna do Título da Despesa
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
@@ -194,7 +86,6 @@ fun Expences(
                 )
             }
 
-            // Coluna da Porcentagem Dinâmica
             Column(
                 modifier = Modifier
                     .fillMaxHeight()

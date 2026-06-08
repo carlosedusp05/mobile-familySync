@@ -3,7 +3,6 @@ package com.aulasandroid.familysync
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,14 +14,13 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aulasandroid.familysync.features.TelaTeste
-import com.aulasandroid.familysync.features.adicionar_despesas.TelaAdicionarDespesas
+import com.aulasandroid.familysync.features.adicionar_financas.TelaAdicionarFinancas
 import com.aulasandroid.familysync.features.alterar_endereco.TelaAlterarEndereco
 import com.aulasandroid.familysync.features.cadastro_familia.TelaCadastroFamilia
 import com.aulasandroid.familysync.features.cadastro_usuario.TelaCadastroUsuario
 import com.aulasandroid.familysync.features.calendario.TelaCalendario
-import com.aulasandroid.familysync.features.despesas.TelaDespesas
-import com.aulasandroid.familysync.features.editar_despesas.TelaEditarDespesas
+import com.aulasandroid.familysync.features.financas.TelaFinancas
+import com.aulasandroid.familysync.features.editar_financas.TelaEditarDespesas
 import com.aulasandroid.familysync.features.editar_lista.TelaEditarLista
 import com.aulasandroid.familysync.features.esqueceu_senha.TelaEsqueceuSenha
 import com.aulasandroid.familysync.features.eventos.TelaEventos
@@ -75,8 +73,8 @@ class MainActivity : ComponentActivity() {
 
 
                         // Despesas
-                        composable(route = "despesas") { TelaDespesas(navController) }
-                        composable(route = "adicionar_despesas") { TelaAdicionarDespesas(navController) }
+                        composable(route = "despesas") { TelaFinancas(navController) }
+                        composable(route = "adicionar_despesas") { TelaAdicionarFinancas(navController) }
                         composable(route = "editar_despesas") { TelaEditarDespesas(navController) }
 
                         // Lista

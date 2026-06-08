@@ -1,7 +1,7 @@
 package com.aulasandroid.familysync.retrofit
 
 import com.aulasandroid.familysync.features.cadastro_usuario.service.CadastrarUsuarioService
-import com.aulasandroid.familysync.features.despesas.service.DespesaService
+import com.aulasandroid.familysync.features.financas.service.FinancasService
 import com.aulasandroid.familysync.features.eventos.service.EventosService
 import com.aulasandroid.familysync.features.login.service.LoginService
 import com.aulasandroid.familysync.features.eventos.users.service.UsuarioService
@@ -40,8 +40,8 @@ object RetrofitFactory {
         retrofit.create(CadastrarUsuarioService::class.java)
     }
 
-    val despesaService: DespesaService by lazy {
-        retrofit.create(DespesaService::class.java)
+    val financasService: FinancasService by lazy {
+        retrofit.create(FinancasService::class.java)
     }
 
     val loginService: LoginService by lazy {

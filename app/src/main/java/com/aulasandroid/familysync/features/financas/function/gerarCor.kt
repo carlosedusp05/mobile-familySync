@@ -1,7 +1,6 @@
-package com.aulasandroid.familysync.features.despesas.function
+package com.aulasandroid.familysync.features.financas.function
 
 import androidx.compose.ui.graphics.Color
-import kotlin.math.absoluteValue
 
 fun gerarCor(index: Int): Color {
 

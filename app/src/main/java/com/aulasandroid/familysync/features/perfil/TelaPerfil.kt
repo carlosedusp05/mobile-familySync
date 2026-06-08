@@ -122,17 +122,7 @@ fun TelaPerfil(navController: NavController) {
                     { }
                 )
 
-//                OutilinedData(
-//                    modifier = Modifier,
-//                    placeHolder = "Data Nascimento (AAAA-MM-DD)",
-//                    width = 383.dp,
-//                    height = 75.dp,
-//                    viewModel.dataNascimento,
-//                    {viewModel.onDataNascimentoChange(it)},
-//                    isError = viewModel.dataNascimentoErro,
-//                    mensagemErro = viewModel.dataNascimentoMensagem,
-//                    keyboardType = KeyboardType.Number
-//                )
+
 
                 Outilined(
                     modifier = Modifier,
