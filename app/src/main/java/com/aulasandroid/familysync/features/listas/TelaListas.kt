@@ -202,6 +202,7 @@ fun TelaListas(
 
                                 viewModel.nomeLista.value = ""
                                mostrarPopup = false
+                                navController.navigate("listas")
                             }
                         )
                     }
