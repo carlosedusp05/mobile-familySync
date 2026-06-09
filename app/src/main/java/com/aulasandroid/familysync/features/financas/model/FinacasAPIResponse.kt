@@ -1,7 +1,7 @@
 package com.aulasandroid.familysync.features.financas.model
 
 data class ItemTelaFinanca(
-    val id: Int,
+    val id: Int = 0,
     val titulo: String,
     val icone: String,
     val valor: String
@@ -81,4 +81,21 @@ data class FinancaAnual(
     val id_familia: Int,
     val mes: String?,
     val total: String?
+)
+
+data class BuscarFinancaResponse(
+    val Desenvolvedor: String?,
+    val Version: String?,
+    val Response: List<FinancaDetalhe>,
+    val StatusCode: Int
+)
+
+data class FinancaDetalhe(
+    val id_financas: Int,
+    val id_familia: Int,
+    val tipo: String,
+    val descricao: String,
+    val valor: String,
+    val data_movimentacao: String,
+    val icone: String
 )

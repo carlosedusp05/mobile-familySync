@@ -3,12 +3,14 @@ package com.aulasandroid.familysync.features.financas.service
 import com.aulasandroid.familysync.features.adicionar_financas.model.CriarFinancaRequest
 import com.aulasandroid.familysync.features.adicionar_financas.model.CriarFinancaResponse
 import com.aulasandroid.familysync.features.editar_financas.model.AtualizarFinancaResponse
+import com.aulasandroid.familysync.features.financas.model.BuscarFinancaResponse
 import com.aulasandroid.familysync.features.financas.model.FinancasAnuaisResponse
 import com.aulasandroid.familysync.features.financas.model.FinancasDiariasResponse
 import com.aulasandroid.familysync.features.financas.model.FinancasMensaisResponse
 import com.aulasandroid.familysync.features.financas.model.FinancasSemanaisResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
@@ -37,6 +39,11 @@ interface FinancasService {
         @Path("idFamilia") idFamilia: Int
     ): Response<FinancasAnuaisResponse>
 
+    @GET("v1/familysync/financas/{idFinanca}")
+    suspend fun buscarFinancaPorId(
+        @Path("idFinanca") idFinanca: Int
+    ): Response<BuscarFinancaResponse>
+
     //POST
     @Headers("Content-Type: application/json")
     @POST("v1/familysync/financas")
@@ -51,4 +58,10 @@ interface FinancasService {
         @Path("idFinanca") idFinanca: Int,
         @Body request: CriarFinancaRequest
     ): Response<AtualizarFinancaResponse>
+
+    //DELETE
+    @DELETE("v1/familysync/financas/{idFinanca}")
+    suspend fun deletarFinanca(
+        @Path("idFinanca") idFinanca: Int
+    ): Response<Unit>
 }

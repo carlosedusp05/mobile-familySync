@@ -11,6 +11,12 @@ import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
 class TelaFinancasViewModel : ViewModel() {
+    var itemSelecionado by mutableStateOf<ItemTelaFinanca?>(null)
+        private set
+
+    fun selecionarItem(item: ItemTelaFinanca) {
+        itemSelecionado = item
+    }
 
     var periodoSelecionado by mutableStateOf(Periodo.DIA)
         private set
@@ -23,6 +29,43 @@ class TelaFinancasViewModel : ViewModel() {
 
     fun carregarDados() {
         carregarPeriodo(periodoSelecionado)
+    }
+
+    fun deletarFinanca(
+        idFinanca: Int
+    ) {
+
+        viewModelScope.launch {
+
+            try {
+
+                val response =
+                    RetrofitFactory.financasService
+                        .deletarFinanca(idFinanca)
+
+                Log.d(
+                    "API_FAMILY",
+                    "DELETE HTTP: ${response.code()}"
+                )
+
+                if (response.isSuccessful) {
+
+                    listaItensTela.removeAll {
+                        it.id == idFinanca
+                    }
+
+                    carregarPeriodo(periodoSelecionado)
+                }
+
+            } catch (e: Exception) {
+
+                Log.e(
+                    "API_FAMILY",
+                    "Erro ao deletar",
+                    e
+                )
+            }
+        }
     }
 
     fun carregarPeriodo(periodo: Periodo) {
@@ -69,6 +112,7 @@ class TelaFinancasViewModel : ViewModel() {
                                 listaItensTela.addAll(
                                     financas.map {
                                         ItemTelaFinanca(
+                                            id = it.id_financas,
                                             titulo = it.descricao ?: "",
                                             icone = it.icone ?: "💰",
                                             valor = it.valor ?: "0"
@@ -147,10 +191,10 @@ class TelaFinancasViewModel : ViewModel() {
                                 listaItensTela.addAll(
                                     financas.map {
                                         ItemTelaFinanca(
-                                            id = it.id_financas,
-                                            titulo = it.descricao ?: "",
-                                            icone = it.icone ?: "💰",
-                                            valor = it.valor ?: "0"
+                                            id = it.id_familia,
+                                            titulo = it.mes ?: "",
+                                            icone = "📅",
+                                            valor = it.total ?: "0"
                                         )
                                     }
                                 )

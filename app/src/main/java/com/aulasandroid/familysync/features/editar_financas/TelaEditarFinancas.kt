@@ -1,5 +1,6 @@
 package com.aulasandroid.familysync.features.adicionar_financas
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,6 +24,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,7 +48,10 @@ import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.features.adicionar_financas.model.CategoriaFinanca
 import com.aulasandroid.familysync.features.adicionar_financas.model.TelaAdicionarFinancasViewModel
 import com.aulasandroid.familysync.features.adicionar_financas.model.categorias
+import com.aulasandroid.familysync.features.editar_financas.model.TelaEditarFinancasViewModel
 import com.aulasandroid.familysync.features.editar_lista.model.TelaEditarListaViewModel
+import com.aulasandroid.familysync.features.financas.model.ItemTelaFinanca
+import com.aulasandroid.familysync.features.financas.model.TelaFinancasViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
@@ -55,8 +60,14 @@ import com.aulasandroid.familysync.ui.theme.marrom
 @Composable
 fun TelaEditarFinancas(
     navController: NavController,
-    viewModel: TelaAdicionarFinancasViewModel = viewModel()
+    idFinanca: Int,
+    viewModel: TelaEditarFinancasViewModel = viewModel()
 ) {
+
+    LaunchedEffect(idFinanca) {
+        Log.d("EDITAR", "ID RECEBIDO: $idFinanca")
+        viewModel.carregarFinanca(idFinanca)
+    }
 
     Column(
         modifier = Modifier
@@ -107,7 +118,7 @@ fun TelaEditarFinancas(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Adicionar Despesas",
+                    text = "Editar Despesas",
                     textAlign = TextAlign.Center,
                     fontSize = 26.sp,
                     fontWeight = FontWeight.SemiBold,
@@ -273,7 +284,8 @@ fun TelaEditarFinancas(
                     navController,
                     "",
                     onClick = {
-                        viewModel.salvarFinanca(
+                        viewModel.atualizarFinanca(
+                            idFinanca =idFinanca,
                             onSuccess = {
                                 navController.navigate("despesas")
                             }

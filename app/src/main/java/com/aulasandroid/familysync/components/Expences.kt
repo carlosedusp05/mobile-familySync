@@ -39,7 +39,9 @@ fun Expences(
     iconeEmoji: String,
     porcentagem: String,
     valor: String,
-    corBorda: Color = laranja
+    idFinanca: Int,
+    corBorda: Color = laranja,
+    onDelete: () -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -120,7 +122,7 @@ fun Expences(
 
         IconButton(
             modifier = Modifier.size(45.dp),
-            onClick = { navController.navigate("editar_despesas") }
+            onClick = { navController.navigate("editar_financa/$idFinanca") }
         ) {
             Image(
                 painter = painterResource(R.drawable.pencil),
@@ -132,7 +134,7 @@ fun Expences(
 
         IconButton(
             modifier = Modifier.size(45.dp),
-            onClick = { navController.navigate("despesas") }
+            onClick = { onDelete() }
         ) {
             Image(
                 painter = painterResource(R.drawable.trash),

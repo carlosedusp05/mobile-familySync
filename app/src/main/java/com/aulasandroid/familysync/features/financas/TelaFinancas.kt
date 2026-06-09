@@ -262,7 +262,9 @@ fun TelaFinancas(
                         iconeEmoji = item.icone,
                         porcentagem = "",
                         valor = "R$ ${item.valor}",
-                        corBorda = corItem
+                        corBorda = corItem,
+                        idFinanca = item.id,
+                        onDelete = {viewModel.deletarFinanca(item.id)}
                     )
                 }
             }
