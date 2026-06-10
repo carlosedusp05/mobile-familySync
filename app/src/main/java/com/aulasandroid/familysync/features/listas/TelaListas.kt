@@ -82,29 +82,56 @@ fun TelaListas(
                 verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                viewModel.listaListas.forEach { lista ->
+                if (viewModel.carregando) {
 
-                    List(
-                        navController = navController,
-                        idLista = lista.idLista,
-                        criador = lista.nomeUsuario,
-                        nome = lista.nomeLista,
-                        porcentagem = viewModel.calcularPorcentagem(lista),
-                        favorita = lista.favorita == 1,
-                        onFavoritoChange = { favorito ->
-
-                            viewModel.atualizarFavorita(
-                                lista.idLista,
-                                favorito
-                            )
-                        },
-                        onDelete = {
-
-                            viewModel.deletarLista(
-                                lista.idLista
-                            )
-                        }
+                    Text(
+                        text = "Carregando listas...",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = marrom,
+                        modifier = Modifier.padding(top = 40.dp)
                     )
+
+                } else if (viewModel.semListas) {
+
+                    Text(
+                        text = "Sua família ainda não contém listas.",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = marrom,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(
+                            horizontal = 30.dp,
+                            vertical = 40.dp
+                        )
+                    )
+
+                } else {
+
+                    viewModel.listaListas.forEach { lista ->
+
+                        List(
+                            navController = navController,
+                            idLista = lista.idLista,
+                            criador = lista.nomeUsuario,
+                            nome = lista.nomeLista,
+                            porcentagem = viewModel.calcularPorcentagem(lista),
+                            favorita = lista.favorita == 1,
+                            onFavoritoChange = { favorito ->
+
+                                viewModel.atualizarFavorita(
+                                    lista.idLista,
+                                    favorito
+                                )
+                            },
+                            onDelete = {
+
+                                viewModel.deletarLista(
+                                    lista.idLista
+                                )
+                            }
+                        )
+                    }
                 }
             }
 

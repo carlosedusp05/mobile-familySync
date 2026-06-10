@@ -16,7 +16,7 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface EventosService {
-    @GET("v1/familysync/eventos/familia/3")
+    @GET("v1/familysync/eventos/familia/39")
     suspend fun buscarEventos(): Response<EventosAPIResponse>
 
     @Headers(

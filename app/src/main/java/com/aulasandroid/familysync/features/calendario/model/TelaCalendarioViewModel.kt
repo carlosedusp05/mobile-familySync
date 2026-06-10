@@ -111,10 +111,9 @@ class TelaCalendarioViewModel : ViewModel() {
             try {
 
                 val request = EventoRequest(
-
                     id_eventos = 0,
-                    id_familia = 3,
-                    id_usuario = 4,
+                    id_familia = 39,
+                    id_usuario = 98,
                     titulo = titulo,
                     descricao = descricao,
                     data = data.text,

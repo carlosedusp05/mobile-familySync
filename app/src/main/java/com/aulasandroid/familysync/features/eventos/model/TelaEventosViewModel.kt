@@ -36,6 +36,9 @@ class TelaEventosViewModel : ViewModel() {
     var listaUsuarios =
         mutableStateListOf<UsuarioResponse>()
 
+    var carregamentoFinalizado by mutableStateOf(false)
+        private set
+
     init {
 
         buscarUsuarios()
@@ -258,6 +261,8 @@ class TelaEventosViewModel : ViewModel() {
 
             try {
 
+                carregamentoFinalizado = false
+
                 val response =
                     RetrofitFactory
                         .eventosService
@@ -276,6 +281,10 @@ class TelaEventosViewModel : ViewModel() {
             } catch (e: Exception) {
 
                 e.printStackTrace()
+
+            } finally {
+
+                carregamentoFinalizado = true
             }
         }
     }

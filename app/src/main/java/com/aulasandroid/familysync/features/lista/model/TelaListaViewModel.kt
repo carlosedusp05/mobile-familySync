@@ -34,7 +34,7 @@ class TelaListaViewModel : ViewModel() {
                 val response =
                     RetrofitFactory
                         .listasService
-                        .buscarFamiliaCompleta(1)
+                        .buscarFamiliaCompleta(39)
 
                 if (response.isSuccessful) {
 
@@ -110,7 +110,7 @@ class TelaListaViewModel : ViewModel() {
                     .atualizarLista(
                         idListaAtual,
                         AtualizarListaRequest(
-                            id_familia = 1,
+                            id_familia = 39,
                             id_usuario = 59,
                             nome = nomeLista.value
                         )

@@ -97,7 +97,7 @@ class TelaAdicionarFinancasViewModel : ViewModel() {
                 val response =
                     RetrofitFactory.financasService.criarFinanca(
                         CriarFinancaRequest(
-                            id_familia = 1,
+                            id_familia = 39,
                             tipo = "despesa",
                             descricao = tema,
                             valor = valorParaApi(),

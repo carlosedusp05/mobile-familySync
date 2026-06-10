@@ -27,7 +27,7 @@ class TelaInformacoesFamiliarViewModel : ViewModel(){
                 val response =
                     RetrofitFactory
                         .informacoesService
-                        .buscarInformacoesFamilia(1)
+                        .buscarInformacoesFamilia(39)
 
                 if (response.isSuccessful) {
 

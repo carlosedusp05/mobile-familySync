@@ -28,6 +28,7 @@ fun LeftArrow(
                 when (abaAtiva) {
                     "lista" -> navController.navigate("listas")
                     "editar-lista" -> navController.navigate("lista")
+                    "eventos" -> navController.navigate("calendario ")
                     else -> navController.navigate("home")
                 }
             }

@@ -93,7 +93,7 @@ fun TelaFinancas(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Button(
-                        onClick = { navController.popBackStack() },
+                        onClick = { navController.navigate("home") },
                         colors = ButtonDefaults.buttonColors(containerColor = laranja),
                         shape = RoundedCornerShape(100),
                         contentPadding = PaddingValues(0.dp),

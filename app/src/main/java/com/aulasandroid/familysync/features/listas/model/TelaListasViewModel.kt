@@ -19,6 +19,12 @@ class TelaListasViewModel : ViewModel() {
     var nomeLista =
         mutableStateOf("")
 
+    var carregando by mutableStateOf(false)
+        private set
+
+    var semListas by mutableStateOf(false)
+        private set
+
     init {
 
         buscarListas()
@@ -51,10 +57,12 @@ class TelaListasViewModel : ViewModel() {
 
             try {
 
+                carregando = true
+
                 val response =
                     RetrofitFactory
                         .listasService
-                        .buscarFamiliaCompleta(1)
+                        .buscarFamiliaCompleta(39)
 
                 if (response.isSuccessful) {
 
@@ -88,11 +96,18 @@ class TelaListasViewModel : ViewModel() {
                             )
                         }
                     }
+
+                    semListas = listaListas.isEmpty()
                 }
 
             } catch (e: Exception) {
 
+                semListas = true
                 e.printStackTrace()
+
+            } finally {
+
+                carregando = false
             }
         }
     }
@@ -204,8 +219,8 @@ class TelaListasViewModel : ViewModel() {
                 val request =
                     CriarListaRequest(
 
-                        id_familia = 1,
-                        id_usuario = 59,
+                        id_familia = 39,
+                        id_usuario = 98,
                         nome = nomeLista
                     )
 

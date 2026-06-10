@@ -79,16 +79,16 @@ class TelaFinancasViewModel : ViewModel() {
                 val response = when (periodo) {
 
                     Periodo.DIA ->
-                        RetrofitFactory.financasService.buscarFinancasDiarias(1)
+                        RetrofitFactory.financasService.buscarFinancasDiarias(39)
 
                     Periodo.SEMANA ->
-                        RetrofitFactory.financasService.buscarFinancasSemanais(1)
+                        RetrofitFactory.financasService.buscarFinancasSemanais(39)
 
                     Periodo.MES ->
-                        RetrofitFactory.financasService.buscarFinancasMensais(1)
+                        RetrofitFactory.financasService.buscarFinancasMensais(39)
 
                     Periodo.ANO ->
-                        RetrofitFactory.financasService.buscarFinancasAnuais(1)
+                        RetrofitFactory.financasService.buscarFinancasAnuais(39)
                 }
 
                 if (response.isSuccessful) {
@@ -100,7 +100,7 @@ class TelaFinancasViewModel : ViewModel() {
                         Periodo.DIA -> {
 
                             val response =
-                                RetrofitFactory.financasService.buscarFinancasDiarias(1)
+                                RetrofitFactory.financasService.buscarFinancasDiarias(39)
 
                             if (response.isSuccessful) {
 
@@ -131,7 +131,7 @@ class TelaFinancasViewModel : ViewModel() {
                         Periodo.SEMANA -> {
 
                             val response =
-                                RetrofitFactory.financasService.buscarFinancasSemanais(1)
+                                RetrofitFactory.financasService.buscarFinancasSemanais(39)
 
                             if (response.isSuccessful) {
 
@@ -155,7 +155,7 @@ class TelaFinancasViewModel : ViewModel() {
                         Periodo.MES -> {
 
                             val response =
-                                RetrofitFactory.financasService.buscarFinancasMensais(1)
+                                RetrofitFactory.financasService.buscarFinancasMensais(39)
 
                             if (response.isSuccessful) {
 
@@ -179,7 +179,7 @@ class TelaFinancasViewModel : ViewModel() {
                         Periodo.ANO -> {
 
                             val response =
-                                RetrofitFactory.financasService.buscarFinancasAnuais(1)
+                                RetrofitFactory.financasService.buscarFinancasAnuais(39)
 
                             if (response.isSuccessful) {
 

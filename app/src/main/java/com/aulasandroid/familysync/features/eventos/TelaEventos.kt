@@ -25,7 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
@@ -39,11 +39,12 @@ import com.aulasandroid.familysync.components.OutlinedDataMenorDp
 import com.aulasandroid.familysync.components.OutlinedMenorDp
 import com.aulasandroid.familysync.components.OutlinedPopUp
 import com.aulasandroid.familysync.components.RowBack
-import com.aulasandroid.familysync.mask.function.formatarData
 import com.aulasandroid.familysync.features.eventos.model.TelaEventosViewModel
+import com.aulasandroid.familysync.mask.function.formatarData
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.laranjaEscuro
+import com.aulasandroid.familysync.ui.theme.marrom
 
 @Composable
 fun TelaEventos(
@@ -58,7 +59,7 @@ fun TelaEventos(
         verticalArrangement = Arrangement.SpaceBetween
     ) {
 
-        RowBack(navController)
+        RowBack(navController, "eventos")
 
         Column(
             modifier = Modifier
@@ -84,29 +85,42 @@ fun TelaEventos(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                viewModel.listaEventos.forEach { evento ->
+                if (
+                    viewModel.carregamentoFinalizado &&
+                    viewModel.listaEventos.isEmpty()
+                ) {
 
-                    Event(
-                        navController = navController,
-                        id = evento.id_eventos,
-                        titulo = evento.titulo,
-                        descricao = evento.descricao,
-                        data = formatarData(evento.data),
-                        horario = evento.hora.substring(0, 5),
-                        criador = viewModel.buscarNomeUsuario(evento.id_usuario),
-                        onClick = {
-                                viewModel.preencherCampos(evento)
-
-                                mostrarPopup = true
-
-                                mostrarPopup = true
-                        },
-                        onDelete = { id ->
-                            viewModel.deletarEvento(id) {
-                                viewModel.buscarEventos()
-                            }
-                        }
+                    Text(
+                        text = "Sua família ainda não possui eventos cadastrados.",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = marrom,
+                        textAlign = TextAlign.Center
                     )
+
+                } else {
+
+                    viewModel.listaEventos.forEach { evento ->
+
+                        Event(
+                            navController = navController,
+                            id = evento.id_eventos,
+                            titulo = evento.titulo,
+                            descricao = evento.descricao,
+                            data = formatarData(evento.data),
+                            horario = evento.hora.substring(0, 5),
+                            criador = viewModel.buscarNomeUsuario(evento.id_usuario),
+                            onClick = {
+                                viewModel.preencherCampos(evento)
+                                mostrarPopup = true
+                            },
+                            onDelete = { id ->
+                                viewModel.deletarEvento(id) {
+                                    viewModel.buscarEventos()
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }

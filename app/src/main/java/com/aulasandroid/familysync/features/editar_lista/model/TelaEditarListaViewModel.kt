@@ -62,7 +62,7 @@ class TelaEditarListaViewModel : ViewModel() {
                 val response =
                     RetrofitFactory
                         .listasService
-                        .buscarFamiliaCompleta(1)
+                        .buscarFamiliaCompleta(39)
 
                 Log.d(
                     "API_FAMILY",
