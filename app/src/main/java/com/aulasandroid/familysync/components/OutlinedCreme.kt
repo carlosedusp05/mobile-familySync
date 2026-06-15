@@ -16,16 +16,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aulasandroid.familysync.ui.theme.creme
 
-
 @Composable
 fun OutlinedCreme(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     placeholder: String,
     modifier: Modifier,
     enabled: Boolean
@@ -44,15 +44,23 @@ fun OutlinedCreme(
             textAlign = TextAlign.Center,
             fontSize = 18.sp
         ),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number
+        ),
         decorationBox = { innerTextField ->
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                if (value.isEmpty()) {
-                    Text(placeholder, color = Color.Gray, fontSize = 16.sp)
+
+                if (value.text.isEmpty()) {
+                    Text(
+                        text = placeholder,
+                        color = Color.Gray,
+                        fontSize = 16.sp
+                    )
                 }
+
                 innerTextField()
             }
         }

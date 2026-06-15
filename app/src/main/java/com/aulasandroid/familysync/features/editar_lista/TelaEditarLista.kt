@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -62,7 +63,24 @@ fun TelaEditarLista(
     idLista: Int,
     viewModel: TelaEditarListaViewModel = viewModel()
 ) {
-    LaunchedEffect(Unit) {
+    if (viewModel.carregando.value) {
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(branco),
+            contentAlignment = Alignment.Center
+        ) {
+
+            CircularProgressIndicator(
+                color = laranja
+            )
+        }
+
+        return
+    }
+
+    LaunchedEffect(idLista) {
         Log.d("API_FAMILY", "ID QUE CHEGOU NA TELA = $idLista")
         viewModel.carregarLista(idLista)
     }

@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class TelaLoginViewModel : ViewModel() {
 
     var email by mutableStateOf("")
     var senha by mutableStateOf("")
@@ -37,9 +37,16 @@ class LoginViewModel : ViewModel() {
     }
 
     fun tentarLogar(onSucesso: () -> Unit) {
+        val emailLimpo = email.trim()
+        val senhaLimpa = senha.trim()
 
-        val isEmailOk = Patterns.EMAIL_ADDRESS.matcher(email).matches()
-        val isSenhaOk = senha.isNotBlank()
+        val isEmailOk =
+            Patterns.EMAIL_ADDRESS
+                .matcher(emailLimpo)
+                .matches()
+
+        val isSenhaOk =
+            senhaLimpa.isNotBlank()
 
         if (isEmailOk && isSenhaOk) {
 
@@ -50,13 +57,16 @@ class LoginViewModel : ViewModel() {
                     carregando = true
 
                     val request = LoginRequest(
-                        email = email,
-                        senha = senha
+                        email = emailLimpo,
+                        senha = senhaLimpa
                     )
 
                     Log.d("API_FAMILY", "Enviando: $request")
 
-                    val response = RetrofitFactory.loginService.logar(request)
+                    val response =
+                        RetrofitFactory
+                            .loginService
+                            .logar(request)
 
                     Log.d("API_FAMILY", "CODE: ${response.code()}")
                     Log.d("API_FAMILY", "BODY: ${response.body()}")

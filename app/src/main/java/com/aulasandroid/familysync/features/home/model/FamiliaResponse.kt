@@ -3,7 +3,6 @@ package com.aulasandroid.familysync.features.home.model
 import com.google.gson.annotations.SerializedName
 
 data class FamiliaResponse(
-
     @SerializedName("Response")
     val response: FamiliaDados
 )

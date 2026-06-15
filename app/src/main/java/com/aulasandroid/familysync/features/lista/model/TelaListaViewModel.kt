@@ -216,4 +216,38 @@ class TelaListaViewModel : ViewModel() {
         nomeLista.value =
             nomeOriginalLista.value
     }
+
+    fun obterPrecoUnitario(item: ItemResponse): Double {
+
+        return item.valor_unitario
+            .replace(",", ".")
+            .toDoubleOrNull() ?: 0.0
+    }
+
+    fun obterPrecoTotal(item: ItemResponse): Double {
+
+        return obterPrecoUnitario(item) * item.quantidade
+    }
+
+    fun obterPrecoUnitarioFormatado(item: ItemResponse): String {
+
+        return java.text.NumberFormat
+            .getCurrencyInstance(
+                java.util.Locale("pt", "BR")
+            )
+            .format(
+                obterPrecoUnitario(item)
+            )
+    }
+
+    fun obterPrecoTotalFormatado(item: ItemResponse): String {
+
+        return java.text.NumberFormat
+            .getCurrencyInstance(
+                java.util.Locale("pt", "BR")
+            )
+            .format(
+                obterPrecoTotal(item)
+            )
+    }
 }

@@ -1,5 +1,6 @@
 package com.aulasandroid.familysync.features.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,12 +33,32 @@ import com.aulasandroid.familysync.features.home.model.TelaHomeViewModel
 import com.aulasandroid.familysync.ui.theme.creme
 import com.aulasandroid.familysync.ui.theme.laranja
 import com.aulasandroid.familysync.ui.theme.marrom
+import androidx.compose.material3.CircularProgressIndicator
+import com.aulasandroid.familysync.ui.theme.branco
 
 @Composable
 fun TelaHome(
     navController: NavController,
     viewModel: TelaHomeViewModel = viewModel()
 ) {
+
+    if (viewModel.carregando.value) {
+
+        Column(
+            modifier = Modifier.fillMaxSize()
+                .background(branco),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+
+            CircularProgressIndicator(
+                color = laranja
+            )
+        }
+
+        return
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()

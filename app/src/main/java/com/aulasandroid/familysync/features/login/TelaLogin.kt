@@ -21,14 +21,14 @@ import com.aulasandroid.familysync.components.Logo
 import com.aulasandroid.familysync.components.OrangeButton
 import com.aulasandroid.familysync.components.Outilined
 import com.aulasandroid.familysync.components.OutilinedIcon
-import com.aulasandroid.familysync.features.login.model.LoginViewModel
+import com.aulasandroid.familysync.features.login.model.TelaLoginViewModel
 import com.aulasandroid.familysync.ui.theme.branco
 import com.aulasandroid.familysync.ui.theme.laranja
 
 @Composable
 fun TelaLogin(
     navController: NavController,
-    viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    viewModel: TelaLoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 ) {
 
     Column(
@@ -47,8 +47,7 @@ fun TelaLogin(
             Logo(
                 modifier = Modifier,
                 110.dp,
-                250.dp,navController//,
-//                {}
+                250.dp,navController
             )
         }
 

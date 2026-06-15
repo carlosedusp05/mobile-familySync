@@ -11,12 +11,6 @@ import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
 
 class TelaFinancasViewModel : ViewModel() {
-    var itemSelecionado by mutableStateOf<ItemTelaFinanca?>(null)
-        private set
-
-    fun selecionarItem(item: ItemTelaFinanca) {
-        itemSelecionado = item
-    }
 
     var periodoSelecionado by mutableStateOf(Periodo.DIA)
         private set
@@ -25,6 +19,9 @@ class TelaFinancasViewModel : ViewModel() {
         private set
 
     var listaItensTela = mutableStateListOf<ItemTelaFinanca>()
+        private set
+
+    var carregando by mutableStateOf(true)
         private set
 
     fun carregarDados() {
@@ -64,6 +61,7 @@ class TelaFinancasViewModel : ViewModel() {
                     "Erro ao deletar",
                     e
                 )
+
             }
         }
     }
@@ -73,6 +71,8 @@ class TelaFinancasViewModel : ViewModel() {
         periodoSelecionado = periodo
 
         viewModelScope.launch {
+
+            carregando = true
 
             try {
 
@@ -206,6 +206,9 @@ class TelaFinancasViewModel : ViewModel() {
             } catch (e: Exception) {
 
                 Log.e("API_FAMILY", "Erro", e)
+
+            } finally {
+                carregando = false
             }
         }
     }

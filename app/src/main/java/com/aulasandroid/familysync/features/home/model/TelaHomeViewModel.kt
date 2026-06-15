@@ -11,14 +11,19 @@ class TelaHomeViewModel : ViewModel() {
     var nomeFamilia =
         mutableStateOf("")
 
-    init {
+    var carregando =
+        mutableStateOf(true)
+        private set
 
+    init {
         buscarFamilia()
     }
 
-    fun buscarFamilia() {
+    private fun buscarFamilia() {
 
         viewModelScope.launch {
+
+            carregando.value = true
 
             try {
 
@@ -29,17 +34,23 @@ class TelaHomeViewModel : ViewModel() {
 
                 if (response.isSuccessful) {
 
-                    nomeFamilia.value =
+                    val familia =
                         response.body()
                             ?.response
                             ?.familia
                             ?.firstOrNull()
-                            ?.nome ?: ""
+
+                    nomeFamilia.value =
+                        familia?.nome ?: ""
                 }
 
             } catch (e: Exception) {
 
                 e.printStackTrace()
+
+            } finally {
+
+                carregando.value = false
             }
         }
     }

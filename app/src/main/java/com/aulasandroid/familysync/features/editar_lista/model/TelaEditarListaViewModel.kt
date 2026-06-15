@@ -3,11 +3,16 @@ package com.aulasandroid.familysync.features.editar_lista.model
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aulasandroid.familysync.features.listas.model.ItemResponse
 import com.aulasandroid.familysync.retrofit.RetrofitFactory
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class TelaEditarListaViewModel : ViewModel() {
 
@@ -15,15 +20,18 @@ class TelaEditarListaViewModel : ViewModel() {
 
     var usarPreco = mutableStateOf(false)
 
-    var precoItem = mutableStateOf("")
+    var precoItem = mutableStateOf(TextFieldValue(""))
 
-    var quantidadeItem = mutableStateOf("1")
+    var quantidadeItem = mutableStateOf(TextFieldValue("1"))
 
     var itensLista = mutableStateListOf<ItemResponse>()
 
     var itensParaExcluir = mutableStateListOf<Int>()
 
     var idListaAtual = 0
+
+    var carregando = mutableStateOf(false)
+        private set
 
     fun alterarNomeItem(valor: String) {
 
@@ -32,11 +40,34 @@ class TelaEditarListaViewModel : ViewModel() {
         }
     }
 
-    fun alterarPreco(valor: String) {
-        precoItem.value = valor
+    fun alterarPreco(valor: TextFieldValue) {
+
+        val numeros =
+            valor.text.filter { it.isDigit() }
+
+        if (numeros.isEmpty()) {
+
+            precoItem.value =
+                TextFieldValue("")
+
+            return
+        }
+
+        val valorFormatado =
+            (numeros.toLong() / 100.0)
+
+        val texto =
+            String.format("%.2f", valorFormatado)
+                .replace(".", ",")
+
+        precoItem.value =
+            TextFieldValue(
+                text = texto,
+                selection = TextRange(texto.length)
+            )
     }
 
-    fun alterarQuantidade(valor: String) {
+    fun alterarQuantidade(valor: TextFieldValue) {
         quantidadeItem.value = valor
     }
 
@@ -158,13 +189,13 @@ class TelaEditarListaViewModel : ViewModel() {
             "TESTE_ITEM",
             """
             usarPreco=${usarPreco.value}
-            preco=${precoItem.value}
+            preco=${precoItem.value.text}
             quantidade=${quantidadeItem.value}
             """.trimIndent()
         )
         Log.d(
             "TESTE_ITEM",
-            "usarPreco=${usarPreco.value} preco=${precoItem.value} quantidade=${quantidadeItem.value}"
+            "usarPreco=${usarPreco.value} preco=${precoItem.value.text} quantidade=${quantidadeItem.value}"
         )
 
         itensLista.add(
@@ -174,13 +205,13 @@ class TelaEditarListaViewModel : ViewModel() {
 
                 quantidade =
                     if (usarPreco.value)
-                        quantidadeItem.value.toIntOrNull() ?: 1
+                        quantidadeItem.value.text.toIntOrNull() ?: 1
                     else
                         1,
 
                 valor_unitario =
                     if (usarPreco.value)
-                        precoItem.value
+                        precoItem.value.text
                             .replace(",", ".")
                             .ifBlank { "0.00" }
                     else
@@ -193,8 +224,8 @@ class TelaEditarListaViewModel : ViewModel() {
         )
 
         nomeItem.value = ""
-        precoItem.value = ""
-        quantidadeItem.value = "1"
+        precoItem.value = TextFieldValue("")
+        quantidadeItem.value = TextFieldValue("1")
         usarPreco.value = false
     }
 
@@ -215,68 +246,42 @@ class TelaEditarListaViewModel : ViewModel() {
     fun salvarLista(
         onSuccess: () -> Unit
     ) {
-
         viewModelScope.launch {
+
+            carregando.value = true
 
             try {
 
                 itensParaExcluir.forEach { idItem ->
 
-                    val responseDelete =
-                        RetrofitFactory
-                            .listasService
-                            .deletarItem(idItem)
-
-                    Log.d(
-                        "API_FAMILY",
-                        "Delete item $idItem -> ${responseDelete.code()}"
-                    )
+                    RetrofitFactory
+                        .listasService
+                        .deletarItem(idItem)
                 }
 
                 itensLista
-                    .filter {
-                        it.id_item == 0
-                    }
+                    .filter { it.id_item == 0 }
                     .forEach { item ->
 
-                        Log.d(
-                            "API_FAMILY",
-                            """
-                            Criando item:
-                            nome=${item.nome_item}
-                            quantidade=${item.quantidade}
-                            valor=${item.valor_unitario}
-                            """.trimIndent()
-                        )
-
-                        val responseItem =
-                            RetrofitFactory
-                                .listasService
-                                .criarItem(
-                                    CriarItemRequest(
-                                        id_lista = idListaAtual,
-                                        nome_item = item.nome_item,
-                                        quantidade = item.quantidade,
-                                        valor_unitario = item.valor_unitario,
-                                        valor_total = "0",
-                                        comprado = false
-                                    )
+                        RetrofitFactory
+                            .listasService
+                            .criarItem(
+                                CriarItemRequest(
+                                    id_lista = idListaAtual,
+                                    nome_item = item.nome_item,
+                                    quantidade = item.quantidade,
+                                    valor_unitario = item.valor_unitario,
+                                    valor_total = "0",
+                                    comprado = false
                                 )
-
-                        Log.d(
-                            "API_FAMILY",
-                            "Código criar item: ${responseItem.code()}"
-                        )
-
-                        Log.d(
-                            "API_FAMILY",
-                            "Body criar item: ${responseItem.body()}"
-                        )
+                            )
                     }
 
                 onSuccess()
 
             } catch (e: Exception) {
+
+                carregando.value = false
 
                 Log.e(
                     "API_FAMILY",

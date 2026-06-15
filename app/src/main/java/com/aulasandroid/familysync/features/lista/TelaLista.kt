@@ -206,11 +206,11 @@ fun TelaLista(
                     viewModel.listaProdutos.forEach { produto ->
 
                         Item(
-                            navController = navController,
                             nome = produto.nome_item,
-                            precoUnitario =
-                                produto.valor_unitario.toDouble(),
+                            precoUnitario = viewModel.obterPrecoUnitarioFormatado(produto),
                             quantidade = produto.quantidade,
+                            precoTotal = viewModel.obterPrecoTotalFormatado(produto),
+                            listaCompra = viewModel.obterPrecoUnitario(produto) > 0,
                             isChecked = produto.comprado == 1,
                             onCheckChange = { checked ->
                                 viewModel.atualizarItemComprado(
